@@ -1,0 +1,6 @@
+@Ldc.Api_HostAddress = http://localhost:5116
+
+GET {{Ldc.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
