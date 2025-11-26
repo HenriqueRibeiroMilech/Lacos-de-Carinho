@@ -1,4 +1,4 @@
-﻿namespace Ldc.Domain.Enums;
+﻿namespace Ldc.Communication.Enums;
 
 public enum RsvpStatus
 {
