@@ -142,7 +142,7 @@
     <value>The email is invalid.</value>
   </data>
   <data name="INVALID_PASSWORD" xml:space="preserve">
-    <value>Your password must be at least 8 characters long and include at least one letter, one lowercase letter, and one number.</value>
+    <value>Your password must be at least 6 characters long.</value>
   </data>
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>Name cannot be empty.</value>
@@ -158,5 +158,26 @@
   </data>
   <data name="TAG_TYPE_NOT_SUPPORTED" xml:space="preserve">
     <value>Tag not supported.</value>
+  </data>
+  <data name="WEDDING_LIST_NOT_FOUND" xml:space="preserve">
+    <value>Wedding list not found.</value>
+  </data>
+  <data name="GIFT_ITEM_NOT_FOUND" xml:space="preserve">
+    <value>Gift item not found.</value>
+  </data>
+  <data name="GIFT_ITEM_ALREADY_RESERVED" xml:space="preserve">
+    <value>This gift item is already reserved.</value>
+  </data>
+  <data name="GIFT_ITEM_NOT_RESERVED_BY_USER" xml:space="preserve">
+    <value>This gift item was not reserved by you.</value>
+  </data>
+  <data name="UNAUTHORIZED_ACCESS" xml:space="preserve">
+    <value>You are not authorized to perform this action.</value>
+  </data>
+  <data name="ROLE_REQUIRED" xml:space="preserve">
+    <value>Role is required.</value>
+  </data>
+  <data name="ROLE_INVALID" xml:space="preserve">
+    <value>Role must be 'admin' or 'user'.</value>
   </data>
 </root>

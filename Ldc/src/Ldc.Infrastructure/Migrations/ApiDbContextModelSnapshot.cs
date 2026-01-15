@@ -22,6 +22,26 @@ namespace Ldc.Infrastructure.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("Ldc.Domain.Entities.Category", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("Ldc.Domain.Entities.Expense", b =>
                 {
                     b.Property<long>("Id")
@@ -56,6 +76,106 @@ namespace Ldc.Infrastructure.Migrations
                     b.ToTable("Expenses");
                 });
 
+            modelBuilder.Entity("Ldc.Domain.Entities.GiftItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<long?>("ReservedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("WeddingListId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReservedById");
+
+                    b.HasIndex("WeddingListId");
+
+                    b.ToTable("GiftItems");
+                });
+
+            modelBuilder.Entity("Ldc.Domain.Entities.PasswordResetToken", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Token")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PasswordResetTokens");
+                });
+
+            modelBuilder.Entity("Ldc.Domain.Entities.Rsvp", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AdditionalGuests")
+                        .HasColumnType("longtext");
+
+                    b.Property<long>("GuestId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("WeddingListId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GuestId");
+
+                    b.HasIndex("WeddingListId", "GuestId")
+                        .IsUnique();
+
+                    b.ToTable("Rsvps");
+                });
+
             modelBuilder.Entity("Ldc.Domain.Entities.Tag", b =>
                 {
                     b.Property<long>("Id")
@@ -77,6 +197,31 @@ namespace Ldc.Infrastructure.Migrations
                     b.ToTable("Tags", (string)null);
                 });
 
+            modelBuilder.Entity("Ldc.Domain.Entities.TemplateGiftItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("TemplateGiftItems");
+                });
+
             modelBuilder.Entity("Ldc.Domain.Entities.User", b =>
                 {
                     b.Property<long>("Id")
@@ -84,6 +229,9 @@ namespace Ldc.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -109,6 +257,47 @@ namespace Ldc.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Ldc.Domain.Entities.WeddingList", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("DeliveryInfo")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateOnly>("EventDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("ListType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("longtext");
+
+                    b.Property<long>("OwnerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ShareableLink")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("ShareableLink")
+                        .IsUnique();
+
+                    b.ToTable("WeddingLists");
+                });
+
             modelBuilder.Entity("Ldc.Domain.Entities.Expense", b =>
                 {
                     b.HasOne("Ldc.Domain.Entities.User", "User")
@@ -118,6 +307,54 @@ namespace Ldc.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Ldc.Domain.Entities.GiftItem", b =>
+                {
+                    b.HasOne("Ldc.Domain.Entities.User", "ReservedBy")
+                        .WithMany()
+                        .HasForeignKey("ReservedById")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Ldc.Domain.Entities.WeddingList", "WeddingList")
+                        .WithMany("Items")
+                        .HasForeignKey("WeddingListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ReservedBy");
+
+                    b.Navigation("WeddingList");
+                });
+
+            modelBuilder.Entity("Ldc.Domain.Entities.PasswordResetToken", b =>
+                {
+                    b.HasOne("Ldc.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Ldc.Domain.Entities.Rsvp", b =>
+                {
+                    b.HasOne("Ldc.Domain.Entities.User", "Guest")
+                        .WithMany()
+                        .HasForeignKey("GuestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ldc.Domain.Entities.WeddingList", "WeddingList")
+                        .WithMany("Rsvps")
+                        .HasForeignKey("WeddingListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Guest");
+
+                    b.Navigation("WeddingList");
                 });
 
             modelBuilder.Entity("Ldc.Domain.Entities.Tag", b =>
@@ -131,9 +368,48 @@ namespace Ldc.Infrastructure.Migrations
                     b.Navigation("Expense");
                 });
 
+            modelBuilder.Entity("Ldc.Domain.Entities.TemplateGiftItem", b =>
+                {
+                    b.HasOne("Ldc.Domain.Entities.Category", "Category")
+                        .WithMany("TemplateItems")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Ldc.Domain.Entities.WeddingList", b =>
+                {
+                    b.HasOne("Ldc.Domain.Entities.User", "Owner")
+                        .WithMany("WeddingLists")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Ldc.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("TemplateItems");
+                });
+
             modelBuilder.Entity("Ldc.Domain.Entities.Expense", b =>
                 {
                     b.Navigation("Tags");
+                });
+
+            modelBuilder.Entity("Ldc.Domain.Entities.User", b =>
+                {
+                    b.Navigation("WeddingLists");
+                });
+
+            modelBuilder.Entity("Ldc.Domain.Entities.WeddingList", b =>
+                {
+                    b.Navigation("Items");
+
+                    b.Navigation("Rsvps");
                 });
 #pragma warning restore 612, 618
         }

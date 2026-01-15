@@ -1,0 +1,167 @@
+<div class="flex min-h-screen w-full bg-white relative overflow-hidden justify-center items-center lg:justify-end lg:items-stretch">
+  
+  <!-- Background Image (Full on mobile, Left on Desktop) -->
+  <div class="absolute top-0 left-0 w-full h-full z-0 lg:w-[60%] lg:z-10">
+    <img src="background.jpg" alt="Background" class="w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-black/30 lg:bg-black/10"></div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="w-full min-h-screen lg:w-[45%] flex flex-col justify-center items-center p-8 z-20 relative 
+              bg-white/10 backdrop-blur-sm 
+              lg:bg-white lg:backdrop-blur-none lg:min-h-screen">
+    
+    <!-- Logo -->
+    <div class="mb-6 flex justify-center w-full">
+       <img class="h-24 object-contain" src="full-logo.png" alt="Logo" />
+    </div>
+
+    <!-- Welcome Text -->
+    <div class="text-center mb-6">
+      <h1 class="font-serif text-3xl text-white lg:text-gray-800 mb-2 tracking-wide">Crie sua Lista</h1>
+      <p class="text-gray-200 lg:text-gray-500 font-light text-sm uppercase tracking-widest">Organize seus presentes</p>
+    </div>
+
+    <!-- Benefit Badge -->
+    <div class="mb-6 px-4 py-2 bg-gradient-to-r from-[#D97F97]/10 to-pink-100/50 rounded-full border border-[#D97F97]/20">
+      <p class="text-[#D97F97] text-xs font-medium flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        Pague uma vez, use para sempre
+      </p>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="cadastroForm" (ngSubmit)="cadastrar()" class="w-full max-w-sm flex flex-col gap-4">
+       <!-- Name -->
+       <div class="flex flex-col gap-2">
+         <label for="input-name" class="text-gray-100 lg:text-gray-700 text-xs font-bold tracking-wider ml-1">NOME DO CASAL</label>
+         <div class="flex items-center border-b border-white/50 lg:border-gray-300 py-2 transition-colors focus-within:border-[#D97F97]">
+           <svg class="mr-3 w-5 h-5 opacity-80 lg:opacity-60 text-white lg:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+           </svg>
+           <input 
+             class="w-full text-white lg:text-gray-900 text-sm focus:outline-none placeholder-gray-200 lg:placeholder-gray-400 bg-transparent" 
+             id="input-name"
+             type="text" 
+             placeholder="Ex: Ana & João" 
+             formControlName="name"
+           />
+         </div>
+         @if(cadastroForm.get('name')?.touched && cadastroForm.get('name')?.hasError('required')) {
+           <p class="text-red-400 text-xs ml-1">O nome é obrigatório</p>
+         }
+         @if(cadastroForm.get('name')?.touched && cadastroForm.get('name')?.hasError('minlength')) {
+           <p class="text-red-400 text-xs ml-1">O nome deve ter pelo menos 3 caracteres</p>
+         }
+       </div>
+
+       <!-- Email -->
+       <div class="flex flex-col gap-2">
+         <label for="input-email" class="text-gray-100 lg:text-gray-700 text-xs font-bold tracking-wider ml-1">E-MAIL</label>
+         <div class="flex items-center border-b border-white/50 lg:border-gray-300 py-2 transition-colors focus-within:border-[#D97F97]">
+           <img class="mr-3 opacity-80 lg:opacity-60 w-5 h-5 invert lg:invert-0" src="mail.svg" alt="" aria-hidden="true" />
+           <input 
+             class="w-full text-white lg:text-gray-900 text-sm focus:outline-none placeholder-gray-200 lg:placeholder-gray-400 bg-transparent" 
+             id="input-email"
+             type="email" 
+             placeholder="exemplo@email.com" 
+             formControlName="email"
+           />
+         </div>
+         @if(cadastroForm.get('email')?.touched && cadastroForm.get('email')?.hasError('required')) {
+           <p class="text-red-400 text-xs ml-1">O e-mail é obrigatório</p>
+         }
+         @if(cadastroForm.get('email')?.touched && cadastroForm.get('email')?.hasError('email')) {
+           <p class="text-red-400 text-xs ml-1">Informe um e-mail válido</p>
+         }
+       </div>
+
+       <!-- Password -->
+       <div class="flex flex-col gap-2">
+         <label for="input-password" class="text-gray-100 lg:text-gray-700 text-xs font-bold tracking-wider ml-1">SENHA</label>
+         <div class="flex items-center border-b border-white/50 lg:border-gray-300 py-2 transition-colors focus-within:border-[#D97F97]">
+           <img class="mr-3 opacity-80 lg:opacity-60 w-5 h-5 invert lg:invert-0" src="access.svg" alt="" aria-hidden="true" />
+           <input 
+             class="w-full text-white lg:text-gray-900 text-sm focus:outline-none placeholder-gray-200 lg:placeholder-gray-400 bg-transparent" 
+             id="input-password"
+             type="password" 
+             placeholder="Mínimo 6 caracteres" 
+             formControlName="password"
+           />
+         </div>
+         @if(cadastroForm.get('password')?.touched && cadastroForm.get('password')?.hasError('minlength')) {
+           <p class="text-red-400 text-xs ml-1">A senha deve ter pelo menos 6 caracteres</p>
+         }
+       </div>
+
+       <!-- Confirm Password -->
+       <div class="flex flex-col gap-2">
+         <label for="input-confirm-password" class="text-gray-100 lg:text-gray-700 text-xs font-bold tracking-wider ml-1">CONFIRMAR SENHA</label>
+         <div class="flex items-center border-b border-white/50 lg:border-gray-300 py-2 transition-colors focus-within:border-[#D97F97]">
+           <img class="mr-3 opacity-80 lg:opacity-60 w-5 h-5 invert lg:invert-0" src="access.svg" alt="" aria-hidden="true" />
+           <input 
+             class="w-full text-white lg:text-gray-900 text-sm focus:outline-none placeholder-gray-200 lg:placeholder-gray-400 bg-transparent" 
+             id="input-confirm-password"
+             type="password" 
+             placeholder="Repita a senha" 
+             formControlName="confirmPassword"
+           />
+         </div>
+         @if(cadastroForm.get('confirmPassword')?.value && !passwordsMatch) {
+           <p class="text-red-400 text-xs ml-1">As senhas não coincidem</p>
+         }
+       </div>
+
+       @if(errorMessage) {
+         <p class="font-bold text-red-500 text-sm text-center mt-2" role="alert">{{ errorMessage }}</p>
+       }
+
+       <!-- Button -->
+       <button 
+         [class]="`
+           mt-4 w-full py-4 rounded-full text-white font-bold text-sm tracking-widest uppercase shadow-lg
+           flex justify-center items-center gap-3
+           ${ cadastroForm.invalid || !passwordsMatch || isLoading ? 'bg-gray-300 cursor-default' : 'cursor-pointer bg-[#D97F97] hover:bg-[#c06f85] active:scale-95 duration-300 transition' }
+         `" 
+         [disabled]="cadastroForm.invalid || !passwordsMatch || isLoading">
+         @if(isLoading) {
+           <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+           </svg>
+           <span>Criando...</span>
+         } @else {
+           <span>Criar Minha Lista</span>
+         }
+       </button>
+
+       <!-- Login Link -->
+       <div class="text-center mt-4">
+         <p class="text-gray-200 lg:text-gray-500 text-sm">Já tem uma conta?</p>
+         <a routerLink="/entrar" class="text-[#D97F97] hover:underline font-semibold text-sm">
+           Fazer login
+         </a>
+       </div>
+
+       <!-- Back to Landing -->
+       <div class="text-center mt-2">
+         <a routerLink="/inicio" class="text-gray-300 lg:text-gray-400 hover:text-[#D97F97] text-xs flex items-center justify-center gap-1 transition-colors">
+           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+           </svg>
+           Voltar para o início
+         </a>
+       </div>
+    </form>
+
+    <!-- Wave SVG (Desktop Only) -->
+    <div class="hidden lg:block absolute top-0 -left-32 w-32 h-full z-20 pointer-events-none">
+       <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="w-full h-full text-white fill-current scale-x-[-1]">
+          <path d="M0 0 C 40 10 60 40 40 100 L 0 100 Z" />
+       </svg>
+    </div>
+  </div>
+
+</div>

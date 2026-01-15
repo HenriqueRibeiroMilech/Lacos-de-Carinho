@@ -1,19 +1,25 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { UserAuthService } from '../../services/user-auth';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
 export class Header {
-  private readonly _auth = inject(UserAuthService);
+  readonly userAuthService = inject(UserAuthService);
   private readonly _router = inject(Router);
+  
+  isMenuOpen = false;
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 
   logout() {
-    this._auth.clearUserToken();
-    this._router.navigate(['/login']);
+    this.userAuthService.clearUserToken();
+    this._router.navigate(['/entrar']);
   }
 }

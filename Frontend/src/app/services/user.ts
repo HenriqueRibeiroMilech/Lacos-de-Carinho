@@ -5,6 +5,23 @@ import { Observable } from 'rxjs';
 import { ILoginSuccessResponse } from '../interfaces/login-success-response';
 import { environment } from '../../environments/environment';
 
+export interface IRegisterRequest {
+  name: string;
+  email: string;
+  password: string;
+  role: 'admin' | 'user';
+}
+
+export interface IRegisterResponse {
+  name: string;
+  token: string;
+}
+
+export interface IUpgradeResponse {
+  token: string;
+  message: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +34,14 @@ export class UserService {
 
   login(email: string, password: string): Observable<ILoginSuccessResponse> {
     const body = { email, password };
-
     return this._httpClient.post<ILoginSuccessResponse>(`${environment.apiUrl}/Login`, body);
+  }
+
+  register(data: IRegisterRequest): Observable<IRegisterResponse> {
+    return this._httpClient.post<IRegisterResponse>(`${environment.apiUrl}/User`, data);
+  }
+
+  upgradeAccount(): Observable<IUpgradeResponse> {
+    return this._httpClient.put<IUpgradeResponse>(`${environment.apiUrl}/User/upgrade`, {});
   }
 }

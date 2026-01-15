@@ -1,25 +1,124 @@
-<div class="w-full flex justify-between items-center p-3 border-b border-gray-200 pb-2">
-  <!-- Logo -->
-  <img class="w-9 h-9" src="logo.svg" alt="Logotipo Marketplace" />
-  <!-- Botão de Produtos -->
-  <a class="flex items-center p-2 rounded-lg bg-[#F5EAEA] cursor-pointer active:translate-y-2 duration-200 
-    ease-in-out transition" routerLink="/products" aria-label="Acessar página de produtos">
-    <img class="mr-2 w-4 h-4" src="package.svg" alt="" aria-hidden="true" />
-    <span class="text-[#F24D0D] text-sm font-medium">Produtos</span>
-  </a>
-  <!-- Container Botão Novo Produto e Avatar -->
-  <div class="flex items-center">
-    <!-- Botão Novo Produto -->
-    <a class="flex items-center p-2 rounded-lg bg-[#F24D0D] cursor-pointer mr-3 active:translate-y-2 duration-200 
-    ease-in-out transition" routerLink="/new-product" aria-label="Adicionar novo produto">
-      <img class="mr-2 w-4 h-4" src="plus-sign.svg" alt="" aria-hidden="true" />
-      <span class="text-white text-sm">Novo produto</span>
-    </a>
-    <!-- Avatar -->
-    <img src="user-avatar.svg" alt="Avatar do usuário" class="mr-3" />
-    <button (click)="logout()" class="flex items-center p-2 rounded-lg bg-gray-200 cursor-pointer active:translate-y-1 duration-150 text-sm font-medium text-gray-700">
-      <img class="mr-2 w-4 h-4" src="logout.svg" alt="" aria-hidden="true" />
-      Sair
-    </button>
+<header class="w-full bg-white border-b border-gray-200 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      
+      <!-- Left Section - Logo & Navigation -->
+      <div class="flex items-center gap-8">
+        <!-- Logo / Home Link -->
+        <a routerLink="/painel" class="flex items-center gap-3 group">
+          <img class="h-10 w-auto object-contain" src="full-logo.png" alt="Logo" />
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-1">
+          <a routerLink="/painel" 
+             routerLinkActive="bg-[#FDF2F4] text-[#D97F97]"
+             [routerLinkActiveOptions]="{exact: true}"
+             class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors duration-200">
+            Dashboard
+          </a>
+          
+          @if(userAuthService.isAdmin()) {
+            <a routerLink="/wedding-lists/new" 
+               routerLinkActive="bg-[#FDF2F4] text-[#D97F97]"
+               class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors duration-200">
+              Criar Lista
+            </a>
+          }
+          
+          <a routerLink="/find-list" 
+             routerLinkActive="bg-[#FDF2F4] text-[#D97F97]"
+             class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors duration-200">
+            Buscar Lista
+          </a>
+        </nav>
+      </div>
+      
+      <!-- Right Section - User Profile & Actions -->
+      <div class="flex items-center gap-3">
+        <!-- User Info (Desktop) -->
+        <div class="hidden sm:flex items-center gap-3 pr-3 border-r border-gray-200">
+          <div class="text-right">
+            <p class="text-sm font-medium text-gray-900">{{ userAuthService.getUserName() || 'Usuário' }}</p>
+            <p class="text-xs text-gray-500">{{ userAuthService.isAdmin() ? 'Casal' : 'Convidado' }}</p>
+          </div>
+          <div class="w-9 h-9 rounded-full bg-[#FDF2F4] flex items-center justify-center">
+            <svg class="w-5 h-5 text-[#D97F97]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+          </div>
+        </div>
+        
+        <!-- Logout Button -->
+        <button 
+          (click)="logout()" 
+          class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 cursor-pointer 
+                 active:scale-95 duration-150 transition text-sm font-medium text-gray-700">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+          </svg>
+          <span class="hidden sm:inline">Sair</span>
+        </button>
+        
+        <!-- Mobile Menu Button -->
+        <button 
+          (click)="toggleMenu()"
+          class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
+          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            @if(isMenuOpen) {
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            } @else {
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            }
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
-</div>
+  
+  <!-- Mobile Navigation Menu -->
+  @if(isMenuOpen) {
+    <div class="md:hidden border-t border-gray-200 bg-white">
+      <nav class="px-4 py-3 space-y-1">
+        <a routerLink="/painel" 
+           routerLinkActive="bg-[#FDF2F4] text-[#D97F97]"
+           [routerLinkActiveOptions]="{exact: true}"
+           (click)="isMenuOpen = false"
+           class="block px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+          Dashboard
+        </a>
+        
+        @if(userAuthService.isAdmin()) {
+          <a routerLink="/wedding-lists/new" 
+             routerLinkActive="bg-[#FDF2F4] text-[#D97F97]"
+             (click)="isMenuOpen = false"
+             class="block px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+            Criar Nova Lista
+          </a>
+        }
+        
+        <a routerLink="/find-list" 
+           routerLinkActive="bg-[#FDF2F4] text-[#D97F97]"
+           (click)="isMenuOpen = false"
+           class="block px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors">
+          Buscar Lista
+        </a>
+        
+        <!-- Mobile User Info -->
+        <div class="pt-3 mt-3 border-t border-gray-200">
+          <div class="flex items-center gap-3 px-4 py-2">
+            <div class="w-10 h-10 rounded-full bg-[#FDF2F4] flex items-center justify-center">
+              <svg class="w-5 h-5 text-[#D97F97]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-900">{{ userAuthService.getUserName() || 'Usuário' }}</p>
+              <p class="text-xs text-gray-500">{{ userAuthService.isAdmin() ? 'Casal' : 'Convidado' }}</p>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  }
+</header>

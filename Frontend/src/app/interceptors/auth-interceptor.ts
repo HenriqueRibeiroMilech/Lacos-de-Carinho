@@ -18,7 +18,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn) 
       catchError((error) => {
         if (error instanceof HttpErrorResponse && (error.status === 401 || error.status === 403)) {
           _userAuthService.clearUserToken();
-          _router.navigate(['/login']);
+          _router.navigate(['/entrar']);
         }
         return throwError(() => error);
       })
@@ -29,7 +29,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn) 
     catchError((error) => {
       if (error instanceof HttpErrorResponse && (error.status === 401 || error.status === 403)) {
         _userAuthService.clearUserToken();
-        _router.navigate(['/login']);
+        _router.navigate(['/entrar']);
       }
       return throwError(() => error);
     })

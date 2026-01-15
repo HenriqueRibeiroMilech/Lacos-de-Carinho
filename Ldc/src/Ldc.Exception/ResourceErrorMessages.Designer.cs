@@ -184,5 +184,68 @@ namespace Ldc.Exception {
                 return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wedding list not found..
+        /// </summary>
+        public static string WEDDING_LIST_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("WEDDING_LIST_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gift item not found..
+        /// </summary>
+        public static string GIFT_ITEM_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("GIFT_ITEM_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This gift item is already reserved..
+        /// </summary>
+        public static string GIFT_ITEM_ALREADY_RESERVED {
+            get {
+                return ResourceManager.GetString("GIFT_ITEM_ALREADY_RESERVED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This gift item was not reserved by you..
+        /// </summary>
+        public static string GIFT_ITEM_NOT_RESERVED_BY_USER {
+            get {
+                return ResourceManager.GetString("GIFT_ITEM_NOT_RESERVED_BY_USER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not authorized to perform this action..
+        /// </summary>
+        public static string UNAUTHORIZED_ACCESS {
+            get {
+                return ResourceManager.GetString("UNAUTHORIZED_ACCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role is required..
+        /// </summary>
+        public static string ROLE_REQUIRED {
+            get {
+                return ResourceManager.GetString("ROLE_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role must be 'admin' or 'user'..
+        /// </summary>
+        public static string ROLE_INVALID {
+            get {
+                return ResourceManager.GetString("ROLE_INVALID", resourceCulture);
+            }
+        }
     }
 }

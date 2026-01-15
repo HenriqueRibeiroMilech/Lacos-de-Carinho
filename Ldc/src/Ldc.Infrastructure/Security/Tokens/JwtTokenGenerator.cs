@@ -1,5 +1,4 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using System.Runtime.InteropServices.JavaScript;
 using System.Security.Claims;
 using System.Text;
 using Ldc.Domain.Entities;
@@ -23,9 +22,9 @@ internal class JwtTokenGenerator : IAccessTokenGenerator
     {
         var claims = new List<Claim>()
         {
-            new Claim(ClaimTypes.Name, user.Name),
-            new Claim(ClaimTypes.Sid, user.UserIdentifier.ToString()),
-            new Claim(ClaimTypes.Role, user.Role)
+            new Claim(JwtRegisteredClaimNames.Name, user.Name),
+            new Claim(JwtRegisteredClaimNames.Sub, user.UserIdentifier.ToString()),
+            new Claim("role", user.Role)
         };
         var tokenDescriptor = new SecurityTokenDescriptor
         {

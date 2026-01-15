@@ -3,6 +3,7 @@ using Ldc.Application.UseCases.Users.Delete;
 using Ldc.Application.UseCases.Users.Profile;
 using Ldc.Application.UseCases.Users.Register;
 using Ldc.Application.UseCases.Users.Update;
+using Ldc.Application.UseCases.Users.Upgrade;
 using Ldc.Communication.Requests;
 using Ldc.Communication.Responses;
 using Microsoft.AspNetCore.Authorization;
@@ -59,6 +60,16 @@ namespace Ldc.Api.Controllers
         {
             await useCase.Execute();
             return NoContent();
+        }
+        
+        [HttpPut("upgrade")]
+        [Authorize]
+        [ProducesResponseType(typeof(ResponseUpgradeUserJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpgradeAccount([FromServices] IUpgradeUserUseCase useCase)
+        {
+            var response = await useCase.Execute();
+            return Ok(response);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Ldc.Domain.Entities;
+﻿using Ldc.Domain.Enums;
+
+namespace Ldc.Domain.Entities;
 
 public class WeddingList
 {
@@ -10,6 +12,8 @@ public class WeddingList
     public string? DeliveryInfo { get; set; }
     
     public DateOnly EventDate { get; set; } 
+    
+    public ListType ListType { get; set; } = ListType.Wedding;
     
     public string ShareableLink { get; set; } = string.Empty;
     

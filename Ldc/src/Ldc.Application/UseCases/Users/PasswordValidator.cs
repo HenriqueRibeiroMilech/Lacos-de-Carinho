@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using Ldc.Exception;
+﻿using Ldc.Exception;
 using FluentValidation;
 using FluentValidation.Validators;
 
@@ -24,25 +23,8 @@ public class PasswordValidator<T> : PropertyValidator<T, string>
             return false;
         }
 
-        if (password.Length < 8)
-        {
-            context.MessageFormatter.AppendArgument(ERROR_MESSAGE_KEY, ResourceErrorMessages.INVALID_PASSWORD);
-            return false;
-        }
-
-        if (Regex.IsMatch(password, @"[A-Z]+") == false)
-        {
-            context.MessageFormatter.AppendArgument(ERROR_MESSAGE_KEY, ResourceErrorMessages.INVALID_PASSWORD);
-            return false;
-        }
-        
-        if (Regex.IsMatch(password, @"[a-z]+") == false)
-        {
-            context.MessageFormatter.AppendArgument(ERROR_MESSAGE_KEY, ResourceErrorMessages.INVALID_PASSWORD);
-            return false;
-        }
-        
-        if (Regex.IsMatch(password, @"[0-9]+") == false)
+        // Apenas verifica se tem pelo menos 6 caracteres
+        if (password.Length < 6)
         {
             context.MessageFormatter.AppendArgument(ERROR_MESSAGE_KEY, ResourceErrorMessages.INVALID_PASSWORD);
             return false;

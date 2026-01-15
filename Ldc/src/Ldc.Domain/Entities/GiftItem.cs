@@ -8,6 +8,8 @@ public class GiftItem
 
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
+    
+    public GiftCategory Category { get; set; } = GiftCategory.Outros;
 
     public GiftItemStatus Status { get; set; } = GiftItemStatus.Available;
     

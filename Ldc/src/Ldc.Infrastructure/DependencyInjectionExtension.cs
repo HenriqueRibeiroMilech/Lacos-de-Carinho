@@ -1,13 +1,20 @@
 ﻿using Ldc.Domain.Repositories;
 using Ldc.Domain.Repositories.Expenses;
+using Ldc.Domain.Repositories.GiftItem;
+using Ldc.Domain.Repositories.PasswordReset;
+using Ldc.Domain.Repositories.Rsvp;
+using Ldc.Domain.Repositories.TemplateItem;
 using Ldc.Domain.Repositories.User;
+using Ldc.Domain.Repositories.WeddingList;
 using Ldc.Domain.Security.Cryptography;
 using Ldc.Domain.Security.Tokens;
+using Ldc.Domain.Services.Email;
 using Ldc.Domain.Services.LoggedUser;
 using Ldc.Infrastructure.Extensions;
 using Ldc.Infrastructure.DataAccess;
 using Ldc.Infrastructure.DataAccess.Repositories;
 using Ldc.Infrastructure.Security.Tokens;
+using Ldc.Infrastructure.Services.Email;
 using Ldc.Infrastructure.Services.LoggedUser;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +28,7 @@ public static class DependencyInjectionExtension
     {
         services.AddScoped<IPasswordEncrypter, Infrastructure.Security.Cryptography.BCrypt>();
         services.AddScoped<ILoggedUser, LoggedUser>();
+        services.AddScoped<IEmailService, SmtpEmailService>();
         
         AddToken(services, configuration);
         AddRepositories(services);
@@ -42,13 +50,37 @@ public static class DependencyInjectionExtension
     private static void AddRepositories(IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        
+        // Expense repositories
         services.AddScoped<IExpensesReadOnlyRepository, ExpensesRepository>();
         services.AddScoped<IExpensesWriteOnlyRepository, ExpensesRepository>();
         services.AddScoped<IExpensesUpdateOnlyRepository, ExpensesRepository>();
+        
+        // User repositories
         services.AddScoped<IUserReadOnlyRepository, UserRepository>();
         services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
         services.AddScoped<IUserUpdateOnlyRepository, UserRepository>();
         
+        // WeddingList repositories
+        services.AddScoped<IWeddingListReadOnlyRepository, WeddingListRepository>();
+        services.AddScoped<IWeddingListWriteOnlyRepository, WeddingListRepository>();
+        services.AddScoped<IWeddingListUpdateOnlyRepository, WeddingListRepository>();
+        
+        // GiftItem repositories
+        services.AddScoped<IGiftItemReadOnlyRepository, GiftItemRepository>();
+        services.AddScoped<IGiftItemWriteOnlyRepository, GiftItemRepository>();
+        services.AddScoped<IGiftItemUpdateOnlyRepository, GiftItemRepository>();
+        
+        // Rsvp repositories
+        services.AddScoped<IRsvpReadOnlyRepository, RsvpRepository>();
+        services.AddScoped<IRsvpWriteOnlyRepository, RsvpRepository>();
+        services.AddScoped<IRsvpUpdateOnlyRepository, RsvpRepository>();
+        
+        // TemplateItem repositories
+        services.AddScoped<ITemplateItemReadOnlyRepository, TemplateItemRepository>();
+        
+        // PasswordResetToken repository
+        services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>();
     }
     
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)

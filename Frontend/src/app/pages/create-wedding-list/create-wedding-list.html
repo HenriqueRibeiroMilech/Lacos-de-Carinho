@@ -1,0 +1,424 @@
+<div class="min-h-screen bg-gradient-to-br from-rose-50 via-white to-pink-50 py-8 px-4">
+  <div class="max-w-2xl mx-auto">
+    
+    <!-- Back Button -->
+    <a routerLink="/painel" 
+       class="inline-flex items-center gap-2 text-gray-500 hover:text-[#D97F97] mb-6 group transition-colors">
+      <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+      <span class="text-sm font-medium">Voltar ao Dashboard</span>
+    </a>
+
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[#D97F97] to-[#c06f85] flex items-center justify-center shadow-lg shadow-rose-200">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+        </svg>
+      </div>
+      <h1 class="text-2xl md:text-3xl font-serif text-gray-800 mb-2">Criar Novo Evento</h1>
+      <p class="text-gray-500">Preencha as informações do seu evento especial</p>
+    </div>
+
+    <!-- Progress Steps -->
+    <div class="flex items-center justify-center gap-2 mb-8">
+      @for(step of [1, 2, 3, 4]; track step) {
+        <button 
+          (click)="goToStep(step)"
+          [class]="'flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ' + 
+            (currentStep === step 
+              ? 'bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white shadow-md' 
+              : step < currentStep 
+                ? 'bg-green-100 text-green-600 cursor-pointer hover:bg-green-200' 
+                : 'bg-gray-100 text-gray-400')">
+          @if(step < currentStep) {
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          } @else {
+            <span class="w-5 h-5 flex items-center justify-center rounded-full text-xs"
+                  [class]="currentStep === step ? 'bg-white/20' : 'bg-gray-200'">
+              {{ step }}
+            </span>
+          }
+          @switch(step) {
+            @case(1) { <span class="hidden sm:inline">Tipo</span> }
+            @case(2) { <span class="hidden sm:inline">Informações</span> }
+            @case(3) { <span class="hidden sm:inline">Data</span> }
+            @case(4) { <span class="hidden sm:inline">Entrega</span> }
+          }
+        </button>
+      }
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-2xl shadow-xl shadow-rose-100/50 border border-rose-100 overflow-hidden">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        
+        <!-- Step 1: List Type -->
+        <div [class]="'p-6 md:p-8 transition-all duration-300 ' + (currentStep === 1 ? 'block' : 'hidden')">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center">
+              <svg class="w-5 h-5 text-[#D97F97]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-lg font-semibold text-gray-800">Tipo de Lista</h2>
+              <p class="text-sm text-gray-500">Escolha o tipo de evento que você está celebrando</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Wedding Option -->
+            <button 
+              type="button"
+              (click)="selectListType(ListType.Wedding)"
+              [disabled]="isTypeDisabled(ListType.Wedding)"
+              [class]="'p-6 rounded-2xl border-2 text-left transition-all duration-300 group ' + 
+                (isTypeDisabled(ListType.Wedding) 
+                  ? 'border-gray-200 bg-gray-50 opacity-60 cursor-not-allowed'
+                  : form.get('listType')?.value === ListType.Wedding 
+                    ? 'border-[#D97F97] bg-rose-50 ring-2 ring-[#D97F97]/20' 
+                    : 'border-gray-200 hover:border-[#D97F97]/50 hover:bg-rose-50/50')">
+              <div class="flex items-start gap-4">
+                <div [class]="'w-14 h-14 rounded-2xl flex items-center justify-center text-3xl transition-all ' +
+                  (isTypeDisabled(ListType.Wedding)
+                    ? 'bg-gray-200'
+                    : form.get('listType')?.value === ListType.Wedding 
+                      ? 'bg-gradient-to-br from-[#D97F97] to-[#c06f85] shadow-lg' 
+                      : 'bg-gray-100 group-hover:bg-rose-100')">
+                  💒
+                </div>
+                <div class="flex-1">
+                  <h3 [class]="'text-lg font-semibold mb-1 ' + 
+                    (isTypeDisabled(ListType.Wedding) ? 'text-gray-400' : form.get('listType')?.value === ListType.Wedding ? 'text-[#D97F97]' : 'text-gray-800')">
+                    Casamento
+                  </h3>
+                  <p class="text-sm text-gray-500">
+                    @if(isTypeDisabled(ListType.Wedding)) {
+                      <span class="text-amber-600">Você já possui uma lista deste tipo</span>
+                    } @else {
+                      Lista de presentes para o seu casamento
+                    }
+                  </p>
+                </div>
+                @if(form.get('listType')?.value === ListType.Wedding && !isTypeDisabled(ListType.Wedding)) {
+                  <div class="w-6 h-6 rounded-full bg-[#D97F97] flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </div>
+                }
+                @if(isTypeDisabled(ListType.Wedding)) {
+                  <div class="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                  </div>
+                }
+              </div>
+            </button>
+
+            <!-- Bridal Shower Option -->
+            <button 
+              type="button"
+              (click)="selectListType(ListType.BridalShower)"
+              [disabled]="isTypeDisabled(ListType.BridalShower)"
+              [class]="'p-6 rounded-2xl border-2 text-left transition-all duration-300 group ' + 
+                (isTypeDisabled(ListType.BridalShower) 
+                  ? 'border-gray-200 bg-gray-50 opacity-60 cursor-not-allowed'
+                  : form.get('listType')?.value === ListType.BridalShower 
+                    ? 'border-[#D97F97] bg-rose-50 ring-2 ring-[#D97F97]/20' 
+                    : 'border-gray-200 hover:border-[#D97F97]/50 hover:bg-rose-50/50')">
+              <div class="flex items-start gap-4">
+                <div [class]="'w-14 h-14 rounded-2xl flex items-center justify-center text-3xl transition-all ' +
+                  (isTypeDisabled(ListType.BridalShower)
+                    ? 'bg-gray-200'
+                    : form.get('listType')?.value === ListType.BridalShower 
+                      ? 'bg-gradient-to-br from-[#D97F97] to-[#c06f85] shadow-lg' 
+                      : 'bg-gray-100 group-hover:bg-rose-100')">
+                  🍲
+                </div>
+                <div class="flex-1">
+                  <h3 [class]="'text-lg font-semibold mb-1 ' + 
+                    (isTypeDisabled(ListType.BridalShower) ? 'text-gray-400' : form.get('listType')?.value === ListType.BridalShower ? 'text-[#D97F97]' : 'text-gray-800')">
+                    Chá de Panela
+                  </h3>
+                  <p class="text-sm text-gray-500">
+                    @if(isTypeDisabled(ListType.BridalShower)) {
+                      <span class="text-amber-600">Você já possui uma lista deste tipo</span>
+                    } @else {
+                      Lista de presentes para o seu chá de cozinha
+                    }
+                  </p>
+                </div>
+                @if(form.get('listType')?.value === ListType.BridalShower && !isTypeDisabled(ListType.BridalShower)) {
+                  <div class="w-6 h-6 rounded-full bg-[#D97F97] flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </div>
+                }
+                @if(isTypeDisabled(ListType.BridalShower)) {
+                  <div class="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                  </div>
+                }
+              </div>
+            </button>
+          </div>
+
+          <div class="mt-6 p-4 bg-blue-50 rounded-xl border border-blue-200">
+            <div class="flex gap-3">
+              <svg class="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div>
+                <p class="text-sm font-medium text-blue-800">Importante</p>
+                <p class="text-sm text-blue-700 mt-1">Você pode ter uma lista de cada tipo ativa ao mesmo tempo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Basic Info -->
+        <div [class]="'p-6 md:p-8 transition-all duration-300 ' + (currentStep === 2 ? 'block' : 'hidden')">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center">
+              <svg class="w-5 h-5 text-[#D97F97]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-lg font-semibold text-gray-800">Informações Básicas</h2>
+              <p class="text-sm text-gray-500">Nome e descrição do evento</p>
+            </div>
+          </div>
+
+          <!-- Title -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Título do Evento <span class="text-[#D97F97]">*</span>
+            </label>
+            <input 
+              type="text" 
+              formControlName="title"
+              placeholder="Ex: Casamento de Maria e João"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#D97F97] focus:ring-2 focus:ring-[#D97F97]/20 outline-none transition-all duration-200 text-gray-800 placeholder:text-gray-400" />
+            @if(form.get('title')?.touched && form.get('title')?.errors) {
+              <p class="mt-2 text-sm text-red-500 flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                @if(form.get('title')?.errors?.['required']) { Título é obrigatório }
+                @if(form.get('title')?.errors?.['minlength']) { Mínimo 3 caracteres }
+              </p>
+            }
+          </div>
+
+          <!-- Message -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Mensagem para os Convidados
+            </label>
+            <textarea 
+              formControlName="message"
+              rows="4"
+              placeholder="Escreva uma mensagem especial para seus convidados..."
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#D97F97] focus:ring-2 focus:ring-[#D97F97]/20 outline-none transition-all duration-200 text-gray-800 placeholder:text-gray-400 resize-none"></textarea>
+            <p class="mt-1 text-xs text-gray-400 text-right">{{ form.get('message')?.value?.length || 0 }}/500</p>
+          </div>
+        </div>
+
+        <!-- Step 3: Date -->
+        <div [class]="'p-6 md:p-8 transition-all duration-300 ' + (currentStep === 3 ? 'block' : 'hidden')">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-lg font-semibold text-gray-800">Data do Evento</h2>
+              <p class="text-sm text-gray-500">Quando será o grande dia?</p>
+            </div>
+          </div>
+
+          <!-- Event Date -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Data <span class="text-[#D97F97]">*</span>
+            </label>
+            <input 
+              type="date" 
+              formControlName="eventDate"
+              [min]="minDate"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#D97F97] focus:ring-2 focus:ring-[#D97F97]/20 outline-none transition-all duration-200 text-gray-800" />
+            @if(form.get('eventDate')?.touched && form.get('eventDate')?.errors?.['required']) {
+              <p class="mt-2 text-sm text-red-500 flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Data é obrigatória
+              </p>
+            }
+          </div>
+
+          <!-- Date Preview -->
+          @if(form.get('eventDate')?.value) {
+            <div class="mt-6 p-4 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl">
+              <p class="text-sm text-gray-600">Seu evento será em:</p>
+              <p class="text-lg font-semibold text-purple-600 mt-1">
+                {{ formatEventDate(form.get('eventDate')?.value) }}
+              </p>
+            </div>
+          }
+        </div>
+
+        <!-- Step 4: Delivery Info -->
+        <div [class]="'p-6 md:p-8 transition-all duration-300 ' + (currentStep === 4 ? 'block' : 'hidden')">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center">
+              <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-lg font-semibold text-gray-800">Informações de Entrega</h2>
+              <p class="text-sm text-gray-500">Onde os presentes devem ser entregues?</p>
+            </div>
+          </div>
+
+          <!-- Delivery Info -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Endereço e Instruções
+            </label>
+            <textarea 
+              formControlName="deliveryInfo"
+              rows="5"
+              placeholder="Endereço completo, pontos de referência, horários disponíveis para receber..."
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#D97F97] focus:ring-2 focus:ring-[#D97F97]/20 outline-none transition-all duration-200 text-gray-800 placeholder:text-gray-400 resize-none"></textarea>
+            <p class="mt-1 text-xs text-gray-400 text-right">{{ form.get('deliveryInfo')?.value?.length || 0 }}/500</p>
+          </div>
+
+          <div class="mt-4 p-4 bg-amber-50 rounded-xl border border-amber-200">
+            <div class="flex gap-3">
+              <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div>
+                <p class="text-sm font-medium text-amber-800">Dica</p>
+                <p class="text-sm text-amber-700 mt-1">Inclua informações de contato caso os convidados precisem confirmar a entrega.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        @if(errorMessage) {
+          <div class="mx-6 md:mx-8 mb-4 p-4 bg-red-50 rounded-xl border border-red-200">
+            <p class="text-sm text-red-600 flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              {{ errorMessage }}
+            </p>
+          </div>
+        }
+
+        <!-- Navigation Buttons -->
+        <div class="px-6 md:px-8 pb-6 md:pb-8 flex gap-3">
+          @if(currentStep > 1) {
+            <button 
+              type="button"
+              (click)="prevStep()"
+              class="flex-1 py-3 px-6 rounded-xl border-2 border-gray-200 text-gray-600 font-medium hover:border-gray-300 hover:bg-gray-50 transition-all duration-200">
+              Voltar
+            </button>
+          }
+          
+          @if(currentStep < totalSteps) {
+            <button 
+              type="button"
+              (click)="nextStep()"
+              class="flex-1 py-3 px-6 rounded-xl bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white font-medium shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
+              Próximo
+            </button>
+          } @else {
+            <button 
+              type="submit"
+              [disabled]="isSubmitting"
+              class="flex-1 py-3 px-6 rounded-xl bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white font-medium shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-md flex items-center justify-center gap-2">
+              @if(isSubmitting) {
+                <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Criando...</span>
+              } @else {
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Criar Evento</span>
+              }
+            </button>
+          }
+        </div>
+      </form>
+    </div>
+
+    <!-- Summary Preview -->
+    @if(currentStep === 4 && form.get('title')?.value) {
+      <div class="mt-6 bg-white rounded-2xl shadow-lg border border-rose-100 p-6">
+        <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Resumo do Evento</h3>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3">
+            <span class="text-xl mt-0.5">{{ form.get('listType')?.value === ListType.Wedding ? '💒' : '🍲' }}</span>
+            <div>
+              <p class="text-sm text-gray-500">Tipo</p>
+              <p class="font-medium text-gray-800">{{ LIST_TYPE_LABELS[form.get('listType')?.value!] }}</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#D97F97] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+            <div>
+              <p class="text-sm text-gray-500">Título</p>
+              <p class="font-medium text-gray-800">{{ form.get('title')?.value }}</p>
+            </div>
+          </div>
+          @if(form.get('eventDate')?.value) {
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-purple-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              <div>
+                <p class="text-sm text-gray-500">Data</p>
+                <p class="font-medium text-gray-800">{{ formatEventDate(form.get('eventDate')?.value) }}</p>
+              </div>
+            </div>
+          }
+          @if(form.get('message')?.value) {
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-blue-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+              </svg>
+              <div>
+                <p class="text-sm text-gray-500">Mensagem</p>
+                <p class="font-medium text-gray-800 line-clamp-2">{{ form.get('message')?.value }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+  </div>
+</div>

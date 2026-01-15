@@ -21,8 +21,8 @@ export const loginAuthGuard: CanActivateFn = async (route, state) => {
   try {
     await firstValueFrom(_userService.validateUser());
 
-    // Token válido, redirecionar para /products
-    return _router.navigate(['/products']);
+    // Token válido, redirecionar para /painel
+    return _router.navigate(['/painel']);
   } catch(error) {
     // Token inválido, permitir acesso ao login
     _userAuthService.clearUserToken();

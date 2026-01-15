@@ -123,7 +123,7 @@
 		<value>O e-mail é inválido.</value>
 	</data>
 	<data name="INVALID_PASSWORD" xml:space="preserve">
-		<value>Sua senha deve ter pelo menos 8 caracteres e incluir pelo menos uma letra, uma letra minúscula e um número.</value>
+		<value>Sua senha deve ter pelo menos 6 caracteres.</value>
 	</data>
 	<data name="NAME_EMPTY" xml:space="preserve">
 		<value>O nome não pode estar vazio.</value>

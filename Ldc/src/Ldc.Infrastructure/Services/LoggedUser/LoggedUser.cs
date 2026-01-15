@@ -1,5 +1,4 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using Ldc.Domain.Entities;
 using Ldc.Domain.Security.Tokens;
 using Ldc.Domain.Services.LoggedUser;
@@ -27,7 +26,7 @@ public class LoggedUser : ILoggedUser
         
         var jwtSecurityToken = tokenHandler.ReadJwtToken(token);
 
-        var identifier = jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Sid).Value;
+        var identifier = jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
 
         return await _dbContext.Users.AsNoTracking().FirstAsync(user => user.UserIdentifier == Guid.Parse(identifier));
     }

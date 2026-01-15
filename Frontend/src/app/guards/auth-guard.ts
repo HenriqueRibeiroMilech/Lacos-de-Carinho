@@ -12,13 +12,13 @@ export const authGuard: CanActivateFn = async (route, state) => {
   // Não possui token no localstorage
   const HAS_TOKEN = _userAuthService.getUserToken();
   if(!HAS_TOKEN) {
-    return _router.navigate(['/login']);
+    return _router.navigate(['/entrar']);
   }
 
   // Token expirado localmente
   if (_userAuthService.isTokenExpired()) {
     _userAuthService.clearUserToken();
-    return _router.navigate(['/login']);
+    return _router.navigate(['/entrar']);
   }
 
   try {
@@ -30,6 +30,6 @@ export const authGuard: CanActivateFn = async (route, state) => {
   } catch (error) {
     // Se a requisição de validação falhar (token inválido), redireciona para o login.
     _userAuthService.clearUserToken();
-    return _router.navigate(['/login']);
+    return _router.navigate(['/entrar']);
   }
 };

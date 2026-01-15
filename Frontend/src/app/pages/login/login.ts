@@ -1,18 +1,21 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user';
 import { UserAuthService } from '../../services/user-auth';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { take } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink, CommonModule],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
-export class Login {
+export class Login implements OnInit {
   loginErrorMessage = '';
+  returnUrl = '';
+  
   userForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
@@ -21,6 +24,17 @@ export class Login {
   private readonly _userService = inject(UserService);
   private readonly _userAuthService = inject(UserAuthService);
   private readonly _router = inject(Router);
+  private readonly _route = inject(ActivatedRoute);
+
+  ngOnInit() {
+    // Captura o returnUrl da query string
+    this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '';
+  }
+
+  // Verifica se o usuário veio de uma lista pública (fluxo convidado)
+  get isGuestFlow(): boolean {
+    return this.returnUrl.includes('/lista/');
+  }
 
   login() {
     if(this.userForm.invalid) return;
@@ -34,8 +48,12 @@ export class Login {
           // salvar o token no localstorage
           this._userAuthService.setUserToken(response.token);
 
-          // redirecionar para tela de produtos
-          this._router.navigate(['/products']);
+          // redirecionar para returnUrl ou painel
+          if (this.returnUrl) {
+            this._router.navigateByUrl(this.returnUrl);
+          } else {
+            this._router.navigate(['/painel']);
+          }
         },
         error: (error) => {
           console.log(error);
