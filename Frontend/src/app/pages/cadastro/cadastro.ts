@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from '../../services/user';
-import { UserAuthService } from '../../services/user-auth';
+import { PaymentService } from '../../services/payment';
 import { Router, RouterLink } from '@angular/router';
 import { take } from 'rxjs';
 
@@ -22,8 +21,7 @@ export class Cadastro {
     confirmPassword: new FormControl('', [Validators.required]),
   });
 
-  private readonly _userService = inject(UserService);
-  private readonly _userAuthService = inject(UserAuthService);
+  private readonly _paymentService = inject(PaymentService);
   private readonly _router = inject(Router);
 
   get passwordsMatch(): boolean {
@@ -36,17 +34,19 @@ export class Cadastro {
     this.isLoading = true;
     this.errorMessage = '';
 
-    // Registro como 'admin' (CASAL) - pode criar listas
-    this._userService.register({
+    // Cria preferência de pagamento - redireciona para Mercado Pago
+    this._paymentService.createPaymentPreference({
       name: this.cadastroForm.get('name')?.value as string,
       email: this.cadastroForm.get('email')?.value as string,
       password: this.cadastroForm.get('password')?.value as string,
-      role: 'admin'
+      paymentType: 'new_account'
     }).pipe(take(1)).subscribe({
       next: (response) => {
-        this.isLoading = false;
-        this._userAuthService.setUserToken(response.token);
-        this._router.navigate(['/painel']);
+        // Salva o preferenceId para verificar depois
+        localStorage.setItem('payment_preference_id', response.preferenceId);
+        
+        // Redireciona para o Mercado Pago
+        window.location.href = response.checkoutUrl;
       },
       error: (error) => {
         this.isLoading = false;
@@ -58,7 +58,7 @@ export class Cadastro {
         } else if (error?.status === 0) {
           this.errorMessage = 'Falha de conexão com o servidor.';
         } else {
-          this.errorMessage = 'Não foi possível realizar o cadastro.';
+          this.errorMessage = 'Não foi possível iniciar o pagamento.';
         }
       },
     });

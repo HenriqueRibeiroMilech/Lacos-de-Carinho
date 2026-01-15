@@ -11,6 +11,9 @@ import { Dashboard } from './pages/dashboard/dashboard';
 import { CreateWeddingList } from './pages/create-wedding-list/create-wedding-list';
 import { ManageWeddingList } from './pages/manage-wedding-list/manage-wedding-list';
 import { PublicList } from './pages/public-list/public-list';
+import { PagamentoSucesso } from './pages/pagamento-sucesso/pagamento-sucesso';
+import { PagamentoFalha } from './pages/pagamento-falha/pagamento-falha';
+import { PagamentoPendente } from './pages/pagamento-pendente/pagamento-pendente';
 
 // Guards
 import { authGuard } from './guards/auth-guard';
@@ -93,6 +96,22 @@ export const routes: Routes = [
   {
     path: 'lista/:link',
     component: PublicList,
+  },
+
+  // ============================================
+  // ROTAS DE PAGAMENTO
+  // ============================================
+  {
+    path: 'pagamento-sucesso',
+    component: PagamentoSucesso,
+  },
+  {
+    path: 'pagamento-falha',
+    component: PagamentoFalha,
+  },
+  {
+    path: 'pagamento-pendente',
+    component: PagamentoPendente,
   },
 
   // ============================================

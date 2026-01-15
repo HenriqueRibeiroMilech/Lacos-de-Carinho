@@ -16,6 +16,9 @@ using Ldc.Application.UseCases.Guest.GetDetails;
 using Ldc.Application.UseCases.Login.DoLogin;
 using Ldc.Application.UseCases.Password.RequestReset;
 using Ldc.Application.UseCases.Password.ResetPassword;
+using Ldc.Application.UseCases.Payment.CreatePreference;
+using Ldc.Application.UseCases.Payment.GetStatus;
+using Ldc.Application.UseCases.Payment.ProcessWebhook;
 using Ldc.Application.UseCases.Rsvps.GetByWeddingList;
 using Ldc.Application.UseCases.Rsvps.Reports.Pdf;
 using Ldc.Application.UseCases.Rsvps.Upsert;
@@ -103,5 +106,10 @@ public static class DependencyInjectionExtension
         // Password UseCases
         services.AddScoped<IRequestPasswordResetUseCase, RequestPasswordResetUseCase>();
         services.AddScoped<IResetPasswordUseCase, ResetPasswordUseCase>();
+        
+        // Payment UseCases
+        services.AddScoped<ICreatePaymentPreferenceUseCase, CreatePaymentPreferenceUseCase>();
+        services.AddScoped<IProcessPaymentWebhookUseCase, ProcessPaymentWebhookUseCase>();
+        services.AddScoped<IGetPaymentStatusUseCase, GetPaymentStatusUseCase>();
     }
 }

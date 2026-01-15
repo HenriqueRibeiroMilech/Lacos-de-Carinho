@@ -2,6 +2,7 @@
 using Ldc.Domain.Repositories.Expenses;
 using Ldc.Domain.Repositories.GiftItem;
 using Ldc.Domain.Repositories.PasswordReset;
+using Ldc.Domain.Repositories.Payment;
 using Ldc.Domain.Repositories.Rsvp;
 using Ldc.Domain.Repositories.TemplateItem;
 using Ldc.Domain.Repositories.User;
@@ -10,12 +11,14 @@ using Ldc.Domain.Security.Cryptography;
 using Ldc.Domain.Security.Tokens;
 using Ldc.Domain.Services.Email;
 using Ldc.Domain.Services.LoggedUser;
+using Ldc.Domain.Services.Payment;
 using Ldc.Infrastructure.Extensions;
 using Ldc.Infrastructure.DataAccess;
 using Ldc.Infrastructure.DataAccess.Repositories;
 using Ldc.Infrastructure.Security.Tokens;
 using Ldc.Infrastructure.Services.Email;
 using Ldc.Infrastructure.Services.LoggedUser;
+using Ldc.Infrastructure.Services.Payment;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +32,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IPasswordEncrypter, Infrastructure.Security.Cryptography.BCrypt>();
         services.AddScoped<ILoggedUser, LoggedUser>();
         services.AddScoped<IEmailService, SmtpEmailService>();
+        services.AddHttpClient<IMercadoPagoService, MercadoPagoService>();
         
         AddToken(services, configuration);
         AddRepositories(services);
@@ -81,6 +85,9 @@ public static class DependencyInjectionExtension
         
         // PasswordResetToken repository
         services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>();
+        
+        // Payment repository
+        services.AddScoped<IPaymentRepository, PaymentRepository>();
     }
     
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)

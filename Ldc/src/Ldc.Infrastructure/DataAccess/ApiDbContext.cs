@@ -15,6 +15,7 @@ public class ApiDbContext : DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<TemplateGiftItem> TemplateGiftItems { get; set; }
     public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
+    public DbSet<Payment> Payments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -84,6 +85,17 @@ public class ApiDbContext : DbContext
 
         modelBuilder.Entity<PasswordResetToken>()
             .HasIndex(p => p.Token)
+            .IsUnique();
+
+        // Payment configuration
+        modelBuilder.Entity<Payment>()
+            .HasOne(p => p.User)
+            .WithMany()
+            .HasForeignKey(p => p.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Payment>()
+            .HasIndex(p => p.PreferenceId)
             .IsUnique();
     }
 }

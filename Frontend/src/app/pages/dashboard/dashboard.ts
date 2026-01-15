@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserAuthService } from '../../services/user-auth';
 import { UserService } from '../../services/user';
 import { WeddingService } from '../../services/wedding';
+import { PaymentService } from '../../services/payment';
 import { IWeddingListShort, IGuestDetails, IGuestEvent, RsvpStatus, ListType, LIST_TYPE_LABELS } from '../../interfaces/wedding';
 import { take } from 'rxjs';
 import * as QRCode from 'qrcode';
@@ -18,6 +19,7 @@ export class Dashboard implements OnInit {
   private readonly _userAuthService = inject(UserAuthService);
   private readonly _userService = inject(UserService);
   private readonly _weddingService = inject(WeddingService);
+  private readonly _paymentService = inject(PaymentService);
   private readonly _router = inject(Router);
 
   // Expose enum to template
@@ -179,26 +181,18 @@ export class Dashboard implements OnInit {
     this.upgrading = true;
     this.upgradeError = '';
 
-    this._userService.upgradeAccount().pipe(take(1)).subscribe({
+    // Cria preferência de pagamento para upgrade
+    this._paymentService.createUpgradePreference().pipe(take(1)).subscribe({
       next: (response) => {
-        // Salva o novo token com a role atualizada
-        this._userAuthService.setUserToken(response.token);
+        // Salva o preferenceId para verificar depois
+        localStorage.setItem('payment_preference_id', response.preferenceId);
         
-        this.upgrading = false;
-        this.showUpgradeModal = false;
-        
-        // Atualiza estado local
-        this.isAdmin = true;
-        
-        // Carrega as listas (agora que é admin)
-        this.loadMyWeddingLists();
-        
-        // Redireciona para criar evento
-        this._router.navigate(['/criar-evento']);
+        // Redireciona para o Mercado Pago
+        window.location.href = response.checkoutUrl;
       },
       error: (err) => {
         this.upgrading = false;
-        this.upgradeError = err.error?.errorMessages?.[0] || 'Erro ao fazer upgrade. Tente novamente.';
+        this.upgradeError = err.error?.errorMessages?.[0] || 'Erro ao iniciar pagamento. Tente novamente.';
       }
     });
   }
