@@ -90,11 +90,12 @@ public class CreatePaymentPreferenceUseCase : ICreatePaymentPreferenceUseCase
         );
 
         // Salvar registro de pagamento
+        // Nota: MercadoPagoPaymentId será preenchido quando recebermos o webhook do MP
         var payment = new Domain.Entities.Payment
         {
             UserId = user.Id,
             PreferenceId = internalReference,
-            MercadoPagoPaymentId = preferenceId,
+            MercadoPagoPaymentId = null, // Será preenchido pelo webhook quando o pagamento for confirmado
             Status = "pending",
             Amount = _price,
             Description = "Plano Organizador - Laços de Carinho",

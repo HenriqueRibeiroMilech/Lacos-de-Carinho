@@ -24,4 +24,21 @@ public interface IMercadoPagoService
     /// <param name="paymentId">ID do pagamento no MP</param>
     /// <returns>Status do pagamento</returns>
     Task<string> GetPaymentStatus(string paymentId);
+
+    /// <summary>
+    /// Obtém detalhes completos de um pagamento no Mercado Pago
+    /// </summary>
+    /// <param name="paymentId">ID do pagamento no MP</param>
+    /// <returns>Detalhes do pagamento incluindo status e external_reference</returns>
+    Task<MercadoPagoPaymentDetails> GetPaymentDetails(string paymentId);
 }
+
+/// <summary>
+/// Detalhes de um pagamento do Mercado Pago
+/// </summary>
+public record MercadoPagoPaymentDetails(
+    string Status,
+    string ExternalReference,
+    string? PayerEmail,
+    decimal? TransactionAmount
+);

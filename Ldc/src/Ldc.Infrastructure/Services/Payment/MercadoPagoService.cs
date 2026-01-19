@@ -104,18 +104,55 @@ public class MercadoPagoService : IMercadoPagoService
 
     public async Task<string> GetPaymentStatus(string paymentId)
     {
-        var response = await _httpClient.GetAsync(
-            $"https://api.mercadopago.com/v1/payments/{paymentId}");
+        var details = await GetPaymentDetails(paymentId);
+        return details.Status;
+    }
 
-        if (!response.IsSuccessStatusCode)
+    public async Task<MercadoPagoPaymentDetails> GetPaymentDetails(string paymentId)
+    {
+        try
         {
-            _logger.LogWarning("Could not get payment status for: {PaymentId}", paymentId);
-            return "unknown";
-        }
+            var response = await _httpClient.GetAsync(
+                $"https://api.mercadopago.com/v1/payments/{paymentId}");
 
-        var content = await response.Content.ReadAsStringAsync();
-        var json = JsonDocument.Parse(content);
-        
-        return json.RootElement.GetProperty("status").GetString() ?? "unknown";
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogWarning("Could not get payment details for: {PaymentId}, StatusCode: {StatusCode}", 
+                    paymentId, response.StatusCode);
+                return new MercadoPagoPaymentDetails("unknown", "", null, null);
+            }
+
+            var content = await response.Content.ReadAsStringAsync();
+            var json = JsonDocument.Parse(content);
+            
+            var status = json.RootElement.GetProperty("status").GetString() ?? "unknown";
+            var externalReference = json.RootElement.TryGetProperty("external_reference", out var extRef) 
+                ? extRef.GetString() ?? "" 
+                : "";
+            
+            string? payerEmail = null;
+            if (json.RootElement.TryGetProperty("payer", out var payer) && 
+                payer.TryGetProperty("email", out var email))
+            {
+                payerEmail = email.GetString();
+            }
+            
+            decimal? transactionAmount = null;
+            if (json.RootElement.TryGetProperty("transaction_amount", out var amount))
+            {
+                transactionAmount = amount.GetDecimal();
+            }
+
+            _logger.LogInformation(
+                "Payment {PaymentId} details: Status={Status}, ExternalRef={ExternalRef}", 
+                paymentId, status, externalReference);
+
+            return new MercadoPagoPaymentDetails(status, externalReference, payerEmail, transactionAmount);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting payment details for: {PaymentId}", paymentId);
+            return new MercadoPagoPaymentDetails("unknown", "", null, null);
+        }
     }
 }

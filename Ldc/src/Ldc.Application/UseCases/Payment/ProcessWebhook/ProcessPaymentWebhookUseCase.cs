@@ -3,6 +3,7 @@ using Ldc.Domain.Repositories;
 using Ldc.Domain.Repositories.Payment;
 using Ldc.Domain.Repositories.User;
 using Ldc.Domain.Services.Payment;
+using Microsoft.Extensions.Logging;
 
 namespace Ldc.Application.UseCases.Payment.ProcessWebhook;
 
@@ -12,44 +13,63 @@ public class ProcessPaymentWebhookUseCase : IProcessPaymentWebhookUseCase
     private readonly IPaymentRepository _paymentRepository;
     private readonly IUserUpdateOnlyRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ILogger<ProcessPaymentWebhookUseCase> _logger;
 
     public ProcessPaymentWebhookUseCase(
         IMercadoPagoService mercadoPagoService,
         IPaymentRepository paymentRepository,
         IUserUpdateOnlyRepository userRepository,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        ILogger<ProcessPaymentWebhookUseCase> logger)
     {
         _mercadoPagoService = mercadoPagoService;
         _paymentRepository = paymentRepository;
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
+        _logger = logger;
     }
 
     public async Task Execute(string paymentId)
     {
-        // Consulta status do pagamento no Mercado Pago
-        var status = await _mercadoPagoService.GetPaymentStatus(paymentId);
+        _logger.LogInformation("Processing webhook for payment ID: {PaymentId}", paymentId);
 
-        // Busca o pagamento pelo ID do MP (armazenado em MercadoPagoPaymentId)
-        var payment = await _paymentRepository.GetByMercadoPagoPaymentId(paymentId);
-        
-        if (payment == null)
+        // Obtém detalhes completos do pagamento no Mercado Pago
+        var paymentDetails = await _mercadoPagoService.GetPaymentDetails(paymentId);
+
+        if (string.IsNullOrEmpty(paymentDetails.ExternalReference))
         {
-            // Pode ser um pagamento que não reconhecemos
+            _logger.LogWarning("Payment {PaymentId} has no external_reference, cannot process", paymentId);
             return;
         }
 
-        // Atualiza status
-        payment.Status = status;
+        // Busca pelo PreferenceId interno (que é o external_reference enviado ao MP)
+        var payment = await _paymentRepository.GetByPreferenceId(paymentDetails.ExternalReference);
+        
+        if (payment == null)
+        {
+            _logger.LogWarning(
+                "Payment not found for external_reference: {ExternalReference} (MP PaymentId: {PaymentId})", 
+                paymentDetails.ExternalReference, paymentId);
+            return;
+        }
 
-        if (status == "approved")
+        _logger.LogInformation(
+            "Found payment record ID {PaymentRecordId} for user {UserId}. Current status: {OldStatus}, New status: {NewStatus}",
+            payment.Id, payment.UserId, payment.Status, paymentDetails.Status);
+
+        // Atualiza o MercadoPagoPaymentId real (agora temos o ID do pagamento, não da preferência)
+        payment.MercadoPagoPaymentId = paymentId;
+        payment.Status = paymentDetails.Status;
+
+        if (paymentDetails.Status == "approved")
         {
             payment.PaidAt = DateTime.UtcNow;
 
             // Fazer upgrade do usuário para ADMIN
             var user = await _userRepository.GetById(payment.UserId);
-            if (user.Role != Roles.ADMIN)
+            if (user != null && user.Role != Roles.ADMIN)
             {
+                _logger.LogInformation("Upgrading user {UserId} to ADMIN role", user.Id);
                 user.Role = Roles.ADMIN;
                 _userRepository.Update(user);
             }
@@ -57,5 +77,9 @@ public class ProcessPaymentWebhookUseCase : IProcessPaymentWebhookUseCase
 
         _paymentRepository.Update(payment);
         await _unitOfWork.Commit();
+
+        _logger.LogInformation(
+            "Successfully processed payment {PaymentId}. Status: {Status}, User upgraded: {Upgraded}",
+            paymentId, paymentDetails.Status, paymentDetails.Status == "approved");
     }
 }

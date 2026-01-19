@@ -12,6 +12,13 @@ namespace Ldc.Api.Controllers;
 [ApiController]
 public class PaymentController : ControllerBase
 {
+    private readonly ILogger<PaymentController> _logger;
+
+    public PaymentController(ILogger<PaymentController> logger)
+    {
+        _logger = logger;
+    }
+
     /// <summary>
     /// Cria uma preferência de pagamento no Mercado Pago
     /// Para novo cadastro: não requer autenticação
@@ -24,7 +31,9 @@ public class PaymentController : ControllerBase
         [FromServices] ICreatePaymentPreferenceUseCase useCase,
         [FromBody] RequestCreatePaymentJson request)
     {
+        _logger.LogInformation("Creating payment preference for type: {PaymentType}", request.PaymentType);
         var response = await useCase.Execute(request);
+        _logger.LogInformation("Payment preference created: {PreferenceId}", response.PreferenceId);
         return Ok(response);
     }
 
@@ -38,8 +47,10 @@ public class PaymentController : ControllerBase
     public async Task<IActionResult> CreateUpgradePreference(
         [FromServices] ICreatePaymentPreferenceUseCase useCase)
     {
+        _logger.LogInformation("Creating upgrade payment preference");
         var request = new RequestCreatePaymentJson { PaymentType = "upgrade" };
         var response = await useCase.Execute(request);
+        _logger.LogInformation("Upgrade preference created: {PreferenceId}", response.PreferenceId);
         return Ok(response);
     }
 
@@ -52,7 +63,9 @@ public class PaymentController : ControllerBase
         [FromServices] IGetPaymentStatusUseCase useCase,
         [FromRoute] string preferenceId)
     {
+        _logger.LogInformation("Getting payment status for: {PreferenceId}", preferenceId);
         var response = await useCase.Execute(preferenceId);
+        _logger.LogInformation("Payment status: {Status}", response.Status);
         return Ok(response);
     }
 
@@ -64,12 +77,23 @@ public class PaymentController : ControllerBase
     public async Task<IActionResult> Webhook(
         [FromServices] IProcessPaymentWebhookUseCase useCase,
         [FromQuery] string? type,
-        [FromQuery(Name = "data.id")] string? dataId)
+        [FromQuery(Name = "data.id")] string? dataId,
+        [FromQuery] string? action)
     {
+        _logger.LogInformation(
+            "Webhook received - Type: {Type}, DataId: {DataId}, Action: {Action}",
+            type, dataId, action);
+
         // Mercado Pago envia notificações com type=payment e data.id=paymentId
         if (type == "payment" && !string.IsNullOrEmpty(dataId))
         {
+            _logger.LogInformation("Processing payment webhook for PaymentId: {PaymentId}", dataId);
             await useCase.Execute(dataId);
+            _logger.LogInformation("Webhook processed successfully for PaymentId: {PaymentId}", dataId);
+        }
+        else
+        {
+            _logger.LogInformation("Webhook ignored - not a payment type or missing dataId");
         }
 
         // Sempre retorna 200 para o Mercado Pago não reenviar
