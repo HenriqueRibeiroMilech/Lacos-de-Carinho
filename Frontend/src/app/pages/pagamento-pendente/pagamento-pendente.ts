@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { UserAuthService } from '../../services/user-auth';
 
 @Component({
   selector: 'app-pagamento-pendente',
@@ -10,5 +11,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './pagamento-pendente.css'
 })
 export class PagamentoPendente {
+  private readonly _router = inject(Router);
+  private readonly _userAuthService = inject(UserAuthService);
 
+  logoutAndRedirect() {
+    this._userAuthService.logout();
+    this._router.navigate(['/entrar']);
+  }
 }
