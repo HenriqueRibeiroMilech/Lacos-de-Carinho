@@ -23,7 +23,7 @@ export class PagamentoSucesso implements OnInit {
   message: string = '';
   preferenceId: string = '';
   checkCount: number = 0;
-  maxChecks: number = 20; // Aumentado para dar mais tempo ao PIX
+  maxChecks: number = 60; // Aumentado para dar bastante tempo ao PIX (aprox 3-5 min)
   tokenUpdated: boolean = false;
 
   ngOnInit() {
@@ -48,14 +48,17 @@ export class PagamentoSucesso implements OnInit {
           this.userName = response.name || '';
           this.message = response.message;
 
-          // Salva o novo token (com role atualizado)
-          if (response.token) {
-            this._userAuthService.setUserToken(response.token);
-            this.tokenUpdated = true;
-          }
-
           // Limpa o preferenceId do localStorage
           localStorage.removeItem('payment_preference_id');
+
+          // IMPORTANTE: Logout automático para obrigar renovação das claims (permissões)
+          this._userAuthService.logout();
+
+          // Redireciona para o login após breve delay para leitura da mensagem
+          setTimeout(() => {
+            this._router.navigate(['/entrar'], { queryParams: { upgradeSuccess: true } });
+          }, 2500);
+
         } else if (response.status === 'pending') {
           this.checkCount++;
           if (this.checkCount < this.maxChecks) {

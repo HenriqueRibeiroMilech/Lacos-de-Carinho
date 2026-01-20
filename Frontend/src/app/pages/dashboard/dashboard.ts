@@ -29,7 +29,7 @@ export class Dashboard implements OnInit {
 
   userName: string = '';
   isAdmin: boolean = false;
-  
+
   // Admin data
   myWeddingLists: IWeddingListShort[] = [];
   loadingMyLists: boolean = false;
@@ -58,17 +58,17 @@ export class Dashboard implements OnInit {
   ngOnInit() {
     // Debug: log token info to console
     this._userAuthService.debugToken();
-    
+
     this.userName = this._userAuthService.getUserName() || 'Usuário';
     this.isAdmin = this._userAuthService.isAdmin();
-    
+
     console.log('Dashboard - userName:', this.userName, 'isAdmin:', this.isAdmin);
-    
+
     // Load admin lists if admin
     if (this.isAdmin) {
       this.loadMyWeddingLists();
     }
-    
+
     // Load guest events for all users
     this.loadGuestEvents();
   }
@@ -104,24 +104,24 @@ export class Dashboard implements OnInit {
   formatDate(dateString: string | undefined): string {
     if (!dateString) return '';
     const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', { 
-      day: '2-digit', 
-      month: 'long', 
-      year: 'numeric' 
+    return date.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
     });
   }
 
   getItemsCount(list: IWeddingListShort): { total: number; reserved: number } {
-    return { 
-      total: list.totalItems || 0, 
-      reserved: list.reservedItems || 0 
+    return {
+      total: list.totalItems || 0,
+      reserved: list.reservedItems || 0
     };
   }
 
   getRsvpCount(list: IWeddingListShort): { confirmed: number; total: number } {
-    return { 
-      total: list.totalRsvps || 0, 
-      confirmed: list.confirmedRsvps || 0 
+    return {
+      total: list.totalRsvps || 0,
+      confirmed: list.confirmedRsvps || 0
     };
   }
 
@@ -186,7 +186,7 @@ export class Dashboard implements OnInit {
       next: (response) => {
         // Salva o preferenceId para verificar depois
         localStorage.setItem('payment_preference_id', response.preferenceId);
-        
+
         // Redireciona para o Mercado Pago
         window.location.href = response.checkoutUrl;
       },
@@ -250,7 +250,7 @@ export class Dashboard implements OnInit {
         title: this.selectedList?.title || 'Lista de Presentes',
         text: 'Confira nossa lista de presentes!',
         url: this.shareUrl
-      }).catch(() => {});
+      }).catch(() => { });
     } else {
       this.copyShareLink();
     }

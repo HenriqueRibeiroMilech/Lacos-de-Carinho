@@ -35,11 +35,15 @@ export class UserAuthService {
     localStorage.removeItem('auth-token');
   }
 
+  logout(): void {
+    this.clearUserToken();
+  }
+
   private decodeJwtPayload(token: string): DecodedToken | null {
     try {
       const parts = token.split('.');
       if (parts.length !== 3) return null;
-      
+
       const base64Url = parts[1];
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
       const jsonPayload = decodeURIComponent(
@@ -48,7 +52,7 @@ export class UserAuthService {
           .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
           .join('')
       );
-      
+
       return JSON.parse(jsonPayload) as DecodedToken;
     } catch (error) {
       console.error('Error decoding JWT:', error);
@@ -101,15 +105,15 @@ export class UserAuthService {
   getUserName(): string | null {
     const payload = this.getDecodedToken();
     if (!payload) return null;
-    
+
     // Try different claim name formats
-    const name = 
+    const name =
       payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] ||
       payload['name'] ||
       payload['unique_name'] ||
       payload['sub'] ||
       null;
-    
+
     return name;
   }
 
@@ -120,17 +124,17 @@ export class UserAuthService {
   getUserRole(): UserRole {
     const payload = this.getDecodedToken();
     if (!payload) return null;
-    
+
     // Try different claim name formats
-    const roleValue = 
+    const roleValue =
       payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] ||
       payload['role'] ||
       null;
-    
+
     if (!roleValue) return null;
-    
+
     const role = roleValue.toString().toLowerCase();
-    
+
     // Map backend roles to frontend roles
     if (role === 'admin' || role === 'casal') {
       return 'CASAL';
@@ -138,7 +142,7 @@ export class UserAuthService {
     if (role === 'user' || role === 'convidado') {
       return 'CONVIDADO';
     }
-    
+
     return null;
   }
 

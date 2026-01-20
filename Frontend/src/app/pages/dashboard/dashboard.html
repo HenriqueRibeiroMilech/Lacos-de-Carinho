@@ -1,10 +1,16 @@
 <div class="min-h-screen bg-gradient-to-br from-rose-50 via-white to-pink-50">
-  
+
   <!-- Animated Background Decorations -->
   <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
-    <div class="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-rose-200/30 to-pink-200/30 rounded-full blur-3xl animate-pulse"></div>
-    <div class="absolute top-1/2 -left-40 w-96 h-96 bg-gradient-to-br from-purple-200/20 to-indigo-200/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
-    <div class="absolute -bottom-40 right-1/3 w-72 h-72 bg-gradient-to-br from-pink-200/25 to-rose-200/25 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+    <div
+      class="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-rose-200/30 to-pink-200/30 rounded-full blur-3xl animate-pulse">
+    </div>
+    <div
+      class="absolute top-1/2 -left-40 w-96 h-96 bg-gradient-to-br from-purple-200/20 to-indigo-200/20 rounded-full blur-3xl animate-pulse"
+      style="animation-delay: 1s;"></div>
+    <div
+      class="absolute -bottom-40 right-1/3 w-72 h-72 bg-gradient-to-br from-pink-200/25 to-rose-200/25 rounded-full blur-3xl animate-pulse"
+      style="animation-delay: 2s;"></div>
   </div>
 
   <!-- Header -->
@@ -15,28 +21,29 @@
         <div class="flex items-center gap-3">
           <img src="full-logo.png" alt="Logo" class="h-10 object-contain" />
         </div>
-        
+
         <!-- User Menu -->
         <div class="flex items-center gap-4">
           <div class="hidden sm:flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#D97F97] to-[#c06f85] flex items-center justify-center shadow-lg shadow-rose-200/50 ring-2 ring-white">
+            <div
+              class="w-10 h-10 rounded-full bg-gradient-to-br from-[#D97F97] to-[#c06f85] flex items-center justify-center shadow-lg shadow-rose-200/50 ring-2 ring-white">
               <span class="text-white text-sm font-bold">{{ userName.charAt(0).toUpperCase() }}</span>
             </div>
             <div class="flex flex-col">
               <span class="text-sm font-semibold text-gray-800">{{ userName }}</span>
               @if(isAdmin) {
-                <span class="text-xs text-[#D97F97]">Organizador</span>
+              <span class="text-xs text-[#D97F97]">Organizador</span>
               } @else {
-                <span class="text-xs text-gray-500">Conta Gratuita</span>
+              <span class="text-xs text-gray-500">Conta Gratuita</span>
               }
             </div>
           </div>
 
-          <button 
-            (click)="logout()"
+          <button (click)="logout()"
             class="flex items-center gap-2 px-4 py-2.5 text-gray-500 hover:text-[#D97F97] bg-white hover:bg-rose-50 rounded-xl border border-gray-200 hover:border-rose-200 shadow-sm hover:shadow-md transition-all duration-300">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
             </svg>
             <span class="hidden sm:inline text-sm font-medium">Sair</span>
           </button>
@@ -47,25 +54,32 @@
 
   <!-- Main Content -->
   <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    
+
     <!-- Welcome Hero Section -->
-    <div class="relative mb-10 p-8 bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl shadow-rose-100/50 border border-white/50 overflow-hidden">
+    <div
+      class="relative mb-10 p-8 bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl shadow-rose-100/50 border border-white/50 overflow-hidden">
       <!-- Decorative elements -->
-      <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-rose-100 to-pink-100 rounded-full -translate-y-1/2 translate-x-1/2 opacity-50"></div>
-      <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-purple-100 to-indigo-100 rounded-full translate-y-1/2 -translate-x-1/2 opacity-50"></div>
-      
+      <div
+        class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-rose-100 to-pink-100 rounded-full -translate-y-1/2 translate-x-1/2 opacity-50">
+      </div>
+      <div
+        class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-purple-100 to-indigo-100 rounded-full translate-y-1/2 -translate-x-1/2 opacity-50">
+      </div>
+
       <div class="relative">
         <div class="flex items-center gap-2 mb-3">
           <span class="text-3xl">👋</span>
           <h1 class="text-3xl md:text-4xl font-serif text-gray-800">
-            Olá, <span class="bg-gradient-to-r from-[#D97F97] to-[#c06f85] bg-clip-text text-transparent">{{ userName }}</span>!
+            Olá, <span class="bg-gradient-to-r from-[#D97F97] to-[#c06f85] bg-clip-text text-transparent">{{ userName
+              }}</span>!
           </h1>
         </div>
         <p class="text-gray-600 text-lg max-w-2xl">
           @if(isAdmin) {
-            Bem-vindo ao seu painel de controle. Gerencie seus eventos, acompanhe presentes reservados e confirmações de presença.
+          Bem-vindo ao seu painel de controle. Gerencie seus eventos, acompanhe presentes reservados e confirmações de
+          presença.
           } @else {
-            Veja os eventos para os quais você foi convidado e escolha presentes especiais para os noivos.
+          Veja os eventos para os quais você foi convidado e escolha presentes especiais para os noivos.
           }
         </p>
       </div>
@@ -73,408 +87,459 @@
 
     <!-- Admin/PRO Section: My Events -->
     @if(isAdmin) {
-      <section class="mb-10">
-        <!-- Section Header -->
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-          <div class="flex items-center gap-4">
-            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#D97F97] to-[#c06f85] flex items-center justify-center shadow-xl shadow-rose-200/50">
-              <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-              </svg>
-            </div>
-            <div>
-              <h2 class="text-2xl font-bold text-gray-800">Meus Eventos</h2>
-              <p class="text-gray-500">Eventos que você está organizando</p>
-            </div>
+    <section class="mb-10">
+      <!-- Section Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div class="flex items-center gap-4">
+          <div
+            class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#D97F97] to-[#c06f85] flex items-center justify-center shadow-xl shadow-rose-200/50">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+              </path>
+            </svg>
           </div>
-          
-          <button 
-            (click)="navigateToCreateEvent()"
-            class="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-2xl font-semibold shadow-xl shadow-rose-200/50 hover:shadow-2xl hover:shadow-rose-300/50 hover:-translate-y-1 active:translate-y-0 transition-all duration-300">
-            <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center group-hover:rotate-90 transition-transform duration-300">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-              </svg>
-            </div>
-            Criar Novo Evento
-          </button>
+          <div>
+            <h2 class="text-2xl font-bold text-gray-800">Meus Eventos</h2>
+            <p class="text-gray-500">Eventos que você está organizando</p>
+          </div>
         </div>
 
-        <!-- Loading State -->
-        @if(loadingMyLists) {
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @for(i of [1, 2, 3]; track i) {
-              <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg animate-pulse">
-                <div class="h-6 bg-gray-200 rounded-lg w-3/4 mb-4"></div>
-                <div class="h-4 bg-gray-100 rounded w-1/2 mb-6"></div>
-                <div class="flex gap-4">
-                  <div class="h-20 bg-gray-100 rounded-xl flex-1"></div>
-                  <div class="h-20 bg-gray-100 rounded-xl flex-1"></div>
-                </div>
-              </div>
-            }
+        <button (click)="navigateToCreateEvent()"
+          class="group flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-2xl font-semibold shadow-xl shadow-rose-200/50 hover:shadow-2xl hover:shadow-rose-300/50 hover:-translate-y-1 active:translate-y-0 transition-all duration-300">
+          <div
+            class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center group-hover:rotate-90 transition-transform duration-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
           </div>
-        }
+          Criar Novo Evento
+        </button>
+      </div>
 
-        <!-- Empty State -->
-        @if(!loadingMyLists && myWeddingLists.length === 0) {
-          <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-12 text-center shadow-xl border border-rose-100/50">
-            <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center">
-              <svg class="w-12 h-12 text-[#D97F97]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-              </svg>
+      <!-- Loading State -->
+      @if(loadingMyLists) {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for(i of [1, 2, 3]; track i) {
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg animate-pulse">
+          <div class="h-6 bg-gray-200 rounded-lg w-3/4 mb-4"></div>
+          <div class="h-4 bg-gray-100 rounded w-1/2 mb-6"></div>
+          <div class="flex gap-4">
+            <div class="h-20 bg-gray-100 rounded-xl flex-1"></div>
+            <div class="h-20 bg-gray-100 rounded-xl flex-1"></div>
+          </div>
+        </div>
+        }
+      </div>
+      }
+
+      <!-- Empty State -->
+      @if(!loadingMyLists && myWeddingLists.length === 0) {
+      <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-12 text-center shadow-xl border border-rose-100/50">
+        <div
+          class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center">
+          <svg class="w-12 h-12 text-[#D97F97]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+            </path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Nenhum evento criado ainda</h3>
+        <p class="text-gray-500 mb-8 max-w-md mx-auto">Crie seu primeiro evento e comece a compartilhar sua lista de
+          presentes com seus convidados!</p>
+        <button (click)="navigateToCreateEvent()"
+          class="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-2xl font-semibold shadow-xl shadow-rose-200/50 hover:shadow-2xl hover:shadow-rose-300/50 hover:-translate-y-1 transition-all duration-300">
+          <svg class="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+          Criar Primeiro Evento
+        </button>
+      </div>
+      }
+
+      <!-- Events Grid -->
+      @if(!loadingMyLists && myWeddingLists.length > 0) {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for(list of myWeddingLists; track list.id) {
+        <div
+          class="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl border border-white/50 hover:border-rose-200 transition-all duration-300 cursor-pointer overflow-hidden"
+          (click)="navigateToEvent(list.id)">
+
+          <!-- Card Header with gradient -->
+          <div class="relative p-6 pb-4">
+            <div
+              class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-rose-100/50 to-pink-100/50 rounded-full -translate-y-1/2 translate-x-1/2">
             </div>
-            <h3 class="text-xl font-bold text-gray-800 mb-2">Nenhum evento criado ainda</h3>
-            <p class="text-gray-500 mb-8 max-w-md mx-auto">Crie seu primeiro evento e comece a compartilhar sua lista de presentes com seus convidados!</p>
-            <button 
-              (click)="navigateToCreateEvent()"
-              class="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-2xl font-semibold shadow-xl shadow-rose-200/50 hover:shadow-2xl hover:shadow-rose-300/50 hover:-translate-y-1 transition-all duration-300">
-              <svg class="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-              </svg>
-              Criar Primeiro Evento
-            </button>
-          </div>
-        }
 
-        <!-- Events Grid -->
-        @if(!loadingMyLists && myWeddingLists.length > 0) {
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @for(list of myWeddingLists; track list.id) {
-              <div 
-                class="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl border border-white/50 hover:border-rose-200 transition-all duration-300 cursor-pointer overflow-hidden"
-                (click)="navigateToEvent(list.id)">
-                
-                <!-- Card Header with gradient -->
-                <div class="relative p-6 pb-4">
-                  <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-rose-100/50 to-pink-100/50 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-                  
-                  <!-- List Type Badge -->
-                  <div class="relative mb-3">
-                    <span [class]="'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ' + 
+            <!-- List Type Badge -->
+            <div class="relative mb-3">
+              <span [class]="'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ' + 
                       (list.listType === ListType.Wedding 
                         ? 'bg-rose-100 text-rose-700' 
                         : 'bg-amber-100 text-amber-700')">
-                      <span>{{ list.listType === ListType.Wedding ? '💒' : '🍲' }}</span>
-                      {{ LIST_TYPE_LABELS[list.listType] }}
-                    </span>
-                  </div>
-                  
-                  <div class="relative flex items-start justify-between">
-                    <div class="flex-1 pr-4">
-                      <h3 class="text-lg font-bold text-gray-800 group-hover:text-[#D97F97] transition-colors mb-1">{{ list.title }}</h3>
-                      <p class="text-sm text-gray-500 flex items-center gap-2">
-                        <svg class="w-4 h-4 text-[#D97F97]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                        {{ formatDate(list.eventDate) }}
-                      </p>
-                    </div>
-                    
-                    <button 
-                      (click)="openShareModal(list); $event.stopPropagation()"
-                      class="relative p-2.5 text-gray-400 hover:text-[#D97F97] bg-gray-50 hover:bg-rose-50 rounded-xl hover:scale-110 active:scale-95 transition-all duration-200"
-                      title="Compartilhar">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
+                <span>{{ list.listType === ListType.Wedding ? '💒' : '🍲' }}</span>
+                {{ LIST_TYPE_LABELS[list.listType] }}
+              </span>
+            </div>
 
-                <!-- Stats -->
-                <div class="px-6 pb-4">
-                  <div class="flex gap-3">
-                    <div class="flex-1 bg-gradient-to-br from-rose-50 to-pink-50 rounded-xl p-4 border border-rose-100/50">
-                      <div class="flex items-center gap-2 text-[#D97F97] mb-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path>
-                        </svg>
-                        <span class="text-xs font-semibold uppercase tracking-wide">Presentes</span>
-                      </div>
-                      <p class="text-2xl font-bold text-gray-800">
-                        {{ getItemsCount(list).reserved }}<span class="text-base text-gray-400 font-normal">/{{ getItemsCount(list).total }}</span>
-                      </p>
-                    </div>
-                    
-                    <div class="flex-1 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-4 border border-purple-100/50">
-                      <div class="flex items-center gap-2 text-purple-500 mb-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                        <span class="text-xs font-semibold uppercase tracking-wide">Confirmados</span>
-                      </div>
-                      <p class="text-2xl font-bold text-gray-800">
-                        {{ getRsvpCount(list).confirmed }}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- View Button -->
-                <div class="px-6 py-4 bg-gray-50/50 border-t border-gray-100">
-                  <span class="text-sm text-[#D97F97] font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">
-                    Gerenciar evento
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                  </span>
-                </div>
+            <div class="relative flex items-start justify-between">
+              <div class="flex-1 pr-4">
+                <h3 class="text-lg font-bold text-gray-800 group-hover:text-[#D97F97] transition-colors mb-1">{{
+                  list.title }}</h3>
+                <p class="text-sm text-gray-500 flex items-center gap-2">
+                  <svg class="w-4 h-4 text-[#D97F97]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  {{ formatDate(list.eventDate) }}
+                </p>
               </div>
-            }
-          </div>
-        }
 
-        <!-- How to use - for Admin -->
-        <div class="mt-6 bg-white/50 backdrop-blur-sm rounded-xl p-4 md:p-5 border border-rose-100/40">
-          <div class="flex items-center gap-2 mb-3">
-            <svg class="w-4 h-4 md:w-5 md:h-5 text-[#D97F97]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            <h3 class="text-sm md:text-base font-medium text-gray-700">Como criar seu evento?</h3>
-          </div>
-          <!-- Mobile: versão descritiva compacta -->
-          <div class="grid grid-cols-2 gap-2.5 text-xs md:hidden">
-            <div class="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <span class="w-5 h-5 rounded-full bg-rose-100 text-[#D97F97] flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">1</span>
-              <span class="text-gray-600">Crie seu evento com nome e data</span>
-            </div>
-            <div class="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <span class="w-5 h-5 rounded-full bg-rose-100 text-[#D97F97] flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">2</span>
-              <span class="text-gray-600">Adicione presentes à lista</span>
-            </div>
-            <div class="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <span class="w-5 h-5 rounded-full bg-rose-100 text-[#D97F97] flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">3</span>
-              <span class="text-gray-600">Compartilhe o link com convidados</span>
-            </div>
-            <div class="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <span class="w-5 h-5 rounded-full bg-rose-100 text-[#D97F97] flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">4</span>
-              <span class="text-gray-600">Acompanhe as reservas</span>
+              <button (click)="openShareModal(list); $event.stopPropagation()"
+                class="relative p-2.5 text-gray-400 hover:text-[#D97F97] bg-gray-50 hover:bg-rose-50 rounded-xl hover:scale-110 active:scale-95 transition-all duration-200"
+                title="Compartilhar">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z">
+                  </path>
+                </svg>
+              </button>
             </div>
           </div>
-          <!-- Desktop: grid com mais detalhes -->
-          <div class="hidden md:grid md:grid-cols-4 gap-3 text-sm">
-            <div class="flex items-start gap-2.5 p-3 bg-white/60 rounded-lg">
-              <div class="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0">
-                <span class="text-[#D97F97] text-xs font-bold">1</span>
+
+          <!-- Stats -->
+          <div class="px-6 pb-4">
+            <div class="flex gap-3">
+              <div class="flex-1 bg-gradient-to-br from-rose-50 to-pink-50 rounded-xl p-4 border border-rose-100/50">
+                <div class="flex items-center gap-2 text-[#D97F97] mb-2">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7">
+                    </path>
+                  </svg>
+                  <span class="text-xs font-semibold uppercase tracking-wide">Presentes</span>
+                </div>
+                <p class="text-2xl font-bold text-gray-800">
+                  {{ getItemsCount(list).reserved }}<span class="text-base text-gray-400 font-normal">/{{
+                    getItemsCount(list).total }}</span>
+                </p>
               </div>
-              <p class="text-gray-600">Crie seu evento com nome, data e mensagem</p>
-            </div>
-            <div class="flex items-start gap-2.5 p-3 bg-white/60 rounded-lg">
-              <div class="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0">
-                <span class="text-[#D97F97] text-xs font-bold">2</span>
+
+              <div
+                class="flex-1 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-4 border border-purple-100/50">
+                <div class="flex items-center gap-2 text-purple-500 mb-2">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z">
+                    </path>
+                  </svg>
+                  <span class="text-xs font-semibold uppercase tracking-wide">Confirmados</span>
+                </div>
+                <p class="text-2xl font-bold text-gray-800">
+                  {{ getRsvpCount(list).confirmed }}
+                </p>
               </div>
-              <p class="text-gray-600">Adicione presentes do catálogo ou personalizados</p>
             </div>
-            <div class="flex items-start gap-2.5 p-3 bg-white/60 rounded-lg">
-              <div class="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0">
-                <span class="text-[#D97F97] text-xs font-bold">3</span>
-              </div>
-              <p class="text-gray-600">Compartilhe o link ou QR Code com convidados</p>
-            </div>
-            <div class="flex items-start gap-2.5 p-3 bg-white/60 rounded-lg">
-              <div class="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0">
-                <span class="text-[#D97F97] text-xs font-bold">4</span>
-              </div>
-              <p class="text-gray-600">Acompanhe presenças e reservas em tempo real</p>
-            </div>
+          </div>
+
+          <!-- View Button -->
+          <div class="px-6 py-4 bg-gray-50/50 border-t border-gray-100">
+            <span class="text-sm text-[#D97F97] font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">
+              Gerenciar evento
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </span>
           </div>
         </div>
-      </section>
+        }
+      </div>
+      }
+
+      <!-- How to use - for Admin -->
+      <div class="mt-6 bg-white/50 backdrop-blur-sm rounded-xl p-4 md:p-5 border border-rose-100/40">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-4 h-4 md:w-5 md:h-5 text-[#D97F97]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <h3 class="text-sm md:text-base font-medium text-gray-700">Como criar seu evento?</h3>
+        </div>
+        <!-- Mobile: versão descritiva compacta -->
+        <div class="grid grid-cols-2 gap-2.5 text-xs md:hidden">
+          <div class="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
+            <span
+              class="w-5 h-5 rounded-full bg-rose-100 text-[#D97F97] flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">1</span>
+            <span class="text-gray-600">Crie seu evento com nome e data</span>
+          </div>
+          <div class="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
+            <span
+              class="w-5 h-5 rounded-full bg-rose-100 text-[#D97F97] flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">2</span>
+            <span class="text-gray-600">Adicione presentes à lista</span>
+          </div>
+          <div class="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
+            <span
+              class="w-5 h-5 rounded-full bg-rose-100 text-[#D97F97] flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">3</span>
+            <span class="text-gray-600">Compartilhe o link com convidados</span>
+          </div>
+          <div class="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
+            <span
+              class="w-5 h-5 rounded-full bg-rose-100 text-[#D97F97] flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">4</span>
+            <span class="text-gray-600">Acompanhe as reservas</span>
+          </div>
+        </div>
+        <!-- Desktop: grid com mais detalhes -->
+        <div class="hidden md:grid md:grid-cols-4 gap-3 text-sm">
+          <div class="flex items-start gap-2.5 p-3 bg-white/60 rounded-lg">
+            <div class="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-[#D97F97] text-xs font-bold">1</span>
+            </div>
+            <p class="text-gray-600">Crie seu evento com nome, data e mensagem</p>
+          </div>
+          <div class="flex items-start gap-2.5 p-3 bg-white/60 rounded-lg">
+            <div class="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-[#D97F97] text-xs font-bold">2</span>
+            </div>
+            <p class="text-gray-600">Adicione presentes do catálogo ou personalizados</p>
+          </div>
+          <div class="flex items-start gap-2.5 p-3 bg-white/60 rounded-lg">
+            <div class="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-[#D97F97] text-xs font-bold">3</span>
+            </div>
+            <p class="text-gray-600">Compartilhe o link ou QR Code com convidados</p>
+          </div>
+          <div class="flex items-start gap-2.5 p-3 bg-white/60 rounded-lg">
+            <div class="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-[#D97F97] text-xs font-bold">4</span>
+            </div>
+            <p class="text-gray-600">Acompanhe presenças e reservas em tempo real</p>
+          </div>
+        </div>
+      </div>
+    </section>
     }
 
     <!-- Guest Events Section (only shows if user has invitations OR is not admin) -->
     @if(!isAdmin || hasGuestEvents) {
-      <section class="mb-10">
-        <!-- Section Header -->
-        <div class="flex items-center gap-4 mb-6">
-          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center shadow-xl shadow-purple-200/50">
-            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-            </svg>
+    <section class="mb-10">
+      <!-- Section Header -->
+      <div class="flex items-center gap-4 mb-6">
+        <div
+          class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center shadow-xl shadow-purple-200/50">
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+            </path>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-gray-800">Meus Convites</h2>
+          <p class="text-gray-500">Eventos para os quais você foi convidado</p>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      @if(loadingGuestEvents) {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for(i of [1, 2]; track i) {
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg animate-pulse">
+          <div class="h-6 bg-gray-200 rounded-lg w-3/4 mb-4"></div>
+          <div class="h-8 bg-gray-100 rounded-full w-1/3 mb-4"></div>
+          <div class="h-4 bg-gray-100 rounded w-full"></div>
+        </div>
+        }
+      </div>
+      }
+
+      <!-- Empty State (only for non-admin users) -->
+      @if(!loadingGuestEvents && !hasGuestEvents && !isAdmin) {
+      <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-12 text-center shadow-xl border border-purple-100/50">
+        <div
+          class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center">
+          <svg class="w-12 h-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+            </path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Nenhum convite ainda</h3>
+        <p class="text-gray-500 max-w-md mx-auto">Quando você for convidado para um evento, ele aparecerá aqui. Acesse
+          pelo link que receber dos noivos!</p>
+      </div>
+      }
+
+      <!-- Guest Events Grid -->
+      @if(!loadingGuestEvents && hasGuestEvents) {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for(event of guestDetails!.events; track event.rsvp.id) {
+        <div (click)="navigateToGuestList(event)"
+          class="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl border border-white/50 hover:border-purple-200 transition-all duration-300 cursor-pointer overflow-hidden">
+
+          <!-- Card Content -->
+          <div class="relative p-6">
+            <div
+              class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-100/50 to-indigo-100/50 rounded-full -translate-y-1/2 translate-x-1/2">
+            </div>
+
+            <div class="relative">
+              <h3 class="text-lg font-bold text-gray-800 group-hover:text-purple-600 transition-colors mb-3"
+                [title]="event.weddingList.title">
+                {{ event.weddingList.title }}
+              </h3>
+
+              <!-- Status Badge -->
+              <div class="mb-4">
+                @switch(event.rsvp.status) {
+                @case(RsvpStatus.Confirmed) {
+                <span
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-green-100 text-green-700 border border-green-200">
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  Presença confirmada
+                </span>
+                }
+                @case(RsvpStatus.Pending) {
+                <span
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700 border border-amber-200">
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  Aguardando confirmação
+                </span>
+                }
+                @case(RsvpStatus.Declined) {
+                <span
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-red-100 text-red-700 border border-red-200">
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  Não irá comparecer
+                </span>
+                }
+                }
+              </div>
+
+              @if(event.rsvp.additionalGuests) {
+              <p class="text-sm text-gray-500 flex items-center gap-2">
+                <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                  </path>
+                </svg>
+                <span><strong>{{ event.rsvp.additionalGuests }}</strong> outro(s) convidado(s)</span>
+              </p>
+              }
+            </div>
           </div>
-          <div>
-            <h2 class="text-2xl font-bold text-gray-800">Meus Convites</h2>
-            <p class="text-gray-500">Eventos para os quais você foi convidado</p>
+
+          <!-- View Button -->
+          <div class="px-6 py-4 bg-purple-50/50 border-t border-purple-100/50">
+            <span
+              class="text-sm text-purple-600 font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">
+              Ver lista de presentes
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </span>
           </div>
         </div>
-
-        <!-- Loading State -->
-        @if(loadingGuestEvents) {
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @for(i of [1, 2]; track i) {
-              <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg animate-pulse">
-                <div class="h-6 bg-gray-200 rounded-lg w-3/4 mb-4"></div>
-                <div class="h-8 bg-gray-100 rounded-full w-1/3 mb-4"></div>
-                <div class="h-4 bg-gray-100 rounded w-full"></div>
-              </div>
-            }
-          </div>
         }
+      </div>
+      }
 
-        <!-- Empty State (only for non-admin users) -->
-        @if(!loadingGuestEvents && !hasGuestEvents && !isAdmin) {
-          <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-12 text-center shadow-xl border border-purple-100/50">
-            <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center">
-              <svg class="w-12 h-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-              </svg>
-            </div>
-            <h3 class="text-xl font-bold text-gray-800 mb-2">Nenhum convite ainda</h3>
-            <p class="text-gray-500 max-w-md mx-auto">Quando você for convidado para um evento, ele aparecerá aqui. Acesse pelo link que receber dos noivos!</p>
+      <!-- Help Section for Guests (shows when user has guest events) -->
+      @if(hasGuestEvents) {
+      <div class="mt-6 bg-white/50 backdrop-blur-sm rounded-xl p-4 md:p-5 border border-purple-100/40">
+        <div class="flex items-center gap-2 mb-3">
+          <svg class="w-4 h-4 md:w-5 md:h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <h3 class="text-sm md:text-base font-medium text-gray-700">Como funciona?</h3>
+        </div>
+        <!-- Mobile: versão descritiva compacta -->
+        <div class="grid grid-cols-1 gap-2.5 text-xs md:hidden">
+          <div class="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
+            <span
+              class="w-5 h-5 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">1</span>
+            <span class="text-gray-600">Acesse a lista pelo card acima ou link recebido</span>
           </div>
-        }
-
-        <!-- Guest Events Grid -->
-        @if(!loadingGuestEvents && hasGuestEvents) {
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @for(event of guestDetails!.events; track event.rsvp.id) {
-              <div 
-                (click)="navigateToGuestList(event)"
-                class="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl border border-white/50 hover:border-purple-200 transition-all duration-300 cursor-pointer overflow-hidden">
-                
-                <!-- Card Content -->
-                <div class="relative p-6">
-                  <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-100/50 to-indigo-100/50 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-                  
-                  <div class="relative">
-                    <h3 class="text-lg font-bold text-gray-800 group-hover:text-purple-600 transition-colors mb-3" [title]="event.weddingList.title">
-                      {{ event.weddingList.title }}
-                    </h3>
-                    
-                    <!-- Status Badge -->
-                    <div class="mb-4">
-                      @switch(event.rsvp.status) {
-                        @case(RsvpStatus.Confirmed) {
-                          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-green-100 text-green-700 border border-green-200">
-                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-                              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                            </svg>
-                            Presença confirmada
-                          </span>
-                        }
-                        @case(RsvpStatus.Pending) {
-                          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700 border border-amber-200">
-                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-                              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
-                            </svg>
-                            Aguardando confirmação
-                          </span>
-                        }
-                        @case(RsvpStatus.Declined) {
-                          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-red-100 text-red-700 border border-red-200">
-                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-                              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                            </svg>
-                            Não irá comparecer
-                          </span>
-                        }
-                      }
-                    </div>
-
-                    @if(event.rsvp.additionalGuests) {
-                      <p class="text-sm text-gray-500 flex items-center gap-2">
-                        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
-                        <span><strong>{{ event.rsvp.additionalGuests }}</strong> outro(s) convidado(s)</span>
-                      </p>
-                    }
-                  </div>
-                </div>
-
-                <!-- View Button -->
-                <div class="px-6 py-4 bg-purple-50/50 border-t border-purple-100/50">
-                  <span class="text-sm text-purple-600 font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">
-                    Ver lista de presentes
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                  </span>
-                </div>
-              </div>
-            }
+          <div class="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
+            <span
+              class="w-5 h-5 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">2</span>
+            <span class="text-gray-600">Confirme sua presença no evento</span>
           </div>
-        }
-
-        <!-- Help Section for Guests (shows when user has guest events) -->
-        @if(hasGuestEvents) {
-          <div class="mt-6 bg-white/50 backdrop-blur-sm rounded-xl p-4 md:p-5 border border-purple-100/40">
-            <div class="flex items-center gap-2 mb-3">
-              <svg class="w-4 h-4 md:w-5 md:h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-              <h3 class="text-sm md:text-base font-medium text-gray-700">Como funciona?</h3>
-            </div>
-            <!-- Mobile: versão descritiva compacta -->
-            <div class="grid grid-cols-1 gap-2.5 text-xs md:hidden">
-              <div class="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-                <span class="w-5 h-5 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">1</span>
-                <span class="text-gray-600">Acesse a lista pelo card acima ou link recebido</span>
-              </div>
-              <div class="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-                <span class="w-5 h-5 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">2</span>
-                <span class="text-gray-600">Confirme sua presença no evento</span>
-              </div>
-              <div class="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-                <span class="w-5 h-5 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">3</span>
-                <span class="text-gray-600">Reserve um presente especial para os noivos</span>
-              </div>
-            </div>
-            <!-- Desktop: grid com mais detalhes -->
-            <div class="hidden md:grid md:grid-cols-3 gap-3 text-sm">
-              <div class="flex items-start gap-2.5 p-3 bg-white/60 rounded-lg">
-                <div class="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
-                  <span class="text-purple-600 text-xs font-bold">1</span>
-                </div>
-                <p class="text-gray-600">Acesse a lista através do card acima ou link recebido</p>
-              </div>
-              <div class="flex items-start gap-2.5 p-3 bg-white/60 rounded-lg">
-                <div class="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
-                  <span class="text-purple-600 text-xs font-bold">2</span>
-                </div>
-                <p class="text-gray-600">Confirme sua presença e informe outros convidados</p>
-              </div>
-              <div class="flex items-start gap-2.5 p-3 bg-white/60 rounded-lg">
-                <div class="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
-                  <span class="text-purple-600 text-xs font-bold">3</span>
-                </div>
-                <p class="text-gray-600">Escolha um presente especial para reservar</p>
-              </div>
-            </div>
+          <div class="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
+            <span
+              class="w-5 h-5 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xs font-semibold flex-shrink-0 mt-0.5">3</span>
+            <span class="text-gray-600">Reserve um presente especial para os noivos</span>
           </div>
-        }
-      </section>
+        </div>
+        <!-- Desktop: grid com mais detalhes -->
+        <div class="hidden md:grid md:grid-cols-3 gap-3 text-sm">
+          <div class="flex items-start gap-2.5 p-3 bg-white/60 rounded-lg">
+            <div class="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-purple-600 text-xs font-bold">1</span>
+            </div>
+            <p class="text-gray-600">Acesse a lista através do card acima ou link recebido</p>
+          </div>
+          <div class="flex items-start gap-2.5 p-3 bg-white/60 rounded-lg">
+            <div class="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-purple-600 text-xs font-bold">2</span>
+            </div>
+            <p class="text-gray-600">Confirme sua presença e informe outros convidados</p>
+          </div>
+          <div class="flex items-start gap-2.5 p-3 bg-white/60 rounded-lg">
+            <div class="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+              <span class="text-purple-600 text-xs font-bold">3</span>
+            </div>
+            <p class="text-gray-600">Escolha um presente especial para reservar</p>
+          </div>
+        </div>
+      </div>
+      }
+    </section>
     }
 
     <!-- Upgrade Card (only for FREE users) -->
     @if(!isAdmin) {
-      <section class="mb-8">
-        <div class="relative overflow-hidden bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 rounded-3xl p-8 shadow-2xl">
-          <!-- Decorative elements -->
-          <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-          <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
-          
-          <div class="relative flex flex-col md:flex-row items-center gap-6">
-            <div class="flex-shrink-0">
-              <div class="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                </svg>
-              </div>
+    <section class="mb-8">
+      <div
+        class="relative overflow-hidden bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 rounded-3xl p-8 shadow-2xl">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+
+        <div class="relative flex flex-col md:flex-row items-center gap-6">
+          <div class="flex-shrink-0">
+            <div class="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+              <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                </path>
+              </svg>
             </div>
-            <div class="flex-1 text-center md:text-left">
-              <h3 class="text-2xl font-bold text-white mb-2">💍 Vai casar?</h3>
-              <p class="text-white/90 text-lg">Crie sua própria lista de presentes e compartilhe com todos os seus convidados. Organize tudo em um só lugar!</p>
-            </div>
-            <button 
-              (click)="openUpgradeInfo()"
-              class="flex-shrink-0 px-8 py-4 bg-white text-[#D97F97] rounded-2xl font-bold shadow-xl hover:shadow-2xl hover:-translate-y-1 active:translate-y-0 transition-all duration-300">
-              Criar minha lista
-            </button>
           </div>
+          <div class="flex-1 text-center md:text-left">
+            <h3 class="text-2xl font-bold text-white mb-2">💍 Vai casar?</h3>
+            <p class="text-white/90 text-lg">Crie sua própria lista de presentes e compartilhe com todos os seus
+              convidados. Organize tudo em um só lugar!</p>
+          </div>
+          <button (click)="openUpgradeInfo()"
+            class="flex-shrink-0 px-8 py-4 bg-white text-[#D97F97] rounded-2xl font-bold shadow-xl hover:shadow-2xl hover:-translate-y-1 active:translate-y-0 transition-all duration-300">
+            Criar minha lista
+          </button>
         </div>
-      </section>
+      </div>
+    </section>
     }
 
   </main>
@@ -490,179 +555,177 @@
 
   <!-- Share Modal -->
   @if(showShareModal && selectedList) {
-    <div class="fixed inset-0 bg-black/40 flex items-end sm:items-center justify-center p-0 sm:p-4 z-50" (click)="closeShareModal()">
-      <div class="bg-white w-full max-w-md rounded-t-2xl sm:rounded-2xl shadow-xl" (click)="$event.stopPropagation()">
-        <div class="p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold text-gray-800">Compartilhar Lista</h2>
-            <button (click)="closeShareModal()" class="p-2 text-gray-400 hover:text-gray-600">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            </button>
-          </div>
-          
-          <p class="text-sm text-gray-500 mb-6">Compartilhe o link ou QR Code com seus convidados para que possam ver e reservar presentes.</p>
-          
-          <!-- QR Code -->
-          @if(qrCodeDataUrl) {
-            <div class="flex flex-col items-center mb-6">
-              <div class="bg-white p-4 rounded-xl border-2 border-dashed border-rose-200 mb-3">
-                <img [src]="qrCodeDataUrl" alt="QR Code" class="w-48 h-48" />
-              </div>
-              <button 
-                (click)="downloadQRCode()"
-                class="text-sm text-[#D97F97] hover:underline flex items-center gap-1">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                </svg>
-                Baixar QR Code
-              </button>
-            </div>
-          }
-          
-          <!-- Link -->
-          <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Link da lista</label>
-            <div class="flex gap-2">
-              <input 
-                type="text" 
-                [value]="shareUrl"
-                readonly
-                class="flex-1 px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-sm text-gray-600" />
-              <button 
-                (click)="copyShareLink()"
-                class="px-4 py-3 rounded-xl text-white font-medium shadow-md hover:shadow-lg transition-all"
-                [class]="linkCopied ? 'bg-green-500' : 'bg-gradient-to-r from-[#D97F97] to-[#c06f85]'">
-                {{ linkCopied ? '✓ Copiado!' : 'Copiar' }}
-              </button>
-            </div>
-          </div>
+  <div class="fixed inset-0 bg-black/40 flex items-end sm:items-center justify-center p-0 sm:p-4 z-50"
+    (click)="closeShareModal()">
+    <div class="bg-white w-full max-w-md rounded-t-2xl sm:rounded-2xl shadow-xl" (click)="$event.stopPropagation()">
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-semibold text-gray-800">Compartilhar Lista</h2>
+          <button (click)="closeShareModal()" class="p-2 text-gray-400 hover:text-gray-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
 
-          <!-- Share buttons -->
-          <div class="flex gap-3">
-            <button 
-              (click)="shareWhatsApp()"
-              class="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-green-500 text-white font-medium hover:bg-green-600 transition-colors">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-              </svg>
-              WhatsApp
+        <p class="text-sm text-gray-500 mb-6">Compartilhe o link ou QR Code com seus convidados para que possam ver e
+          reservar presentes.</p>
+
+        <!-- QR Code -->
+        @if(qrCodeDataUrl) {
+        <div class="flex flex-col items-center mb-6">
+          <div class="bg-white p-4 rounded-xl border-2 border-dashed border-rose-200 mb-3">
+            <img [src]="qrCodeDataUrl" alt="QR Code" class="w-48 h-48" />
+          </div>
+          <button (click)="downloadQRCode()" class="text-sm text-[#D97F97] hover:underline flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            Baixar QR Code
+          </button>
+        </div>
+        }
+
+        <!-- Link -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Link da lista</label>
+          <div class="flex gap-2">
+            <input type="text" [value]="shareUrl" readonly
+              class="flex-1 px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-sm text-gray-600" />
+            <button (click)="copyShareLink()"
+              class="px-4 py-3 rounded-xl text-white font-medium shadow-md hover:shadow-lg transition-all"
+              [class]="linkCopied ? 'bg-green-500' : 'bg-gradient-to-r from-[#D97F97] to-[#c06f85]'">
+              {{ linkCopied ? '✓ Copiado!' : 'Copiar' }}
             </button>
           </div>
         </div>
+
+        <!-- Share buttons -->
+        <div class="flex gap-3">
+          <button (click)="shareWhatsApp()"
+            class="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-green-500 text-white font-medium hover:bg-green-600 transition-colors">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            WhatsApp
+          </button>
+        </div>
       </div>
     </div>
+  </div>
   }
 
   <!-- Upgrade Modal -->
   @if(showUpgradeModal) {
-    <div class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" (click)="closeUpgradeModal()">
-      <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden" (click)="$event.stopPropagation()">
-        <!-- Header com gradient -->
-        <div class="relative bg-gradient-to-r from-[#D97F97] to-[#c06f85] p-6 text-white">
-          <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-          <button (click)="closeUpgradeModal()" class="absolute top-4 right-4 p-2 text-white/80 hover:text-white transition-colors">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
-          <div class="relative flex items-center gap-4">
-            <div class="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-              <span class="text-4xl">💍</span>
-            </div>
-            <div>
-              <h2 class="text-2xl font-bold">Criar sua lista de presentes</h2>
-              <p class="text-white/90">Transforme sua conta em uma conta de organizador</p>
-            </div>
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" (click)="closeUpgradeModal()">
+    <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden" (click)="$event.stopPropagation()">
+      <!-- Header com gradient -->
+      <div class="relative bg-gradient-to-r from-[#D97F97] to-[#c06f85] p-6 text-white">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+        <button (click)="closeUpgradeModal()"
+          class="absolute top-4 right-4 p-2 text-white/80 hover:text-white transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+        <div class="relative flex items-center gap-4">
+          <div class="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+            <span class="text-4xl">💍</span>
           </div>
-        </div>
-
-        <!-- Content -->
-        <div class="p-6">
-          <p class="text-gray-600 mb-6">
-            Ao criar sua lista, você poderá:
-          </p>
-
-          <ul class="space-y-3 mb-6">
-            <li class="flex items-center gap-3 text-gray-700">
-              <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-              <span>Criar listas de presentes personalizadas</span>
-            </li>
-            <li class="flex items-center gap-3 text-gray-700">
-              <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-              <span>Compartilhar com seus convidados via link ou QR Code</span>
-            </li>
-            <li class="flex items-center gap-3 text-gray-700">
-              <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-              <span>Acompanhar presentes reservados em tempo real</span>
-            </li>
-            <li class="flex items-center gap-3 text-gray-700">
-              <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-              <span>Gerenciar confirmações de presença (RSVP)</span>
-            </li>
-          </ul>
-
-          @if(upgradeError) {
-            <div class="mb-4 p-4 rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm">
-              {{ upgradeError }}
-            </div>
-          }
-
-          <!-- Pricing Badge -->
-          <div class="mb-6 p-4 rounded-2xl bg-gradient-to-r from-[#D97F97]/10 to-pink-100/50 border border-[#D97F97]/20 text-center">
-            <p class="text-sm text-gray-600 mb-1">Pagamento único</p>
-            <p class="text-3xl font-bold text-[#D97F97]">R$ 49,90</p>
-            <p class="text-xs text-gray-500 mt-1">Use para sempre, sem mensalidades!</p>
-          </div>
-
-          <div class="flex gap-3">
-            <button 
-              (click)="closeUpgradeModal()"
-              class="flex-1 px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 transition-colors">
-              Cancelar
-            </button>
-            <button 
-              (click)="confirmUpgrade()"
-              [disabled]="upgrading"
-              class="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0">
-              @if(upgrading) {
-                <span class="flex items-center justify-center gap-2">
-                  <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Processando...
-                </span>
-              } @else {
-                <span class="flex items-center justify-center gap-2">
-                  Pagar agora
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                  </svg>
-                </span>
-              }
-            </button>
+          <div>
+            <h2 class="text-2xl font-bold">Criar sua lista de presentes</h2>
+            <p class="text-white/90">Transforme sua conta em uma conta de organizador</p>
           </div>
         </div>
       </div>
+
+      <!-- Content -->
+      <div class="p-6">
+        <p class="text-gray-600 mb-6">
+          Ao criar sua lista, você poderá:
+        </p>
+
+        <ul class="space-y-3 mb-6">
+          <li class="flex items-center gap-3 text-gray-700">
+            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span>Criar listas de presentes personalizadas</span>
+          </li>
+          <li class="flex items-center gap-3 text-gray-700">
+            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span>Compartilhar com seus convidados via link ou QR Code</span>
+          </li>
+          <li class="flex items-center gap-3 text-gray-700">
+            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span>Acompanhar presentes reservados em tempo real</span>
+          </li>
+          <li class="flex items-center gap-3 text-gray-700">
+            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span>Gerenciar confirmações de presença (RSVP)</span>
+          </li>
+        </ul>
+
+        @if(upgradeError) {
+        <div class="mb-4 p-4 rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm">
+          {{ upgradeError }}
+        </div>
+        }
+
+        <!-- Pricing Badge -->
+        <div
+          class="mb-6 p-4 rounded-2xl bg-gradient-to-r from-[#D97F97]/10 to-pink-100/50 border border-[#D97F97]/20 text-center">
+          <p class="text-sm text-gray-600 mb-1">Pagamento único</p>
+          <p class="text-3xl font-bold text-[#D97F97]">R$ 39,90</p>
+          <p class="text-xs text-gray-500 mt-1">Use para sempre, sem mensalidades!</p>
+        </div>
+
+        <div class="flex gap-3">
+          <button (click)="closeUpgradeModal()"
+            class="flex-1 px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 transition-colors">
+            Cancelar
+          </button>
+          <button (click)="confirmUpgrade()" [disabled]="upgrading"
+            class="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0">
+            @if(upgrading) {
+            <span class="flex items-center justify-center gap-2">
+              <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
+              </svg>
+              Processando...
+            </span>
+            } @else {
+            <span class="flex items-center justify-center gap-2">
+              Pagar agora
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </span>
+            }
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
   }
 
 </div>

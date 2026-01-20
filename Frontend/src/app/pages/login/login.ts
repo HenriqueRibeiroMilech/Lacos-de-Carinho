@@ -14,8 +14,9 @@ import { CommonModule } from '@angular/common';
 })
 export class Login implements OnInit {
   loginErrorMessage = '';
+  successMessage = '';
   returnUrl = '';
-  
+
   userForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
@@ -29,6 +30,11 @@ export class Login implements OnInit {
   ngOnInit() {
     // Captura o returnUrl da query string
     this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '';
+
+    // Verifica se veio de um upgrade bem-sucedido
+    if (this._route.snapshot.queryParams['upgradeSuccess']) {
+      this.successMessage = 'Pagamento aprovado com sucesso! Por favor, faça login novamente para ativar seu plano de Organizador.';
+    }
   }
 
   // Verifica se o usuário veio de uma lista pública (fluxo convidado)
@@ -37,14 +43,14 @@ export class Login implements OnInit {
   }
 
   login() {
-    if(this.userForm.invalid) return;
+    if (this.userForm.invalid) return;
 
     this._userService.login(
-      this.userForm.get('email')?.value as string, 
+      this.userForm.get('email')?.value as string,
       this.userForm.get('password')?.value as string).pipe(take(1)).subscribe({
         next: (response) => {
           this.loginErrorMessage = '';
-          
+
           // salvar o token no localstorage
           this._userAuthService.setUserToken(response.token);
 
