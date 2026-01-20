@@ -78,11 +78,15 @@ export class Register implements OnInit {
         }
 
         // Detecta se o erro é de email já existente
-        if (errorMsg.toLowerCase().includes('email') &&
-          (errorMsg.toLowerCase().includes('existe') ||
-            errorMsg.toLowerCase().includes('cadastrado') ||
-            errorMsg.toLowerCase().includes('já') ||
-            errorMsg.toLowerCase().includes('registered'))) {
+        // Aceita "e-mail" ou "email", e textos como "já está em uso", "já existe", "já cadastrado"
+        const lowerError = errorMsg.toLowerCase().replace(/-/g, ''); // remove hífens para normalizar e-mail -> email
+
+        if (lowerError.includes('email') &&
+          (lowerError.includes('existe') ||
+            lowerError.includes('cadastrado') ||
+            lowerError.includes('ja') || // 'já' sem acento
+            lowerError.includes('uso') || // "já está em uso"
+            lowerError.includes('registered'))) {
           this.existingEmail = this.registerForm.get('email')?.value || '';
           this.showExistingAccountModal = true;
         } else {

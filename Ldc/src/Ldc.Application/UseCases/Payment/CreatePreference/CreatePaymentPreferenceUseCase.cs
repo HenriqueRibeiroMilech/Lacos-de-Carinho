@@ -61,6 +61,22 @@ public class CreatePaymentPreferenceUseCase : ICreatePaymentPreferenceUseCase
         }
         else
         {
+            // Verifica se já existe usuário com este e-mail
+            var existingUser = await _userReadOnlyRepository.GetUserByEmail(request.Email);
+            if (existingUser != null)
+            {
+                // Regra de segurança para sobrescrever conta pendente recente (tentativa de pagamento anterior falhou/desistiu)
+                // 1. Não é ADMIN (não pagou plano)
+                // 2. Criado há menos de 1 hora
+                // Isso permite que o usuário tente se cadastrar novamente caso tenha tido problemas no pagamento anterior
+                if (existingUser.Role == Domain.Enums.Roles.USER && 
+                    existingUser.CreatedAt > DateTime.UtcNow.AddHours(-1))
+                {
+                    await _userWriteOnlyRepository.Delete(existingUser);
+                    await _unitOfWork.Commit();
+                }
+            }
+
             // Novo cadastro: criar usuário pendente
             await ValidateNewAccount(request);
             
