@@ -3,17 +3,20 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { PaymentService } from '../../services/payment';
 import { Router, RouterLink } from '@angular/router';
 import { take } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cadastro',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, CommonModule],
   templateUrl: './cadastro.html',
   styleUrl: './cadastro.css'
 })
 export class Cadastro {
   errorMessage = '';
   isLoading = false;
-  
+  showExistingAccountModal = false;
+  existingEmail = '';
+
   cadastroForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -44,23 +47,45 @@ export class Cadastro {
       next: (response) => {
         // Salva o preferenceId para verificar depois
         localStorage.setItem('payment_preference_id', response.preferenceId);
-        
+
         // Redireciona para o Mercado Pago
         window.location.href = response.checkoutUrl;
       },
       error: (error) => {
         this.isLoading = false;
         const backendError = error?.error;
+        let errorMsg = '';
+
         if (backendError && Array.isArray(backendError.errorMessages) && backendError.errorMessages.length) {
-          this.errorMessage = backendError.errorMessages[0];
+          errorMsg = backendError.errorMessages[0];
         } else if (typeof backendError === 'string') {
-          this.errorMessage = backendError;
+          errorMsg = backendError;
         } else if (error?.status === 0) {
-          this.errorMessage = 'Falha de conexão com o servidor.';
+          errorMsg = 'Falha de conexão com o servidor.';
         } else {
-          this.errorMessage = 'Não foi possível iniciar o pagamento.';
+          errorMsg = 'Não foi possível iniciar o pagamento.';
+        }
+
+        // Detecta se o erro é de email já existente
+        if (errorMsg.toLowerCase().includes('email') &&
+          (errorMsg.toLowerCase().includes('existe') ||
+            errorMsg.toLowerCase().includes('cadastrado') ||
+            errorMsg.toLowerCase().includes('já') ||
+            errorMsg.toLowerCase().includes('registered'))) {
+          this.existingEmail = this.cadastroForm.get('email')?.value || '';
+          this.showExistingAccountModal = true;
+        } else {
+          this.errorMessage = errorMsg;
         }
       },
     });
+  }
+
+  closeModal() {
+    this.showExistingAccountModal = false;
+  }
+
+  goToLogin() {
+    this._router.navigate(['/entrar']);
   }
 }

@@ -4,10 +4,11 @@ import { UserService } from '../../services/user';
 import { UserAuthService } from '../../services/user-auth';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { take } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, CommonModule],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
@@ -15,7 +16,9 @@ export class Register implements OnInit {
   errorMessage = '';
   isLoading = false;
   returnUrl = '';
-  
+  showExistingAccountModal = false;
+  existingEmail = '';
+
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -52,7 +55,7 @@ export class Register implements OnInit {
       next: (response) => {
         this.isLoading = false;
         this._userAuthService.setUserToken(response.token);
-        
+
         if (this.returnUrl) {
           this._router.navigateByUrl(this.returnUrl);
         } else {
@@ -62,16 +65,41 @@ export class Register implements OnInit {
       error: (error) => {
         this.isLoading = false;
         const backendError = error?.error;
+        let errorMsg = '';
+
         if (backendError && Array.isArray(backendError.errorMessages) && backendError.errorMessages.length) {
-          this.errorMessage = backendError.errorMessages[0];
+          errorMsg = backendError.errorMessages[0];
         } else if (typeof backendError === 'string') {
-          this.errorMessage = backendError;
+          errorMsg = backendError;
         } else if (error?.status === 0) {
-          this.errorMessage = 'Falha de conexão com o servidor.';
+          errorMsg = 'Falha de conexão com o servidor.';
         } else {
-          this.errorMessage = 'Não foi possível realizar o cadastro.';
+          errorMsg = 'Não foi possível realizar o cadastro.';
+        }
+
+        // Detecta se o erro é de email já existente
+        if (errorMsg.toLowerCase().includes('email') &&
+          (errorMsg.toLowerCase().includes('existe') ||
+            errorMsg.toLowerCase().includes('cadastrado') ||
+            errorMsg.toLowerCase().includes('já') ||
+            errorMsg.toLowerCase().includes('registered'))) {
+          this.existingEmail = this.registerForm.get('email')?.value || '';
+          this.showExistingAccountModal = true;
+        } else {
+          this.errorMessage = errorMsg;
         }
       },
     });
+  }
+
+  closeModal() {
+    this.showExistingAccountModal = false;
+  }
+
+  goToLogin() {
+    const loginUrl = this.returnUrl
+      ? `/entrar?returnUrl=${encodeURIComponent(this.returnUrl)}`
+      : '/entrar';
+    this._router.navigateByUrl(loginUrl);
   }
 }
