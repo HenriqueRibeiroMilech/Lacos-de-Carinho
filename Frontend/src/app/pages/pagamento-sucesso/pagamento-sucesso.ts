@@ -64,11 +64,14 @@ export class PagamentoSucesso implements OnInit {
           if (this.checkCount < this.maxChecks) {
             // Intervalo progressivo: começa em 2s, aumenta até 5s
             const delay = Math.min(2000 + (this.checkCount * 300), 5000);
-            this.message = `Aguardando confirmação do pagamento... (tentativa ${this.checkCount}/${this.maxChecks})`;
+
+            // Override mensagem do backend para evitar confusão sobre "dados de acesso"
+            this.message = 'Seu pagamento está sendo processado. Assim que for confirmado, você receberá um email.';
+
             setTimeout(() => this.checkPaymentStatus(), delay);
           } else {
             this.status = 'pending';
-            this.message = 'Seu pagamento está sendo processado. Você receberá um email de confirmação em breve. Tente atualizar a página em alguns minutos.';
+            this.message = 'Seu pagamento está sendo processado. Assim que for confirmado, você receberá um email.';
           }
         } else {
           this.status = 'error';
@@ -104,6 +107,11 @@ export class PagamentoSucesso implements OnInit {
     } else {
       this._router.navigate(['/criar-evento']);
     }
+  }
+
+  logoutAndRedirect() {
+    this._userAuthService.logout();
+    this._router.navigate(['/entrar']);
   }
 }
 
