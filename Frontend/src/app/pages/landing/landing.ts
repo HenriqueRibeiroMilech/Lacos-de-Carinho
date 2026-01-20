@@ -159,7 +159,7 @@ export class Landing implements OnInit, OnDestroy {
     {
       number: '1',
       title: 'Crie sua conta',
-      description: 'Cadastre-se gratuitamente em menos de 1 minuto'
+      description: 'Cadastre-se em menos de 1 minuto'
     },
     {
       number: '2',
