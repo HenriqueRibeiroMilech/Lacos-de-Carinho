@@ -19,7 +19,7 @@ export class Landing implements OnInit, OnDestroy {
     { icon: '🧊', name: 'Geladeira', reserved: false },
     { icon: '📺', name: 'Smart TV', reserved: false },
   ];
-  
+
   heroReservedCount = 0;
   heroTotalGifts = 50; // Total fictício da lista
   private animationInterval: any;
@@ -42,9 +42,9 @@ export class Landing implements OnInit, OnDestroy {
     // Reseta tudo
     this.heroGifts.forEach(g => g.reserved = false);
     this.heroReservedCount = 0;
-    
+
     let currentIndex = 0;
-    
+
     // Reserva um presente a cada 1.5 segundos
     this.animationInterval = setInterval(() => {
       if (currentIndex < this.heroGifts.length) {
@@ -182,7 +182,7 @@ export class Landing implements OnInit, OnDestroy {
   faqs = [
     {
       question: 'Qual o valor para usar a plataforma?',
-      answer: 'Cobramos apenas um pagamento único! Diferente de outras plataformas, não temos mensalidade nem cobramos porcentagem sobre o valor dos presentes. Pague uma vez e use para sempre.',
+      answer: 'Cobramos apenas um pagamento único! Diferente de outras plataformas, não temos mensalidade nem cobramos porcentagem sobre o valor dos presentes.',
       open: false
     },
     {
@@ -223,8 +223,8 @@ export class Landing implements OnInit, OnDestroy {
   }
 
   prevTestimonial() {
-    this.currentTestimonialIndex = this.currentTestimonialIndex === 0 
-      ? this.testimonials.length - 1 
+    this.currentTestimonialIndex = this.currentTestimonialIndex === 0
+      ? this.testimonials.length - 1
       : this.currentTestimonialIndex - 1;
   }
 
