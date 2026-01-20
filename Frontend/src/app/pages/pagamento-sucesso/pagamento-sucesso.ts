@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PaymentService } from '../../services/payment';
 import { UserAuthService } from '../../services/user-auth';
-import { take, interval } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-pagamento-sucesso',
@@ -24,12 +23,13 @@ export class PagamentoSucesso implements OnInit {
   message: string = '';
   preferenceId: string = '';
   checkCount: number = 0;
-  maxChecks: number = 10;
+  maxChecks: number = 20; // Aumentado para dar mais tempo ao PIX
+  tokenUpdated: boolean = false;
 
   ngOnInit() {
     // Pega o preferenceId da URL (query param ou localStorage)
-    this.preferenceId = this._route.snapshot.queryParams['external_reference'] || 
-                        localStorage.getItem('payment_preference_id') || '';
+    this.preferenceId = this._route.snapshot.queryParams['external_reference'] ||
+      localStorage.getItem('payment_preference_id') || '';
 
     if (!this.preferenceId) {
       this.status = 'error';
@@ -47,22 +47,25 @@ export class PagamentoSucesso implements OnInit {
           this.status = 'approved';
           this.userName = response.name || '';
           this.message = response.message;
-          
-          // Salva o token
+
+          // Salva o novo token (com role atualizado)
           if (response.token) {
             this._userAuthService.setUserToken(response.token);
+            this.tokenUpdated = true;
           }
-          
+
           // Limpa o preferenceId do localStorage
           localStorage.removeItem('payment_preference_id');
         } else if (response.status === 'pending') {
           this.checkCount++;
           if (this.checkCount < this.maxChecks) {
-            // Tenta novamente em 3 segundos
-            setTimeout(() => this.checkPaymentStatus(), 3000);
+            // Intervalo progressivo: começa em 2s, aumenta até 5s
+            const delay = Math.min(2000 + (this.checkCount * 300), 5000);
+            this.message = `Aguardando confirmação do pagamento... (tentativa ${this.checkCount}/${this.maxChecks})`;
+            setTimeout(() => this.checkPaymentStatus(), delay);
           } else {
             this.status = 'pending';
-            this.message = 'Seu pagamento está sendo processado. Você receberá um email de confirmação em breve.';
+            this.message = 'Seu pagamento está sendo processado. Você receberá um email de confirmação em breve. Tente atualizar a página em alguns minutos.';
           }
         } else {
           this.status = 'error';
@@ -70,17 +73,34 @@ export class PagamentoSucesso implements OnInit {
         }
       },
       error: () => {
-        this.status = 'error';
-        this.message = 'Erro ao verificar status do pagamento.';
+        this.checkCount++;
+        if (this.checkCount < this.maxChecks) {
+          // Tenta novamente em caso de erro de rede
+          setTimeout(() => this.checkPaymentStatus(), 3000);
+        } else {
+          this.status = 'error';
+          this.message = 'Erro ao verificar status do pagamento. Tente atualizar a página.';
+        }
       }
     });
   }
 
   goToDashboard() {
-    this._router.navigate(['/painel']);
+    if (this.tokenUpdated) {
+      // Força reload completo para garantir que o novo token seja usado em todo o app
+      window.location.href = '/painel';
+    } else {
+      this._router.navigate(['/painel']);
+    }
   }
 
   goToCreateEvent() {
-    this._router.navigate(['/criar-evento']);
+    if (this.tokenUpdated) {
+      // Força reload completo para garantir que o novo token seja usado em todo o app
+      window.location.href = '/criar-evento';
+    } else {
+      this._router.navigate(['/criar-evento']);
+    }
   }
 }
+

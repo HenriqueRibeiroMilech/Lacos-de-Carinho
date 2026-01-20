@@ -63,7 +63,14 @@ public class MercadoPagoService : IMercadoPagoService
                 ["failure"] = $"{_failureUrl}?external_reference={externalReference}",
                 ["pending"] = $"{_pendingUrl}?external_reference={externalReference}"
             },
-            ["external_reference"] = externalReference
+            ["external_reference"] = externalReference,
+            // Configuração de métodos de pagamento - não exclui nenhum para garantir que PIX apareça
+            ["payment_methods"] = new Dictionary<string, object>
+            {
+                ["excluded_payment_methods"] = Array.Empty<object>(),
+                ["excluded_payment_types"] = Array.Empty<object>(),
+                ["installments"] = 12 // Permite parcelamento
+            }
         };
         
         // Só adiciona auto_return se for HTTPS
