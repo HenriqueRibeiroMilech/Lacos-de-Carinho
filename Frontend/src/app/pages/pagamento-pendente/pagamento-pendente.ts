@@ -1,10 +1,9 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserAuthService } from '../../services/user-auth';
 import { PaymentService } from '../../services/payment';
-import { SignalRService } from '../../services/signalr';
-import { take, Subscription } from 'rxjs';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-pagamento-pendente',
@@ -13,14 +12,11 @@ import { take, Subscription } from 'rxjs';
   templateUrl: './pagamento-pendente.html',
   styleUrl: './pagamento-pendente.css'
 })
-export class PagamentoPendente implements OnInit, OnDestroy {
+export class PagamentoPendente implements OnInit {
   private readonly _route = inject(ActivatedRoute);
   private readonly _router = inject(Router);
   private readonly _userAuthService = inject(UserAuthService);
   private readonly _paymentService = inject(PaymentService);
-  private readonly _signalRService = inject(SignalRService);
-
-  private signalRSub?: Subscription;
 
   status: 'checking' | 'pending' | 'approved' = 'checking';
   userName: string = '';
@@ -34,42 +30,9 @@ export class PagamentoPendente implements OnInit, OnDestroy {
 
     if (this.preferenceId) {
       this.checkPaymentStatus();
-      this.connectToSignalR();
     } else {
       // Sem preferenceId, mostra como pendente
       this.status = 'pending';
-    }
-  }
-
-  ngOnDestroy() {
-    // Limpa a conexão SignalR ao sair
-    this.signalRSub?.unsubscribe();
-    this._signalRService.disconnect();
-  }
-
-  /**
-   * Conecta ao SignalR para receber notificações em tempo real
-   */
-  private async connectToSignalR() {
-    try {
-      await this._signalRService.connectToPaymentHub(this.preferenceId);
-
-      // Ouve eventos de pagamento aprovado
-      this.signalRSub = this._signalRService.onPaymentApproved.subscribe(event => {
-        console.log('PagamentoPendente: Received payment approved event', event);
-
-        this.status = 'approved';
-        this.userName = event.userName || '';
-
-        // Salva o novo token com role ADMIN
-        if (event.token) {
-          this._userAuthService.setUserToken(event.token);
-          this.tokenUpdated = true;
-        }
-      });
-    } catch (err) {
-      console.error('PagamentoPendente: Failed to connect to SignalR', err);
-      // Não faz nada se falhar - ainda tem a verificação via API
     }
   }
 

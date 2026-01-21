@@ -2,7 +2,6 @@ using Ldc.Domain.Enums;
 using Ldc.Domain.Repositories;
 using Ldc.Domain.Repositories.Payment;
 using Ldc.Domain.Repositories.User;
-using Ldc.Domain.Security.Tokens;
 using Ldc.Domain.Services.Payment;
 using Microsoft.Extensions.Logging;
 
@@ -14,7 +13,6 @@ public class ProcessPaymentWebhookUseCase : IProcessPaymentWebhookUseCase
     private readonly IPaymentRepository _paymentRepository;
     private readonly IUserUpdateOnlyRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IAccessTokenGenerator _tokenGenerator;
     private readonly ILogger<ProcessPaymentWebhookUseCase> _logger;
 
     public ProcessPaymentWebhookUseCase(
@@ -22,21 +20,17 @@ public class ProcessPaymentWebhookUseCase : IProcessPaymentWebhookUseCase
         IPaymentRepository paymentRepository,
         IUserUpdateOnlyRepository userRepository,
         IUnitOfWork unitOfWork,
-        IAccessTokenGenerator tokenGenerator,
         ILogger<ProcessPaymentWebhookUseCase> logger)
     {
         _mercadoPagoService = mercadoPagoService;
         _paymentRepository = paymentRepository;
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
-        _tokenGenerator = tokenGenerator;
         _logger = logger;
     }
 
-    public async Task<WebhookProcessingResult> Execute(string paymentId)
+    public async Task Execute(string paymentId)
     {
-        var result = new WebhookProcessingResult();
-        
         _logger.LogInformation("Processing webhook for payment ID: {PaymentId}", paymentId);
 
         // Obtém detalhes completos do pagamento no Mercado Pago
@@ -45,7 +39,7 @@ public class ProcessPaymentWebhookUseCase : IProcessPaymentWebhookUseCase
         if (string.IsNullOrEmpty(paymentDetails.ExternalReference))
         {
             _logger.LogWarning("Payment {PaymentId} has no external_reference, cannot process", paymentId);
-            return result;
+            return;
         }
 
         // Busca pelo PreferenceId interno (que é o external_reference enviado ao MP)
@@ -56,11 +50,8 @@ public class ProcessPaymentWebhookUseCase : IProcessPaymentWebhookUseCase
             _logger.LogWarning(
                 "Payment not found for external_reference: {ExternalReference} (MP PaymentId: {PaymentId})", 
                 paymentDetails.ExternalReference, paymentId);
-            return result;
+            return;
         }
-
-        result.PaymentFound = true;
-        result.PreferenceId = payment.PreferenceId;
 
         _logger.LogInformation(
             "Found payment record ID {PaymentRecordId} for user {UserId}. Current status: {OldStatus}, New status: {NewStatus}",
@@ -81,18 +72,6 @@ public class ProcessPaymentWebhookUseCase : IProcessPaymentWebhookUseCase
                 _logger.LogInformation("Upgrading user {UserId} to ADMIN role", user.Id);
                 user.Role = Roles.ADMIN;
                 _userRepository.Update(user);
-                
-                // Gera novo token com role atualizada para notificação SignalR
-                result.Approved = true;
-                result.UserName = user.Name;
-                result.Token = _tokenGenerator.Generate(user);
-                
-                _logger.LogInformation("Generated new token for user {UserId} with ADMIN role", user.Id);
-            }
-            else if (user != null)
-            {
-                result.Approved = true;
-                result.UserName = user.Name;
             }
         }
 
@@ -102,7 +81,5 @@ public class ProcessPaymentWebhookUseCase : IProcessPaymentWebhookUseCase
         _logger.LogInformation(
             "Successfully processed payment {PaymentId}. Status: {Status}, User upgraded: {Upgraded}",
             paymentId, paymentDetails.Status, paymentDetails.Status == "approved");
-            
-        return result;
     }
 }

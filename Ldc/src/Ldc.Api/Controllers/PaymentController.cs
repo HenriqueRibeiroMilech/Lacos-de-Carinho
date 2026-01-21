@@ -1,4 +1,3 @@
-using Ldc.Api.Services;
 using Ldc.Application.UseCases.Payment.CreatePreference;
 using Ldc.Application.UseCases.Payment.GetStatus;
 using Ldc.Application.UseCases.Payment.ProcessWebhook;
@@ -77,7 +76,6 @@ public class PaymentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Webhook(
         [FromServices] IProcessPaymentWebhookUseCase useCase,
-        [FromServices] IPaymentNotificationService notificationService,
         [FromQuery] string? type,
         [FromQuery(Name = "data.id")] string? dataId,
         [FromQuery] string? action)
@@ -90,21 +88,7 @@ public class PaymentController : ControllerBase
         if (type == "payment" && !string.IsNullOrEmpty(dataId))
         {
             _logger.LogInformation("Processing payment webhook for PaymentId: {PaymentId}", dataId);
-            var result = await useCase.Execute(dataId);
-            
-            // Se pagamento foi aprovado, envia notificação em tempo real via SignalR
-            if (result.Approved && !string.IsNullOrEmpty(result.PreferenceId))
-            {
-                _logger.LogInformation(
-                    "Payment approved! Sending SignalR notification for PreferenceId: {PreferenceId}",
-                    result.PreferenceId);
-                    
-                await notificationService.NotifyPaymentApproved(
-                    result.PreferenceId,
-                    result.UserName ?? "",
-                    result.Token ?? "");
-            }
-            
+            await useCase.Execute(dataId);
             _logger.LogInformation("Webhook processed successfully for PaymentId: {PaymentId}", dataId);
         }
         else
