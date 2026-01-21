@@ -51,13 +51,11 @@ export class PagamentoSucesso implements OnInit {
           // Limpa o preferenceId do localStorage
           localStorage.removeItem('payment_preference_id');
 
-          // IMPORTANTE: Logout automático para obrigar renovação das claims (permissões)
-          this._userAuthService.logout();
-
-          // Redireciona para o login após breve delay para leitura da mensagem
-          setTimeout(() => {
-            this._router.navigate(['/entrar'], { queryParams: { upgradeSuccess: true } });
-          }, 2500);
+          // IMPORTANTE: Salva o novo token com role ADMIN atualizada
+          if (response.token) {
+            this._userAuthService.setUserToken(response.token);
+            this.tokenUpdated = true;
+          }
 
         } else if (response.status === 'pending') {
           this.checkCount++;

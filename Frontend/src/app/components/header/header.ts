@@ -11,7 +11,7 @@ import { UserAuthService } from '../../services/user-auth';
 export class Header {
   readonly userAuthService = inject(UserAuthService);
   private readonly _router = inject(Router);
-  
+
   isMenuOpen = false;
 
   toggleMenu() {
@@ -19,7 +19,13 @@ export class Header {
   }
 
   logout() {
-    this.userAuthService.clearUserToken();
-    this._router.navigate(['/entrar']);
+    const guestListLink = this.userAuthService.getLogoutRedirectUrl();
+    this.userAuthService.logout();
+
+    if (guestListLink) {
+      this._router.navigate(['/lista', guestListLink]);
+    } else {
+      this._router.navigate(['/entrar']);
+    }
   }
 }

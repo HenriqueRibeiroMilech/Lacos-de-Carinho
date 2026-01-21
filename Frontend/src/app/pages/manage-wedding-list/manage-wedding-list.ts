@@ -299,7 +299,7 @@ export class ManageWeddingList implements OnInit {
   addFromCatalog(item: ITemplateItem) {
     if (!this.list) return;
     this.addingItemId = item.id;
-    
+
     // Obtém a categoria do item do catálogo
     const categoryId = this.mapCatalogCategoryToId(item.category?.name || '');
 
@@ -410,7 +410,7 @@ export class ManageWeddingList implements OnInit {
 
   confirmDelete() {
     if (!this.itemToDelete) return;
-    
+
     this._weddingService.deleteGiftItem(this.listId, this.itemToDelete.id).pipe(take(1)).subscribe({
       next: () => {
         if (this.list && this.itemToDelete) {
@@ -486,7 +486,7 @@ export class ManageWeddingList implements OnInit {
 
   async downloadQRCode() {
     if (!this.qrCodeDataUrl) return;
-    
+
     const link = document.createElement('a');
     link.download = `qrcode-${this.list?.title || 'lista'}.png`;
     link.href = this.qrCodeDataUrl;
@@ -494,7 +494,14 @@ export class ManageWeddingList implements OnInit {
   }
 
   shareWhatsApp() {
-    const text = encodeURIComponent(`Confira nossa lista de presentes: ${this.shareUrl}`);
+    const message = `💒✨ *Você está convidado(a)!* ✨💒
+Olá! Temos o prazer de convidar você para celebrar conosco um momento muito especial!
+🎁 Preparamos uma lista de presentes para facilitar sua escolha. Acesse o link abaixo para ver todas as opções e reservar o seu:
+👉 ${this.shareUrl}
+Sua presença é o nosso maior presente! 💕
+_Enviado com amor através do Laços de Carinho_ 🎀`;
+
+    const text = encodeURIComponent(message);
     window.open(`https://wa.me/?text=${text}`, '_blank');
   }
 
@@ -549,9 +556,9 @@ export class ManageWeddingList implements OnInit {
   // Retorna lista expandida com convidado principal + acompanhantes como itens individuais
   getExpandedRsvps(): { name: string; status: number; isGuest: boolean }[] {
     if (!this.list?.rsvps) return [];
-    
+
     const expanded: { name: string; status: number; isGuest: boolean }[] = [];
-    
+
     for (const rsvp of this.list.rsvps) {
       // Adiciona o convidado principal
       expanded.push({
@@ -559,7 +566,7 @@ export class ManageWeddingList implements OnInit {
         status: rsvp.status,
         isGuest: true
       });
-      
+
       // Adiciona cada acompanhante como item individual
       if (rsvp.additionalGuests && rsvp.status === RsvpStatus.Confirmed) {
         const guests = rsvp.additionalGuests.split(',').map(g => g.trim()).filter(g => g);
@@ -572,7 +579,7 @@ export class ManageWeddingList implements OnInit {
         }
       }
     }
-    
+
     return expanded;
   }
 
@@ -583,7 +590,7 @@ export class ManageWeddingList implements OnInit {
 
   downloadGuestListPdf() {
     if (this.downloadingPdf || !this.listId) return;
-    
+
     this.downloadingPdf = true;
     this._weddingService.downloadGuestListPdf(this.listId).pipe(take(1)).subscribe({
       next: (blob) => {

@@ -1,7 +1,68 @@
 <div class="min-h-screen bg-gradient-to-br from-rose-50 via-white to-pink-50 flex items-center justify-center p-4">
 
+  <!-- Checking State -->
+  @if(status === 'checking') {
+  <div class="text-center">
+    <div
+      class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-r from-[#D97F97] to-[#c06f85] flex items-center justify-center animate-pulse">
+      <svg class="w-10 h-10 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+        </path>
+      </svg>
+    </div>
+    <h2 class="text-xl font-semibold text-gray-700">Verificando pagamento...</h2>
+    <p class="text-gray-500 mt-2">Aguarde um momento</p>
+  </div>
+  }
+
+  <!-- Approved State (pagamento já foi aprovado!) -->
+  @if(status === 'approved') {
   <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 max-w-lg w-full text-center">
-    <!-- Pending Icon -->
+    <div
+      class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 flex items-center justify-center shadow-lg shadow-green-200">
+      <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+      </svg>
+    </div>
+
+    <div class="text-5xl mb-4">🎉</div>
+
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">Pagamento Aprovado!</h1>
+
+    @if(userName) {
+    <p class="text-lg text-gray-600 mb-4">
+      Parabéns, <span class="font-semibold text-[#D97F97]">{{ userName }}</span>!
+    </p>
+    }
+
+    @if(tokenUpdated) {
+    <p class="text-gray-500 mb-8">
+      Seu plano de Organizador foi ativado com sucesso! Agora você pode criar suas listas e organizar cada detalhe do
+      seu grande dia.
+    </p>
+
+    <button (click)="goToDashboard()"
+      class="w-full py-4 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-2xl font-semibold shadow-lg shadow-rose-200 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+      Ir para o Painel
+    </button>
+    } @else {
+    <p class="text-gray-500 mb-8">
+      Seu cadastro foi confirmado com sucesso. Faça login para começar a criar suas listas!
+    </p>
+
+    <button (click)="logoutAndRedirect()"
+      class="w-full py-4 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-2xl font-semibold shadow-lg shadow-rose-200 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+      Fazer Login
+    </button>
+    }
+  </div>
+  }
+
+  <!-- Pending State (ainda aguardando) -->
+  @if(status === 'pending') {
+  <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 max-w-lg w-full text-center">
     <div
       class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-200">
       <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -14,30 +75,25 @@
 
     <h1 class="text-3xl font-bold text-gray-800 mb-2">Pagamento em processamento</h1>
 
-    <p class="text-gray-500 mb-8">
+    <p class="text-gray-500 mb-6">
       Seu pagamento está sendo processado. Assim que for confirmado, você receberá um email.
     </p>
 
-    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 mb-8">
-      <p class="text-amber-700 text-sm">
-        <strong>Importante:</strong> Pagamentos via boleto podem levar até 3 dias úteis para compensar.
-      </p>
-    </div>
+    <p class="text-gray-600 mb-8 text-sm">
+      Assim que seu pagamento for aprovado, faça login para começar a criar suas listas e organizar seu casamento.
+    </p>
 
-    <div class="space-y-3">
-
-
-      <button (click)="logoutAndRedirect()"
-        class="block w-full py-4 border-2 border-gray-200 text-gray-600 rounded-2xl font-semibold hover:bg-gray-50 transition-colors">
-        Sair e Fazer Login
-      </button>
-    </div>
+    <button (click)="logoutAndRedirect()"
+      class="w-full py-4 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-2xl font-semibold shadow-lg shadow-rose-200 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+      Fazer Login
+    </button>
 
     <p class="text-sm text-gray-400 mt-8">
       Dúvidas? Entre em contato:<br>
-      <a href="mailto:suporte@lacosdecarinho.com.br"
-        class="text-[#D97F97] hover:underline">suporte&#64;lacosdecarinho.com.br</a>
+      <a href="mailto:lacosdecarinhosuporte@gmail.com"
+        class="text-[#D97F97] hover:underline">lacosdecarinhosuporte&#64;gmail.com</a>
     </p>
   </div>
+  }
 
 </div>

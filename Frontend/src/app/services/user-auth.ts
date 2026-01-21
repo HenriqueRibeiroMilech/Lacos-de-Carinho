@@ -35,8 +35,32 @@ export class UserAuthService {
     localStorage.removeItem('auth-token');
   }
 
+  // Armazena o link da lista pública que o convidado veio
+  setGuestListLink(link: string): void {
+    localStorage.setItem('guest-list-link', link);
+  }
+
+  getGuestListLink(): string | null {
+    return localStorage.getItem('guest-list-link');
+  }
+
+  clearGuestListLink(): void {
+    localStorage.removeItem('guest-list-link');
+  }
+
   logout(): void {
+    const guestListLink = this.getGuestListLink();
     this.clearUserToken();
+    this.clearGuestListLink();
+    return; // O componente que chama decide para onde redirecionar
+  }
+
+  // Retorna o link da lista se for convidado, ou null
+  getLogoutRedirectUrl(): string | null {
+    if (!this.isAdmin()) {
+      return this.getGuestListLink();
+    }
+    return null;
   }
 
   private decodeJwtPayload(token: string): DecodedToken | null {

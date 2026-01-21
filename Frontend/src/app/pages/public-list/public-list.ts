@@ -74,12 +74,12 @@ export class PublicList implements OnInit {
   get availableItems(): IGiftItem[] {
     if (!this.list || !this.list.items) return [];
     let items = this.list.items.filter(i => i.status === GiftItemStatus.Available);
-    
+
     // Filtrar por categoria se selecionada (usar !== null para permitir categoria 0)
     if (this.selectedCategory !== null) {
       items = items.filter(i => this.getItemCategory(i) === this.selectedCategory);
     }
-    
+
     return items;
   }
 
@@ -137,7 +137,7 @@ export class PublicList implements OnInit {
   // Conta quantos itens disponíveis há em cada categoria
   getCategoryCount(categoryId: number): number {
     if (!this.list || !this.list.items) return 0;
-    return this.list.items.filter(i => 
+    return this.list.items.filter(i =>
       i.status === GiftItemStatus.Available && this.getItemCategory(i) === categoryId
     ).length;
   }
@@ -150,7 +150,12 @@ export class PublicList implements OnInit {
   ngOnInit() {
     this._route.paramMap.subscribe(params => {
       this.shareableLink = params.get('link') || '';
-      
+
+      // Salva o link da lista para redirecionamento pós-logout
+      if (this.shareableLink) {
+        this._userAuthService.setGuestListLink(this.shareableLink);
+      }
+
       // Se não estiver logado, redireciona para login com returnUrl
       if (!this.isLoggedIn) {
         this._router.navigate(['/entrar'], {
@@ -158,7 +163,7 @@ export class PublicList implements OnInit {
         });
         return;
       }
-      
+
       if (this.shareableLink) {
         this.loadList();
       }
@@ -181,17 +186,17 @@ export class PublicList implements OnInit {
       next: (response) => {
         this.list = response;
         this.loading = false;
-        
+
         if (this.list) {
-             if (this.list.isOwner) {
-               // Owner preview mode - set a demo RSVP for visualization
-               this.myRsvp = { id: 0, guestId: 0, status: RsvpStatus.Pending };
-             } else {
-               // Guest mode - load real RSVP
-               this.loadGuestDetails();
-             }
+          if (this.list.isOwner) {
+            // Owner preview mode - set a demo RSVP for visualization
+            this.myRsvp = { id: 0, guestId: 0, status: RsvpStatus.Pending };
+          } else {
+            // Guest mode - load real RSVP
+            this.loadGuestDetails();
+          }
         } else {
-             this.error = 'Lista não encontrada';
+          this.error = 'Lista não encontrada';
         }
         this._cdr.markForCheck();
       },
@@ -275,21 +280,21 @@ export class PublicList implements OnInit {
 
   submitRsvp() {
     if (!this.list) return;
-    
+
     // Owner preview mode - update local state only (no API call)
     if (this.isOwner) {
       const additionalGuests = this.rsvpChoice === RsvpStatus.Confirmed ? this.serializeAdditionalGuests() : undefined;
-      this.myRsvp = { 
-        id: 0, 
-        guestId: 0, 
+      this.myRsvp = {
+        id: 0,
+        guestId: 0,
         status: this.rsvpChoice,
-        additionalGuests 
+        additionalGuests
       };
       this.showRsvpModal = false;
       this._cdr.markForCheck();
       return;
     }
-    
+
     this.sendingRsvp = true;
     const additionalGuests = this.rsvpChoice === RsvpStatus.Confirmed ? this.serializeAdditionalGuests() : undefined;
 
@@ -315,7 +320,7 @@ export class PublicList implements OnInit {
   reserveItem(item: IGiftItem) {
     if (!this.isLoggedIn) {
       // Redirect to login with return URL
-      this._router.navigate(['/entrar'], { 
+      this._router.navigate(['/entrar'], {
         queryParams: { returnUrl: `/lista/${this.shareableLink}` }
       });
       return;
@@ -351,7 +356,7 @@ export class PublicList implements OnInit {
       this._cdr.markForCheck();
       return;
     }
-    
+
     this._weddingService.cancelReservation(item.id).pipe(take(1)).subscribe({
       next: () => {
         this.loadList();

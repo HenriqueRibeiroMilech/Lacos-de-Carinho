@@ -132,8 +132,15 @@ export class Dashboard implements OnInit {
   }
 
   logout() {
-    this._userAuthService.clearUserToken();
-    this._router.navigate(['/entrar']);
+    // Se for convidado e tiver uma lista associada, redireciona para ela
+    if (!this.isAdmin && this.guestDetails?.events?.length) {
+      const shareableLink = this.guestDetails.events[0].weddingList.shareableLink;
+      this._userAuthService.clearUserToken();
+      this._router.navigate(['/lista', shareableLink]);
+    } else {
+      this._userAuthService.clearUserToken();
+      this._router.navigate(['/entrar']);
+    }
   }
 
   navigateToCreateEvent() {
@@ -232,7 +239,14 @@ export class Dashboard implements OnInit {
   }
 
   shareWhatsApp() {
-    const text = encodeURIComponent(`Confira nossa lista de presentes: ${this.shareUrl}`);
+    const message = `💒✨ *Você está convidado(a)!* ✨💒
+Olá! Temos o prazer de convidar você para celebrar conosco um momento muito especial!
+🎁 Preparamos uma lista de presentes para facilitar sua escolha. Acesse o link abaixo para ver todas as opções e reservar o seu:
+👉 ${this.shareUrl}
+Sua presença é o nosso maior presente! 💕
+_Enviado com amor através do Laços de Carinho_ 🎀`;
+
+    const text = encodeURIComponent(message);
     window.open(`https://wa.me/?text=${text}`, '_blank');
   }
 

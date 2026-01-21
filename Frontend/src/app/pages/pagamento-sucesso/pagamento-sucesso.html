@@ -28,30 +28,40 @@
       </svg>
     </div>
 
-    <!-- Confetti animation -->
+    <!-- Confetti -->
     <div class="text-5xl mb-4">🎉</div>
 
     <h1 class="text-3xl font-bold text-gray-800 mb-2">Pagamento Aprovado!</h1>
 
     @if(userName) {
-    <p class="text-lg text-gray-600 mb-6">
-      Bem-vindo(a), <span class="font-semibold text-[#D97F97]">{{ userName }}</span>!
+    <p class="text-lg text-gray-600 mb-4">
+      Parabéns, <span class="font-semibold text-[#D97F97]">{{ userName }}</span>!
     </p>
     }
 
-    <p class="text-gray-500 mb-8">{{ message }}</p>
+    <!-- Token atualizado automaticamente - pode ir direto pro painel -->
+    @if(tokenUpdated) {
+    <p class="text-gray-500 mb-8">
+      Seu plano de Organizador foi ativado com sucesso! Agora você pode criar suas listas e organizar cada detalhe do
+      seu grande dia.
+    </p>
 
-    <div class="space-y-3">
-      <button (click)="goToCreateEvent()"
-        class="w-full py-4 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-2xl font-semibold shadow-lg shadow-rose-200 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
-        Criar minha lista de presentes
-      </button>
+    <button (click)="goToDashboard()"
+      class="w-full py-4 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-2xl font-semibold shadow-lg shadow-rose-200 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+      Ir para o Painel
+    </button>
+    } @else {
+    <!-- Token não atualizado (fallback) - precisa fazer login -->
+    <p class="text-gray-500 mb-8">
+      Seu cadastro foi confirmado com sucesso. Faça login para começar a criar suas listas e organizar cada detalhe do
+      seu grande dia!
+    </p>
 
-      <button (click)="goToDashboard()"
-        class="w-full py-4 border-2 border-gray-200 text-gray-600 rounded-2xl font-semibold hover:bg-gray-50 transition-colors">
-        Ir para o painel
-      </button>
-    </div>
+    <button (click)="logoutAndRedirect()"
+      class="w-full py-4 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-2xl font-semibold shadow-lg shadow-rose-200 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+      Fazer Login
+    </button>
+    }
   </div>
   }
 
@@ -71,8 +81,8 @@
     <p class="text-gray-500 mb-8">{{ message }}</p>
 
     <button (click)="logoutAndRedirect()"
-      class="inline-block w-full py-4 border-2 border-gray-200 text-gray-600 rounded-2xl font-semibold hover:bg-gray-50 transition-colors">
-      Sair e Fazer Login
+      class="w-full py-4 border-2 border-gray-200 text-gray-600 rounded-2xl font-semibold hover:bg-gray-50 transition-colors">
+      Fazer Login
     </button>
   </div>
   }
