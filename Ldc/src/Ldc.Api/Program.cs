@@ -1,7 +1,9 @@
 using System.Text;
 using System.Text.Json.Serialization;
 using Ldc.Api.Filters;
+using Ldc.Api.Hubs;
 using Ldc.Api.Middleware;
+using Ldc.Api.Services;
 using Ldc.Api.Token;
 using Ldc.Application;
 using Ldc.Domain.Security.Tokens;
@@ -55,6 +57,10 @@ builder.Services.AddApplication();
 
 builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
 
+// SignalR para notificações em tempo real
+builder.Services.AddSignalR();
+builder.Services.AddScoped<IPaymentNotificationService, PaymentNotificationService>();
+
 builder.Services.AddHttpContextAccessor();
 
 // CORS policy to allow Angular dev server origin. Adjust origin if your frontend runs elsewhere.
@@ -62,10 +68,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
+        policy.WithOrigins("http://localhost:4200", "https://lacosdecarinho.com.br")
             .AllowAnyHeader()
-            .AllowAnyMethod();
-        // If someday you send cookies or credentials, add .AllowCredentials();
+            .AllowAnyMethod()
+            .AllowCredentials(); // Necessário para SignalR
     });
 });
 
@@ -105,6 +111,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// SignalR Hub mapping
+app.MapHub<PaymentHub>("/hubs/payment");
 
 if (builder.Configuration.IsTestEnvironment() == false)
 {
