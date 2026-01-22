@@ -62,7 +62,6 @@ export class Login implements OnInit {
           }
         },
         error: (error) => {
-          console.log(error);
           // Backend returns { errorMessages: string[] } with 401
           const backendError = error?.error;
           if (backendError && Array.isArray(backendError.errorMessages) && backendError.errorMessages.length) {

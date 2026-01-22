@@ -56,13 +56,8 @@ export class Dashboard implements OnInit {
   }
 
   ngOnInit() {
-    // Debug: log token info to console
-    this._userAuthService.debugToken();
-
     this.userName = this._userAuthService.getUserName() || 'Usuário';
     this.isAdmin = this._userAuthService.isAdmin();
-
-    console.log('Dashboard - userName:', this.userName, 'isAdmin:', this.isAdmin);
 
     // Load admin lists if admin
     if (this.isAdmin) {
