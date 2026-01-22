@@ -39,31 +39,16 @@ public class GetPaymentStatusUseCase : IGetPaymentStatusUseCase
             };
         }
 
-        // Busca o usuário para verificar a role
-        var user = await _userRepository.GetById(payment.UserId);
-        
-        // FALLBACK: Se o usuário já é ADMIN (webhook já atualizou), considera aprovado
-        // mesmo que payment.Status não tenha sido atualizado corretamente
-        var effectiveStatus = payment.Status;
-        if (user != null && user.Role == Roles.ADMIN && payment.Status != "approved")
-        {
-            // Corrige o status do pagamento para manter consistência
-            payment.Status = "approved";
-            payment.PaidAt ??= DateTime.UtcNow;
-            _paymentRepository.Update(payment);
-            await _unitOfWork.Commit();
-            effectiveStatus = "approved";
-        }
-
         var response = new ResponsePaymentStatusJson
         {
-            Status = effectiveStatus
+            Status = payment.Status
         };
 
-        switch (effectiveStatus)
+        switch (payment.Status)
         {
             case "approved":
                 // Garante que o usuário é ADMIN
+                var user = await _userRepository.GetById(payment.UserId);
                 if (user.Role != Roles.ADMIN)
                 {
                     user.Role = Roles.ADMIN;
@@ -85,7 +70,7 @@ public class GetPaymentStatusUseCase : IGetPaymentStatusUseCase
                 break;
 
             default:
-                response.Message = "Status do pagamento: " + effectiveStatus;
+                response.Message = "Status do pagamento: " + payment.Status;
                 break;
         }
 
