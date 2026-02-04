@@ -61,6 +61,11 @@ export class ManageWeddingList implements OnInit {
   settingsForm = { title: '', message: '', eventDate: '', deliveryInfo: '' };
   savingSettings = false;
 
+  // Edit item modal
+  showEditModal = false;
+  editItemForm = { id: 0, name: '', description: '', category: GiftCategory.Outros };
+  savingEdit = false;
+
   // Delete confirmation modal
   showDeleteModal = false;
   itemToDelete: IGiftItem | null = null;
@@ -417,6 +422,41 @@ export class ManageWeddingList implements OnInit {
           this.list.items = this.list.items.filter(i => i.id !== this.itemToDelete!.id);
         }
         this.cancelDelete();
+      }
+    });
+  }
+
+  openEditModal(item: IGiftItem) {
+    this.editItemForm = {
+      id: item.id,
+      name: item.name,
+      description: item.description || '',
+      category: item.category || GiftCategory.Outros
+    };
+    this.showEditModal = true;
+  }
+
+  saveEditItem() {
+    if (!this.editItemForm.name.trim()) return;
+    this.savingEdit = true;
+
+    this._weddingService.updateGiftItem(this.listId, this.editItemForm.id, {
+      name: this.editItemForm.name,
+      description: this.editItemForm.description,
+      category: this.editItemForm.category
+    }).pipe(take(1)).subscribe({
+      next: (updatedItem) => {
+        if (this.list && this.list.items) {
+          const index = this.list.items.findIndex(i => i.id === updatedItem.id);
+          if (index !== -1) {
+            this.list.items[index] = updatedItem;
+          }
+        }
+        this.showEditModal = false;
+        this.savingEdit = false;
+      },
+      error: () => {
+        this.savingEdit = false;
       }
     });
   }

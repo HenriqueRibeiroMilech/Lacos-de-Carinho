@@ -59,9 +59,9 @@ public class MercadoPagoService : IMercadoPagoService
             },
             ["back_urls"] = new Dictionary<string, string>
             {
-                ["success"] = $"{_successUrl}?external_reference={externalReference}",
-                ["failure"] = $"{_failureUrl}?external_reference={externalReference}",
-                ["pending"] = $"{_pendingUrl}?external_reference={externalReference}"
+                ["success"] = _successUrl,
+                ["failure"] = _failureUrl,
+                ["pending"] = _pendingUrl
             },
             ["external_reference"] = externalReference,
             // Configuração de métodos de pagamento - não exclui nenhum para garantir que PIX apareça
