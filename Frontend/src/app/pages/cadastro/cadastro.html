@@ -50,7 +50,7 @@
           </svg>
           <input
             class="w-full text-white lg:text-gray-900 text-sm focus:outline-none placeholder-gray-200 lg:placeholder-gray-400 bg-transparent"
-            id="input-name" type="text" placeholder="Ex: Ana & João" formControlName="name" />
+            id="input-name" type="text" placeholder="Seu nome completo" formControlName="name" />
         </div>
         @if(cadastroForm.get('name')?.touched && cadastroForm.get('name')?.hasError('required')) {
         <p class="text-red-400 text-xs ml-1">O nome é obrigatório</p>
