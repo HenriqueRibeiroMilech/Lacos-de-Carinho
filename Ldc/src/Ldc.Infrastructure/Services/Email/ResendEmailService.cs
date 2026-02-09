@@ -1,30 +1,25 @@
-using System.Net;
-using System.Net.Mail;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.Json;
 using Ldc.Domain.Services.Email;
 using Microsoft.Extensions.Configuration;
 
 namespace Ldc.Infrastructure.Services.Email;
 
-public class SmtpEmailService : IEmailService
+public class ResendEmailService : IEmailService
 {
-    private readonly string _smtpHost;
-    private readonly int _smtpPort;
-    private readonly string _smtpUser;
-    private readonly string _smtpPassword;
+    private readonly HttpClient _httpClient;
+    private readonly string _apiKey;
     private readonly string _fromEmail;
     private readonly string _fromName;
-    private readonly bool _enableSsl;
 
-    public SmtpEmailService(IConfiguration configuration)
+    public ResendEmailService(IConfiguration configuration, HttpClient httpClient)
     {
+        _httpClient = httpClient;
         var emailSettings = configuration.GetSection("Settings:Email");
-        _smtpHost = emailSettings["SmtpHost"] ?? "smtp.gmail.com";
-        _smtpPort = int.Parse(emailSettings["SmtpPort"] ?? "587");
-        _smtpUser = emailSettings["SmtpUser"] ?? "";
-        _smtpPassword = emailSettings["SmtpPassword"] ?? "";
-        _fromEmail = emailSettings["FromEmail"] ?? _smtpUser;
+        _apiKey = emailSettings["ResendApiKey"] ?? "";
+        _fromEmail = emailSettings["FromEmail"] ?? "noreply@lacosdecarinho.com";
         _fromName = emailSettings["FromName"] ?? "Laços de Carinho";
-        _enableSsl = bool.Parse(emailSettings["EnableSsl"] ?? "true");
     }
 
     public async Task SendPasswordResetEmailAsync(string toEmail, string userName, string resetLink)
@@ -35,25 +30,28 @@ public class SmtpEmailService : IEmailService
         await SendEmailAsync(toEmail, subject, body);
     }
 
-    private async Task SendEmailAsync(string toEmail, string subject, string body)
+    private async Task SendEmailAsync(string toEmail, string subject, string htmlBody)
     {
-        using var client = new SmtpClient(_smtpHost, _smtpPort)
+        var requestBody = new
         {
-            Credentials = new NetworkCredential(_smtpUser, _smtpPassword),
-            EnableSsl = _enableSsl,
-            Timeout = 30000 // 30 seconds timeout
+            from = $"{_fromName} <{_fromEmail}>",
+            to = new[] { toEmail },
+            subject = subject,
+            html = htmlBody
         };
 
-        var mailMessage = new MailMessage
-        {
-            From = new MailAddress(_fromEmail, _fromName),
-            Subject = subject,
-            Body = body,
-            IsBodyHtml = true
-        };
-        mailMessage.To.Add(toEmail);
+        var json = JsonSerializer.Serialize(requestBody);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        await client.SendMailAsync(mailMessage);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+
+        var response = await _httpClient.PostAsync("https://api.resend.com/emails", content);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            throw new Exception($"Failed to send email via Resend: {response.StatusCode} - {errorContent}");
+        }
     }
 
     private string GetPasswordResetEmailTemplate(string userName, string resetLink)
@@ -73,7 +71,7 @@ public class SmtpEmailService : IEmailService
                     <!-- Header -->
                     <tr>
                         <td style='padding: 40px 40px 20px; text-align: center; background: linear-gradient(135deg, #D97F97 0%, #c06f85 100%); border-radius: 16px 16px 0 0;'>
-                            <h1 style='margin: 0; color: #ffffff; font-size: 28px; font-weight: 600;'>💝 Laços de Carinho</h1>
+                            <h1 style='margin: 0; color: #ffffff; font-size: 28px; font-weight: 600;'>Laços de Carinho</h1>
                         </td>
                     </tr>
                     

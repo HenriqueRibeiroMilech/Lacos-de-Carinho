@@ -31,7 +31,7 @@ public static class DependencyInjectionExtension
     {
         services.AddScoped<IPasswordEncrypter, Infrastructure.Security.Cryptography.BCrypt>();
         services.AddScoped<ILoggedUser, LoggedUser>();
-        services.AddScoped<IEmailService, SmtpEmailService>();
+        services.AddHttpClient<IEmailService, ResendEmailService>();
         services.AddHttpClient<IMercadoPagoService, MercadoPagoService>();
         
         AddToken(services, configuration);
