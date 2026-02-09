@@ -9,14 +9,14 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 -- 1. Insert Categories
 INSERT INTO Categories (Id, Name) VALUES 
-(1, 'Cozinha'),
-(2, 'Eletrodomésticos'),
-(3, 'Cama, Mesa e Banho'),
-(4, 'Decoração'),
-(5, 'Móveis'),
-(6, 'Eletrônicos'),
-(7, 'Lua de Mel (Cotas)'),
-(8, 'Lazer e Bar');
+(1, '🍳 Cozinha'),
+(2, '🔌 Eletrodomésticos'),
+(3, '🛏️ Cama, Mesa e Banho'),
+(4, '🖼️ Decoração'),
+(5, '🪑 Móveis'),
+(6, '📺 Eletrônicos'),
+(7, '✈️ Lua de Mel (Cotas)'),
+(8, '🍹 Lazer e Bar');
 
 -- 2. Insert Template Items associated with Categories
 
@@ -31,7 +31,9 @@ INSERT INTO TemplateGiftItems (Name, Description, CategoryId) VALUES
 ('Petisqueira', 'Ideal para receber amigos', 1),
 ('Fruteira de Mesa', 'Design moderno para centro de mesa', 1),
 ('Tábua de Corte', 'Bambu ou madeira tratada', 1),
-('Escorredor de Louça', 'Aço inox resistente', 1);
+('Escorredor de Louça', 'Aço inox resistente', 1),
+('Chaleira', 'Inox ou colorida para ferver água', 1),
+('Garrafa Térmica', 'Para manter o café quentinho', 1);
 
 -- Eletrodomésticos (Id: 2)
 INSERT INTO TemplateGiftItems (Name, Description, CategoryId) VALUES
@@ -44,7 +46,9 @@ INSERT INTO TemplateGiftItems (Name, Description, CategoryId) VALUES
 ('Aspirador de Pó', 'Compacto e eficiente', 2),
 ('Micro-ondas', 'Essencial para a cozinha moderna', 2),
 ('Mixer de Mão', 'Versátil para sopas e vitaminas', 2),
-('Torradeira', 'Para pães quentinhos', 2);
+('Torradeira', 'Para pães quentinhos', 2),
+('Panela de Pressão Elétrica', 'Praticidade e segurança no cozimento', 2),
+('Purificador de Água', 'Água gelada e pura sempre', 2);
 
 -- Cama, Mesa e Banho (Id: 3)
 INSERT INTO TemplateGiftItems (Name, Description, CategoryId) VALUES
@@ -55,7 +59,9 @@ INSERT INTO TemplateGiftItems (Name, Description, CategoryId) VALUES
 ('Toalha de Mesa', 'Estampada ou lisa para 6 lugares', 3),
 ('Jogo Americano', 'Kit com 4 ou 6 lugares', 3),
 ('Protetor de Colchão', 'Impermeável e lavável', 3),
-('Travesseiros (Par)', 'Macios e antialérgicos', 3);
+('Travesseiros (Par)', 'Macios e antialérgicos', 3),
+('Cobertor de Microfibra', 'Leve e quentinho', 3),
+('Tapetes de Banheiro', 'Kit antiderrapante', 3);
 
 -- Decoração (Id: 4)
 INSERT INTO TemplateGiftItems (Name, Description, CategoryId) VALUES
@@ -65,14 +71,18 @@ INSERT INTO TemplateGiftItems (Name, Description, CategoryId) VALUES
 ('Tapete para Sala', 'Conforto e design para o ambiente', 4),
 ('Espelho com Moldura', 'Para ampliar o ambiente', 4),
 ('Porta-Retrato Digital', 'Para exibir as fotos do casamento', 4),
-('Velas Aromáticas', 'Kit para criar um clima aconchegante', 4);
+('Velas Aromáticas', 'Kit para criar um clima aconchegante', 4),
+('Almofadas Decorativas', 'Kit com 4 capas e enchimentos', 4),
+('Relógio de Parede', 'Design moderno', 4);
 
 -- Móveis (Id: 5)
 INSERT INTO TemplateGiftItems (Name, Description, CategoryId) VALUES
 ('Mesa de Cabeceira', 'Par para o quarto do casal', 5),
 ('Puff Decorativo', 'Versátil para a sala de estar', 5),
 ('Sapateira', 'Organização prática', 5),
-('Carrinho de Bar', 'Para bebidas e decoração', 5);
+('Carrinho de Bar', 'Para bebidas e decoração', 5),
+('Poltrona de Leitura', 'Confortável para a sala', 5),
+('Estante Livreiro', 'Para organizar os livros', 5);
 
 -- Eletrônicos (Id: 6)
 INSERT INTO TemplateGiftItems (Name, Description, CategoryId) VALUES
@@ -94,4 +104,5 @@ INSERT INTO TemplateGiftItems (Name, Description, CategoryId) VALUES
 ('Kit Caipirinha', 'Tábua, copo e socador', 8),
 ('Balde de Gelo', 'Inox ou acrílico', 8),
 ('Conjunto de Utensílios para Churrasco', 'Faca, garfo e pegador', 8),
-('Cooler Térmico', 'Para levar bebidas para qualquer lugar', 8);
+('Cooler Térmico', 'Para levar bebidas para qualquer lugar', 8),
+('Jogo de Dardo', 'Diversão para a área de lazer', 8);
