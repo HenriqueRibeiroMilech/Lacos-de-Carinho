@@ -110,7 +110,14 @@ export class ManageWeddingList implements OnInit {
       next: (response) => {
         // Use fallback if API returns empty
         if (response.groups && response.groups.length > 0) {
-          this.templateGroups = response.groups;
+          // Propagate group category to each item (API items don't have category)
+          this.templateGroups = response.groups.map(group => ({
+            ...group,
+            items: group.items.map(item => ({
+              ...item,
+              category: item.category || group.category
+            }))
+          }));
         } else {
           this.templateGroups = this.getCompleteCatalog();
         }
@@ -274,31 +281,14 @@ export class ManageWeddingList implements OnInit {
   }
 
   // Mapeia categoria do catálogo para o ID de categoria (enum)
-  private mapCatalogCategoryToId(categoryName: string): GiftCategory {
-    const mapping: { [key: string]: GiftCategory } = {
-      'Cozinha': GiftCategory.Cozinha,
-      '🍳 Cozinha': GiftCategory.Cozinha,
-      'Quarto': GiftCategory.Quarto,
-      '🛏️ Quarto': GiftCategory.Quarto,
-      'Banheiro': GiftCategory.Banheiro,
-      '🚿 Banheiro': GiftCategory.Banheiro,
-      'Sala': GiftCategory.Sala,
-      'Sala de Estar': GiftCategory.Sala,
-      '🛋️ Sala de Estar': GiftCategory.Sala,
-      'Lavanderia': GiftCategory.Lavanderia,
-      '🧹 Lavanderia': GiftCategory.Lavanderia,
-      'Casa Inteligente': GiftCategory.CasaInteligente,
-      '🏠 Casa Inteligente': GiftCategory.CasaInteligente,
-      'Mesa Posta': GiftCategory.MesaPosta,
-      '🍷 Mesa Posta': GiftCategory.MesaPosta,
-      'Área Externa': GiftCategory.AreaExterna,
-      '🌿 Área Externa': GiftCategory.AreaExterna,
-      'Experiências': GiftCategory.Experiencias,
-      '💝 Experiências': GiftCategory.Experiencias,
-      'Contribuições': GiftCategory.Contribuicoes,
-      '💰 Contribuições': GiftCategory.Contribuicoes
-    };
-    return mapping[categoryName] ?? GiftCategory.Outros;
+  // Agora os IDs do banco (Categories table) são iguais aos IDs do enum GiftCategory
+  private mapCatalogCategoryToId(item: ITemplateItem): GiftCategory {
+    // Use the category ID directly since seed IDs match the GiftCategory enum
+    const categoryId = item.category?.id;
+    if (categoryId !== undefined && categoryId >= 0 && categoryId <= 10) {
+      return categoryId as GiftCategory;
+    }
+    return GiftCategory.Outros;
   }
 
   addFromCatalog(item: ITemplateItem) {
@@ -306,7 +296,7 @@ export class ManageWeddingList implements OnInit {
     this.addingItemId = item.id;
 
     // Obtém a categoria do item do catálogo
-    const categoryId = this.mapCatalogCategoryToId(item.category?.name || '');
+    const categoryId = this.mapCatalogCategoryToId(item);
 
     this._weddingService.addGiftItem(this.listId, {
       name: item.name,
