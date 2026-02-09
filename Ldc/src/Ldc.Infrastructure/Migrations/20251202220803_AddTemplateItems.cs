@@ -17,7 +17,7 @@ namespace Ldc.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "varchar(255)", nullable: false)
+                    Name = table.Column<string>(type: "varchar(255)", nullable: false)   
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>

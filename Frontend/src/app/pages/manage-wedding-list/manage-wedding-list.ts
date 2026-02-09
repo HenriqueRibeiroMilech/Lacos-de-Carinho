@@ -534,12 +534,16 @@ export class ManageWeddingList implements OnInit {
   }
 
   shareWhatsApp() {
-    const message = `💒✨ *Você está convidado(a)!* ✨💒
-Olá! Temos o prazer de convidar você para celebrar conosco um momento muito especial!
-🎁 Preparamos uma lista de presentes para facilitar sua escolha. Acesse o link abaixo para ver todas as opções e reservar o seu:
-👉 ${this.shareUrl}
-Sua presença é o nosso maior presente! 💕
-_Enviado com amor através do Laços de Carinho_ 🎀`;
+    const message = `*Nossa Lista de Presentes*
+
+Olá! Preparamos uma lista especial para o nosso casamento.
+
+Acesse o link abaixo para ver as opções e reservar o seu presente:
+${this.shareUrl}
+
+Confirme sua presença também!
+
+Esperamos você lá.`;
 
     const text = encodeURIComponent(message);
     window.open(`https://wa.me/?text=${text}`, '_blank');
