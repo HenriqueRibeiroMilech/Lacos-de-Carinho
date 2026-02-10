@@ -64,8 +64,8 @@ export enum GiftCategory {
   CasaInteligente = 6,
   MesaPosta = 7,
   AreaExterna = 8,
-  Experiencias = 9,
-  Contribuicoes = 10
+  Escritorio = 9,
+  BarELazer = 10
 }
 
 // Categorias disponíveis para presentes (UI display)
@@ -78,8 +78,8 @@ export const GIFT_CATEGORIES = [
   { id: GiftCategory.CasaInteligente, name: 'Casa Inteligente', icon: '🏠' },
   { id: GiftCategory.MesaPosta, name: 'Mesa Posta', icon: '🍷' },
   { id: GiftCategory.AreaExterna, name: 'Área Externa', icon: '🌿' },
-  { id: GiftCategory.Experiencias, name: 'Experiências', icon: '💝' },
-  { id: GiftCategory.Contribuicoes, name: 'Contribuições', icon: '💰' },
+  { id: GiftCategory.Escritorio, name: 'Escritório', icon: '💻' },
+  { id: GiftCategory.BarELazer, name: 'Bar e Lazer', icon: '🍸' },
   { id: GiftCategory.Outros, name: 'Outros', icon: '📦' }
 ] as const;
 

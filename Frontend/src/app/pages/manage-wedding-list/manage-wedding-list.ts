@@ -238,23 +238,25 @@ export class ManageWeddingList implements OnInit {
         ]
       },
       {
-        category: { id: 9, name: '💝 Experiências' },
+        category: { id: 9, name: '💻 Escritório' },
         items: [
-          { id: 90, name: 'Jantar Romântico', description: 'Voucher para jantar em restaurante especial', category: { id: 9, name: 'Experiências' } },
-          { id: 91, name: 'Spa Day', description: 'Dia de spa para o casal', category: { id: 9, name: 'Experiências' } },
-          { id: 92, name: 'Passeio de Balão', description: 'Voo de balão para duas pessoas', category: { id: 9, name: 'Experiências' } },
-          { id: 93, name: 'Curso de Culinária', description: 'Aula de culinária para o casal', category: { id: 9, name: 'Experiências' } },
-          { id: 94, name: 'Degustação de Vinhos', description: 'Experiência de degustação em vinícola', category: { id: 9, name: 'Experiências' } },
-          { id: 95, name: 'Noite no Hotel', description: 'Diária em hotel romântico', category: { id: 9, name: 'Experiências' } },
+          { id: 90, name: 'Cadeira de Escritório', description: 'Ergonômica com tela mesh', category: { id: 9, name: 'Escritório' } },
+          { id: 91, name: 'Mesa Escrivaninha', description: 'Estilo industrial ou clean', category: { id: 9, name: 'Escritório' } },
+          { id: 92, name: 'Luminária de Mesa', description: 'Articulada estilo Pixar', category: { id: 9, name: 'Escritório' } },
+          { id: 93, name: 'Monitor LED 24"', description: 'Full HD para trabalho', category: { id: 9, name: 'Escritório' } },
+          { id: 94, name: 'Kit Teclado e Mouse', description: 'Sem fio, conforto e praticidade', category: { id: 9, name: 'Escritório' } },
+          { id: 95, name: 'Fones Noise Cancelling', description: 'Foco total no trabalho', category: { id: 9, name: 'Escritório' } },
         ]
       },
       {
-        category: { id: 10, name: '💰 Contribuições' },
+        category: { id: 10, name: '🍸 Bar e Lazer' },
         items: [
-          { id: 100, name: 'Lua de Mel', description: 'Contribuição para viagem de lua de mel', category: { id: 10, name: 'Contribuições' } },
-          { id: 101, name: 'Reforma da Casa', description: 'Contribuição para reforma do lar', category: { id: 10, name: 'Contribuições' } },
-          { id: 102, name: 'Móveis Novos', description: 'Contribuição para compra de móveis', category: { id: 10, name: 'Contribuições' } },
-          { id: 103, name: 'Eletrodomésticos', description: 'Contribuição para eletrodomésticos', category: { id: 10, name: 'Contribuições' } },
+          { id: 100, name: 'Adega Climatizada', description: 'Para vinhos na temperatura certa', category: { id: 10, name: 'Bar e Lazer' } },
+          { id: 101, name: 'Carrinho de Bar', description: 'Com rodinhas para sala', category: { id: 10, name: 'Bar e Lazer' } },
+          { id: 102, name: 'Kit Caipirinha', description: 'Coqueteleira, socador e tábua', category: { id: 10, name: 'Bar e Lazer' } },
+          { id: 103, name: 'Jogo Copos Whisky', description: 'Cristal com fundo grosso', category: { id: 10, name: 'Bar e Lazer' } },
+          { id: 104, name: 'Balde de Gelo Inox', description: 'Térmico com pinça', category: { id: 10, name: 'Bar e Lazer' } },
+          { id: 105, name: 'Decanter Design', description: 'Para aerar vinhos tintos', category: { id: 10, name: 'Bar e Lazer' } },
         ]
       }
     ];

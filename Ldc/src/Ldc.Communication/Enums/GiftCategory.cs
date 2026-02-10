@@ -11,6 +11,6 @@ public enum GiftCategory
     CasaInteligente = 6,
     MesaPosta = 7,
     AreaExterna = 8,
-    Experiencias = 9,
-    Contribuicoes = 10
+    Escritorio = 9,
+    BarELazer = 10
 }
