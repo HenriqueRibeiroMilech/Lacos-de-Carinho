@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { UserAuthService } from '../../services/user-auth';
@@ -10,9 +10,18 @@ import { UserAuthService } from '../../services/user-auth';
   templateUrl: './pagamento-falha.html',
   styleUrl: './pagamento-falha.css'
 })
-export class PagamentoFalha {
+export class PagamentoFalha implements OnInit {
   private readonly _router = inject(Router);
   private readonly _userAuthService = inject(UserAuthService);
+
+  errorMessage = '';
+
+  ngOnInit() {
+    const navState = history.state;
+    if (navState?.fromCheckout && navState?.message) {
+      this.errorMessage = navState.message;
+    }
+  }
 
   logoutAndRedirect() {
     this._userAuthService.logout();

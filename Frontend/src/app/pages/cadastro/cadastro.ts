@@ -1,21 +1,27 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PaymentService } from '../../services/payment';
 import { Router, RouterLink } from '@angular/router';
-import { take } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { PaymentForm } from '../../components/payment-form/payment-form';
+import { UserAuthService } from '../../services/user-auth';
+import { UserService } from '../../services/user';
+import { IDirectPaymentResponse } from '../../services/payment';
+import { FacebookPixelService } from '../../services/facebook-pixel';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-cadastro',
-  imports: [ReactiveFormsModule, RouterLink, CommonModule],
+  imports: [ReactiveFormsModule, RouterLink, CommonModule, PaymentForm],
   templateUrl: './cadastro.html',
   styleUrl: './cadastro.css'
 })
 export class Cadastro {
   errorMessage = '';
-  isLoading = false;
   showExistingAccountModal = false;
   existingEmail = '';
+
+  // Controle de etapa: 'form' ou 'payment'
+  currentStep: 'form' | 'payment' = 'form';
 
   cadastroForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -24,65 +30,73 @@ export class Cadastro {
     confirmPassword: new FormControl('', [Validators.required]),
   });
 
-  private readonly _paymentService = inject(PaymentService);
   private readonly _router = inject(Router);
+  private readonly _userAuthService = inject(UserAuthService);
+  private readonly _userService = inject(UserService);
+  private readonly _facebookPixelService = inject(FacebookPixelService);
+
+  checkingEmail = false;
 
   get passwordsMatch(): boolean {
     return this.cadastroForm.get('password')?.value === this.cadastroForm.get('confirmPassword')?.value;
   }
 
-  cadastrar() {
+  // Step 1: Valida o formulário e verifica se o email já existe
+  avancarParaPagamento() {
     if (this.cadastroForm.invalid || !this.passwordsMatch) return;
-
-    this.isLoading = true;
     this.errorMessage = '';
+    this.checkingEmail = true;
 
-    // Cria preferência de pagamento - redireciona para Mercado Pago
-    this._paymentService.createPaymentPreference({
-      name: this.cadastroForm.get('name')?.value as string,
-      email: this.cadastroForm.get('email')?.value as string,
-      password: this.cadastroForm.get('password')?.value as string,
-      paymentType: 'new_account'
-    }).pipe(take(1)).subscribe({
+    const email = this.cadastroForm.get('email')?.value || '';
+
+    this._userService.checkEmailExists(email).pipe(take(1)).subscribe({
       next: (response) => {
-        // Salva o preferenceId para verificar depois
-        localStorage.setItem('payment_preference_id', response.preferenceId);
-
-        // Redireciona para o Mercado Pago
-        window.location.href = response.checkoutUrl;
-      },
-      error: (error) => {
-        this.isLoading = false;
-        const backendError = error?.error;
-        let errorMsg = '';
-
-        if (backendError && Array.isArray(backendError.errorMessages) && backendError.errorMessages.length) {
-          errorMsg = backendError.errorMessages[0];
-        } else if (typeof backendError === 'string') {
-          errorMsg = backendError;
-        } else if (error?.status === 0) {
-          errorMsg = 'Falha de conexão com o servidor.';
-        } else {
-          errorMsg = 'Não foi possível iniciar o pagamento.';
-        }
-
-        // Detecta se o erro é de email já existente
-        // Aceita "e-mail" ou "email", e textos como "já está em uso", "já existe", "já cadastrado"
-        const lowerError = errorMsg.toLowerCase().replace(/-/g, ''); // remove hífens para normalizar e-mail -> email
-
-        if (lowerError.includes('email') &&
-          (lowerError.includes('existe') ||
-            lowerError.includes('cadastrado') ||
-            lowerError.includes('ja') || // 'já' sem acento
-            lowerError.includes('uso') || // "já está em uso"
-            lowerError.includes('registered'))) {
-          this.existingEmail = this.cadastroForm.get('email')?.value || '';
+        this.checkingEmail = false;
+        if (response.exists) {
+          this.existingEmail = email;
           this.showExistingAccountModal = true;
         } else {
-          this.errorMessage = errorMsg;
+          this.currentStep = 'payment';
+          this._facebookPixelService.track('Lead');
+          this._facebookPixelService.track('InitiateCheckout');
         }
       },
+      error: () => {
+        this.checkingEmail = false;
+        // Em caso de erro na verificação, avança normalmente
+        this.currentStep = 'payment';
+        this._facebookPixelService.track('Lead');
+        this._facebookPixelService.track('InitiateCheckout');
+      }
     });
+  }
+
+  // Volta do pagamento para o formulário
+  voltarParaFormulario() {
+    this.currentStep = 'form';
+  }
+
+  // Callback quando o pagamento é aprovado
+  onPaymentApproved(response: IDirectPaymentResponse) {
+    if (response.token) {
+      this._userAuthService.setUserToken(response.token);
+    }
+
+    this._router.navigate(['/pagamento-sucesso'], {
+      state: {
+        fromCheckout: true,
+        token: response.token,
+        name: response.name,
+        message: response.message,
+        paymentMethod: response.paymentMethod || 'card'
+      }
+    });
+  }
+
+  // Callback quando o pagamento falha
+  onPaymentError(message: string) {
+    // Apenas exibe o erro no componente de pagamento
+    // O componente payment-form já lida com a exibição
   }
 
   closeModal() {
@@ -93,3 +107,4 @@ export class Cadastro {
     this._router.navigate(['/entrar']);
   }
 }
+

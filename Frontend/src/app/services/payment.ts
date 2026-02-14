@@ -22,6 +22,32 @@ export interface IPaymentStatusResponse {
   message: string;
 }
 
+// --- Checkout Transparente ---
+
+export interface IDirectPaymentRequest {
+  paymentType: 'new_account' | 'upgrade';
+  token?: string;          // Token do cartão (gerado pelo SDK)
+  paymentMethodId: string; // ex: "visa", "master", "pix"
+  issuerId: string;        // ID do emissor
+  installments: number;    // Parcelas
+  payerEmail: string;      // Email do pagador
+  name?: string;           // Nome (para novo cadastro)
+  password?: string;       // Senha (para novo cadastro)
+}
+
+export interface IDirectPaymentResponse {
+  status: string;
+  statusDetail: string;
+  message: string;
+  token?: string;
+  name?: string;
+  paymentId: number;
+  pixQrCode?: string;
+  pixQrCodeBase64?: string;
+  ticketUrl?: string;
+  paymentMethod?: string; // 'pix' | 'card' — set by the payment-form component
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -29,7 +55,17 @@ export class PaymentService {
   private readonly _httpClient = inject(HttpClient);
 
   /**
-   * Cria preferência de pagamento para novo cadastro
+   * Processa pagamento direto via Checkout Transparente
+   */
+  processDirectPayment(data: IDirectPaymentRequest): Observable<IDirectPaymentResponse> {
+    return this._httpClient.post<IDirectPaymentResponse>(
+      `${environment.apiUrl}/Payment/process`,
+      data
+    );
+  }
+
+  /**
+   * Cria preferência de pagamento para novo cadastro (Checkout Pro - fallback)
    */
   createPaymentPreference(data: ICreatePaymentRequest): Observable<IPaymentPreferenceResponse> {
     return this._httpClient.post<IPaymentPreferenceResponse>(
@@ -56,4 +92,14 @@ export class PaymentService {
       `${environment.apiUrl}/Payment/status/${preferenceId}`
     );
   }
+
+  /**
+   * Verifica status de pagamento Pix (polling)
+   */
+  checkPixStatus(mpPaymentId: number): Observable<IDirectPaymentResponse> {
+    return this._httpClient.get<IDirectPaymentResponse>(
+      `${environment.apiUrl}/Payment/check-pix/${mpPaymentId}`
+    );
+  }
 }
+

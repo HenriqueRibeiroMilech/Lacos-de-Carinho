@@ -6,6 +6,7 @@ using Ldc.Application.UseCases.Users.Update;
 using Ldc.Application.UseCases.Users.Upgrade;
 using Ldc.Communication.Requests;
 using Ldc.Communication.Responses;
+using Ldc.Domain.Repositories.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,15 @@ namespace Ldc.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        [HttpGet("check-email/{email}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> CheckEmailExists(
+            [FromServices] IUserReadOnlyRepository userRepository,
+            [FromRoute] string email)
+        {
+            var user = await userRepository.GetUserByEmail(email);
+            return Ok(new { exists = user != null });
+        }
         [HttpPost]
         [ProducesResponseType(typeof(ResponseRegisteredUserJson), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]

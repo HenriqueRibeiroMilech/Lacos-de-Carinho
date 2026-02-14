@@ -3,14 +3,8 @@ namespace Ldc.Domain.Services.Payment;
 public interface IMercadoPagoService
 {
     /// <summary>
-    /// Cria uma preferência de pagamento no Mercado Pago
+    /// Cria uma preferência de pagamento no Mercado Pago (Checkout Pro - fallback)
     /// </summary>
-    /// <param name="title">Título do produto</param>
-    /// <param name="description">Descrição</param>
-    /// <param name="amount">Valor</param>
-    /// <param name="externalReference">Referência externa (PreferenceId interno)</param>
-    /// <param name="payerEmail">Email do pagador</param>
-    /// <returns>Tupla com (PreferenceId, CheckoutUrl)</returns>
     Task<(string PreferenceId, string CheckoutUrl)> CreatePreference(
         string title,
         string description,
@@ -19,19 +13,41 @@ public interface IMercadoPagoService
         string payerEmail);
 
     /// <summary>
+    /// Processa um pagamento direto via Checkout Transparente
+    /// O token do cartão é gerado pelo SDK MercadoPago.js no frontend
+    /// </summary>
+    Task<MercadoPagoDirectPaymentResult> CreatePayment(
+        string token,
+        decimal amount,
+        string description,
+        string payerEmail,
+        string externalReference,
+        string paymentMethodId,
+        string issuerId,
+        int installments);
+
+    /// <summary>
     /// Consulta o status de um pagamento no Mercado Pago
     /// </summary>
-    /// <param name="paymentId">ID do pagamento no MP</param>
-    /// <returns>Status do pagamento</returns>
     Task<string> GetPaymentStatus(string paymentId);
 
     /// <summary>
     /// Obtém detalhes completos de um pagamento no Mercado Pago
     /// </summary>
-    /// <param name="paymentId">ID do pagamento no MP</param>
-    /// <returns>Detalhes do pagamento incluindo status e external_reference</returns>
     Task<MercadoPagoPaymentDetails> GetPaymentDetails(string paymentId);
 }
+
+/// <summary>
+/// Resultado de um pagamento direto (Checkout Transparente)
+/// </summary>
+public record MercadoPagoDirectPaymentResult(
+    long PaymentId,
+    string Status,
+    string StatusDetail,
+    string? PixQrCode,
+    string? PixQrCodeBase64,
+    string? TicketUrl
+);
 
 /// <summary>
 /// Detalhes de um pagamento do Mercado Pago

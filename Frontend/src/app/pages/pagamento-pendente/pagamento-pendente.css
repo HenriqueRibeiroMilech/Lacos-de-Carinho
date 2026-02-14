@@ -1,1 +1,67 @@
-/* Pagamento Pendente styles */
+/* ==========================================
+   Pagamento Pendente — Animations
+   ========================================== */
+
+:host {
+    display: block;
+}
+
+.pending-card {
+    animation: slideUpFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
+
+.approved-card {
+    animation: slideUpFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
+
+.loading-card {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes slideUpFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Clock icon pulse */
+.clock-icon {
+    animation: clockPulse 2s ease-in-out infinite;
+}
+
+@keyframes clockPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 10px 15px -3px rgba(251, 191, 36, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 10px 25px -3px rgba(251, 191, 36, 0.6);
+    }
+}
+
+/* Timer counter */
+.timer-counter {
+    font-variant-numeric: tabular-nums;
+}

@@ -1,5 +1,6 @@
 using Ldc.Application.UseCases.Payment.CreatePreference;
 using Ldc.Application.UseCases.Payment.GetStatus;
+using Ldc.Application.UseCases.Payment.ProcessDirect;
 using Ldc.Application.UseCases.Payment.ProcessWebhook;
 using Ldc.Communication.Requests;
 using Ldc.Communication.Responses;
@@ -20,7 +21,27 @@ public class PaymentController : ControllerBase
     }
 
     /// <summary>
-    /// Cria uma preferência de pagamento no Mercado Pago
+    /// Processa pagamento direto via Checkout Transparente
+    /// Para novo cadastro: não requer autenticação
+    /// Para upgrade: requer autenticação
+    /// </summary>
+    [HttpPost("process")]
+    [ProducesResponseType(typeof(ResponseDirectPaymentJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ProcessDirectPayment(
+        [FromServices] IProcessDirectPaymentUseCase useCase,
+        [FromBody] RequestProcessDirectPaymentJson request)
+    {
+        _logger.LogInformation("Processing direct payment for type: {PaymentType}, method: {Method}",
+            request.PaymentType, request.PaymentMethodId);
+        var response = await useCase.Execute(request);
+        _logger.LogInformation("Direct payment processed: Status={Status}, PaymentId={PaymentId}",
+            response.Status, response.PaymentId);
+        return Ok(response);
+    }
+
+    /// <summary>
+    /// Cria uma preferência de pagamento no Mercado Pago (Checkout Pro - fallback)
     /// Para novo cadastro: não requer autenticação
     /// Para upgrade: requer autenticação
     /// </summary>
@@ -70,6 +91,21 @@ public class PaymentController : ControllerBase
     }
 
     /// <summary>
+    /// Polling endpoint para verificar status de Pix (checa diretamente no Mercado Pago)
+    /// </summary>
+    [HttpGet("check-pix/{mpPaymentId}")]
+    [ProducesResponseType(typeof(ResponseDirectPaymentJson), StatusCodes.Status200OK)]
+    public async Task<IActionResult> CheckPixStatus(
+        [FromServices] IProcessDirectPaymentUseCase useCase,
+        [FromRoute] long mpPaymentId)
+    {
+        _logger.LogInformation("Checking Pix payment status for MP PaymentId: {PaymentId}", mpPaymentId);
+        var response = await useCase.CheckPixStatus(mpPaymentId);
+        _logger.LogInformation("Pix status check result: {Status}", response.Status);
+        return Ok(response);
+    }
+
+    /// <summary>
     /// Webhook para receber notificações do Mercado Pago
     /// </summary>
     [HttpPost("webhook")]
@@ -84,7 +120,6 @@ public class PaymentController : ControllerBase
             "Webhook received - Type: {Type}, DataId: {DataId}, Action: {Action}",
             type, dataId, action);
 
-        // Mercado Pago envia notificações com type=payment e data.id=paymentId
         if (type == "payment" && !string.IsNullOrEmpty(dataId))
         {
             _logger.LogInformation("Processing payment webhook for PaymentId: {PaymentId}", dataId);
@@ -96,7 +131,6 @@ public class PaymentController : ControllerBase
             _logger.LogInformation("Webhook ignored - not a payment type or missing dataId");
         }
 
-        // Sempre retorna 200 para o Mercado Pago não reenviar
         return Ok();
     }
 }

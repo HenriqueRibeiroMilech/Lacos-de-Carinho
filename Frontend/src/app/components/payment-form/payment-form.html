@@ -1,0 +1,197 @@
+<div class="payment-container">
+    <!-- Header -->
+    <div class="payment-header">
+        <h2>💳 Pagamento</h2>
+        <p class="payment-subtitle">Escolha como deseja pagar</p>
+        <div class="mp-powered-by">
+            <svg class="mp-shield-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <span>Processado com segurança por</span>
+            <svg class="mp-logo" viewBox="0 0 148 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="148" height="32" rx="4" fill="#00AEEF" />
+                <text x="74" y="21" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold"
+                    font-size="14" fill="white">Mercado Pago</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Seleção de método de pagamento -->
+    <div class="method-selector" *ngIf="!pixData && (!paymentResult || paymentResult.status !== 'approved')">
+        <button class="method-btn" [class.active]="selectedMethod === 'card'" (click)="selectMethod('card')">
+            <span class="method-icon">💳</span>
+            <span>Cartão</span>
+        </button>
+        <button class="method-btn" [class.active]="selectedMethod === 'pix'" (click)="selectMethod('pix')">
+            <span class="method-icon">📱</span>
+            <span>Pix</span>
+        </button>
+    </div>
+
+    <!-- formulário de cartão -->
+    <div class="card-form" *ngIf="selectedMethod === 'card' && !paymentResult">
+        <div class="form-group">
+            <label for="cardNumber">Número do cartão</label>
+            <input id="cardNumber" type="text" [(ngModel)]="cardNumber" (input)="formatCardNumber()"
+                placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number" />
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="cardExpiry">Validade</label>
+                <input id="cardExpiry" type="text" [(ngModel)]="cardExpiry" (input)="formatExpiry()" placeholder="MM/AA"
+                    maxlength="5" autocomplete="cc-exp" />
+            </div>
+            <div class="form-group">
+                <label for="cardCvv">CVV</label>
+                <input id="cardCvv" type="text" [(ngModel)]="cardCvv" placeholder="123" maxlength="4"
+                    autocomplete="cc-csc" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="cardholderName">Nome no cartão</label>
+            <input id="cardholderName" type="text" [(ngModel)]="cardholderName"
+                placeholder="Como está impresso no cartão" autocomplete="cc-name" />
+        </div>
+
+        <div class="form-group">
+            <label for="cardholderCpf">CPF do titular</label>
+            <input id="cardholderCpf" type="text" [(ngModel)]="cardholderDocument" (input)="formatCpf()"
+                placeholder="000.000.000-00" maxlength="14" />
+        </div>
+
+        <!-- Parcelas -->
+        <div class="form-group" *ngIf="installmentOptions.length > 0 || loadingInstallments">
+            <label for="installments">Parcelas</label>
+            <div class="installment-select-wrapper">
+                <select id="installments" *ngIf="!loadingInstallments" [value]="installments"
+                    (change)="onInstallmentChange($event)" class="installment-select">
+                    <option *ngFor="let opt of installmentOptions" [value]="opt.quantity">
+                        {{ opt.label }}
+                    </option>
+                </select>
+                <div class="installment-loading" *ngIf="loadingInstallments">
+                    <span class="polling-spinner"></span>
+                    <span>Buscando parcelas...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mp-card-security">
+            <svg class="mp-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0110 0v4" />
+            </svg>
+            <span>Seus dados são criptografados e processados diretamente pelo <strong>Mercado Pago</strong></span>
+        </div>
+    </div>
+
+    <!-- Pix: antes de gerar -->
+    <div class="pix-info" *ngIf="selectedMethod === 'pix' && !pixData && !paymentResult">
+        <div class="pix-logo">📱</div>
+        <p>Ao clicar em <strong>Pagar com Pix</strong>, um QR Code será gerado.</p>
+        <p class="pix-small">Escaneie com o app do seu banco ou copie o código.</p>
+        <div class="mp-pix-trust">
+            <svg class="mp-shield-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <span>Pix gerado via <strong>Mercado Pago</strong> — protegido pelo Banco Central</span>
+        </div>
+    </div>
+
+    <!-- Pix: QR Code gerado -->
+    <div class="pix-result" *ngIf="pixData">
+        <h3>Pix gerado! 🎉</h3>
+        <p>Escaneie o QR Code ou copie o código abaixo:</p>
+
+        <div class="qr-code-container" *ngIf="pixData.qrCodeBase64">
+            <img [src]="'data:image/png;base64,' + pixData.qrCodeBase64" alt="QR Code Pix" class="qr-code-img" />
+        </div>
+
+        <div class="pix-copy-area">
+            <input type="text" [value]="pixData.qrCode" readonly class="pix-code-input" />
+            <button class="copy-btn" (click)="copyPixCode()">
+                {{ pixCopied ? '✅ Copiado!' : '📋 Copiar' }}
+            </button>
+        </div>
+
+        <p class="pix-timer">⏳ O Pix expira em 30 minutos</p>
+
+        <div class="pix-polling" *ngIf="pixPollingMessage">
+            <span class="polling-spinner"></span>
+            <p>{{ pixPollingMessage }}</p>
+        </div>
+    </div>
+
+    <!-- Resultado do pagamento: aprovado -->
+    <div class="payment-result" *ngIf="paymentResult && paymentResult.status === 'approved'">
+        <div class="success-icon">✅</div>
+        <h3>Pagamento aprovado!</h3>
+        <p>{{ paymentResult.message }}</p>
+    </div>
+
+    <!-- Resultado do pagamento: rejeitado -->
+    <div class="payment-result rejected" *ngIf="paymentResult && paymentResult.status === 'rejected'">
+        <div class="error-icon">❌</div>
+        <h3>Pagamento não aprovado</h3>
+        <p>{{ paymentResult.message }}</p>
+        <button class="btn-retry" (click)="resetPaymentState()">Tentar novamente</button>
+    </div>
+
+    <!-- Mensagem de erro -->
+    <div class="error-message" *ngIf="errorMessage && !paymentResult">
+        {{ errorMessage }}
+    </div>
+
+    <!-- Botões de ação -->
+    <div class="payment-actions" *ngIf="!paymentResult || paymentResult.status === 'rejected'">
+        <button class="btn-pay" (click)="processPayment()" [disabled]="isProcessing || !!pixData"
+            *ngIf="!paymentResult">
+            <span *ngIf="isProcessing" class="spinner"></span>
+            <span *ngIf="!isProcessing">
+                {{ selectedMethod === 'pix' ? '📱 Gerar Pix' : '💳 Pagar com Cartão' }}
+            </span>
+            <span *ngIf="isProcessing">Processando...</span>
+        </button>
+
+        <button class="btn-back" (click)="goBack()" *ngIf="!isProcessing && !pixData">
+            ← Voltar
+        </button>
+    </div>
+
+    <!-- Selo de segurança -->
+    <div class="security-section" *ngIf="!paymentResult || paymentResult.status !== 'approved'">
+        <div class="security-divider"></div>
+        <div class="security-badges">
+            <div class="security-item">
+                <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <path d="M9 12l2 2 4-4" />
+                </svg>
+                <span>Pagamento seguro</span>
+            </div>
+            <div class="security-item">
+                <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0110 0v4" />
+                </svg>
+                <span>Dados criptografados</span>
+            </div>
+            <div class="security-item">
+                <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M9 12l2 2 4-4" />
+                </svg>
+                <span>PCI Compliant</span>
+            </div>
+        </div>
+        <div class="mp-footer-badge">
+            <svg class="mp-logo-footer" viewBox="0 0 148 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="148" height="32" rx="4" fill="#00AEEF" />
+                <text x="74" y="21" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold"
+                    font-size="14" fill="white">Mercado Pago</text>
+            </svg>
+        </div>
+    </div>
+</div>

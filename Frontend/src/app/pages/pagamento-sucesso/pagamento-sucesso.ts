@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PaymentService } from '../../services/payment';
 import { UserAuthService } from '../../services/user-auth';
+import { FacebookPixelService } from '../../services/facebook-pixel';
 import { take } from 'rxjs';
 
 @Component({
@@ -17,17 +18,35 @@ export class PagamentoSucesso implements OnInit {
   private readonly _router = inject(Router);
   private readonly _paymentService = inject(PaymentService);
   private readonly _userAuthService = inject(UserAuthService);
+  private readonly _facebookPixelService = inject(FacebookPixelService);
 
   status: 'loading' | 'approved' | 'pending' | 'error' = 'loading';
   userName: string = '';
   message: string = '';
   preferenceId: string = '';
   checkCount: number = 0;
-  maxChecks: number = 60; // Aumentado para dar bastante tempo ao PIX (aprox 3-5 min)
+  maxChecks: number = 60;
   tokenUpdated: boolean = false;
 
+  // Detalhes do pagamento para exibir
+  paymentMethod: string = '';
+  paymentValue: string = 'R$ 39,90';
+
   ngOnInit() {
-    // Pega o preferenceId da URL (query param ou localStorage)
+    // Verifica se veio do Checkout Transparente (navigation state)
+    const navState = history.state;
+
+    if (navState?.fromCheckout) {
+      this.status = 'approved';
+      this.userName = navState.name || '';
+      this.message = navState.message || 'Pagamento aprovado! Bem-vindo ao Laços de Carinho.';
+      this.tokenUpdated = !!navState.token;
+      this.paymentMethod = navState.paymentMethod === 'pix' ? 'Pix' : 'Cartão de Crédito';
+      this._facebookPixelService.track('Purchase', { value: 39.90, currency: 'BRL' });
+      return;
+    }
+
+    // Fluxo Checkout Pro (fallback): verifica via preferenceId
     this.preferenceId = this._route.snapshot.queryParams['external_reference'] ||
       localStorage.getItem('payment_preference_id') || '';
 
@@ -48,24 +67,18 @@ export class PagamentoSucesso implements OnInit {
           this.userName = response.name || '';
           this.message = response.message;
 
-          // Limpa o preferenceId do localStorage
           localStorage.removeItem('payment_preference_id');
 
-          // IMPORTANTE: Salva o novo token com role ADMIN atualizada
           if (response.token) {
             this._userAuthService.setUserToken(response.token);
             this.tokenUpdated = true;
           }
-
+          this._facebookPixelService.track('Purchase', { value: 39.90, currency: 'BRL' });
         } else if (response.status === 'pending') {
           this.checkCount++;
           if (this.checkCount < this.maxChecks) {
-            // Intervalo progressivo: começa em 2s, aumenta até 5s
             const delay = Math.min(2000 + (this.checkCount * 300), 5000);
-
-            // Override mensagem do backend para evitar confusão sobre "dados de acesso"
             this.message = 'Seu pagamento está sendo processado. Assim que for confirmado, você receberá um email.';
-
             setTimeout(() => this.checkPaymentStatus(), delay);
           } else {
             this.status = 'pending';
@@ -79,7 +92,6 @@ export class PagamentoSucesso implements OnInit {
       error: () => {
         this.checkCount++;
         if (this.checkCount < this.maxChecks) {
-          // Tenta novamente em caso de erro de rede
           setTimeout(() => this.checkPaymentStatus(), 3000);
         } else {
           this.status = 'error';
@@ -91,7 +103,6 @@ export class PagamentoSucesso implements OnInit {
 
   goToDashboard() {
     if (this.tokenUpdated) {
-      // Força reload completo para garantir que o novo token seja usado em todo o app
       window.location.href = '/painel';
     } else {
       this._router.navigate(['/painel']);
@@ -100,7 +111,6 @@ export class PagamentoSucesso implements OnInit {
 
   goToCreateEvent() {
     if (this.tokenUpdated) {
-      // Força reload completo para garantir que o novo token seja usado em todo o app
       window.location.href = '/criar-evento';
     } else {
       this._router.navigate(['/criar-evento']);
@@ -112,4 +122,3 @@ export class PagamentoSucesso implements OnInit {
     this._router.navigate(['/entrar']);
   }
 }
-

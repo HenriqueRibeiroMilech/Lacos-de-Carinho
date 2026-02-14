@@ -65,7 +65,10 @@
               "buildTarget": "frontend-gestao-marketplace:build:production"
             },
             "development": {
-              "buildTarget": "frontend-gestao-marketplace:build:development"
+              "buildTarget": "frontend-gestao-marketplace:build:development",
+              "ssl": true,
+              "sslCert": "cert.crt",
+              "sslKey": "cert.key"
             }
           },
           "defaultConfiguration": "development"

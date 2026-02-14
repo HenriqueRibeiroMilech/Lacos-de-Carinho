@@ -10,6 +10,10 @@
 
         <!-- CTA Buttons -->
         <div class="flex items-center gap-2 sm:gap-3">
+          <a routerLink="/cadastro"
+            class="hidden sm:inline-flex px-4 py-2 bg-rose-100 text-[#D97F97] rounded-lg font-semibold hover:bg-rose-200 transition-colors text-sm">
+            Começar agora
+          </a>
           <a routerLink="/entrar"
             class="px-4 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-lg sm:rounded-xl font-semibold shadow-lg shadow-rose-200/50 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 text-sm sm:text-base">
             Login
@@ -40,24 +44,23 @@
 
         <!-- Main headline -->
         <h1 class="text-5xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-2">
-          A forma mais fácil de organizar sua
+          Organize seu Casamento
           <span
             class="bg-gradient-to-r from-[#D97F97] via-pink-500 to-purple-500 bg-clip-text text-transparent animate-gradient">
-            lista de presentes
+            Sem Taxas e Sem Estresse
           </span>
         </h1>
 
         <p class="text-sm sm:text-lg lg:text-xl text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
-          Crie sua lista de presentes para casamento ou chá de panela em minutos.
-          Compartilhe com seus convidados e acompanhe tudo em tempo real.
-          <strong class="text-[#D97F97]">Pagamento único, sem mensalidades!</strong>
+          Tenha controle total da sua lista, confirmação de presença e presentes sem repetidos.
+          Tudo isso fugindo das <strong class="text-red-500">taxas de 10%</strong> dos concorrentes.
         </p>
 
         <!-- CTA Buttons -->
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-12 px-2">
           <button (click)="scrollTo('preco')"
             class="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg shadow-xl shadow-rose-300/40 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer">
-            <span>Quero Criar Minha Lista</span>
+            <span>Criar Minha Lista Sem Taxas</span>
             <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
             </svg>
@@ -165,11 +168,10 @@
           Nosso diferencial
         </span>
         <h2 class="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-          Preço justo e <span
-            class="bg-gradient-to-r from-[#D97F97] to-[#c06f85] bg-clip-text text-transparent">transparente</span>
+          Pare de perder dinheiro com <span class="text-red-500 decoration-red-300 line-through">taxas</span>
         </h2>
         <p class="text-sm sm:text-lg text-gray-600 max-w-2xl mx-auto">
-          Sem mensalidades e sem taxas sobre seus presentes. Simples assim.
+          Veja quanto você economiza escolhendo a Laços de Carinho
         </p>
       </div>
 
@@ -177,42 +179,55 @@
       <div class="grid md:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto">
         <!-- Competitors Card -->
         <div
-          class="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 border-2 border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
-            <div
-              class="w-9 sm:w-11 h-9 sm:h-11 rounded-lg sm:rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
-              <svg class="w-5 sm:w-6 h-5 sm:h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            </div>
-            <div>
-              <h3 class="text-base sm:text-lg font-bold text-gray-900">Concorrentes</h3>
-              <p class="text-red-500 text-xs sm:text-sm font-medium">O que eles cobram</p>
-            </div>
+          class="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 border-2 border-gray-200 shadow-lg relative overflow-hidden group hover:border-red-200 transition-colors">
+          <div
+            class="absolute -right-12 -top-12 w-24 h-24 bg-red-50 rounded-full group-hover:scale-150 transition-transform duration-500">
           </div>
-          <ul class="space-y-2 sm:space-y-3">
-            <li class="flex items-center gap-2 sm:gap-3 text-gray-600 text-sm sm:text-base">
-              <svg class="w-4 sm:w-5 h-4 sm:h-5 text-red-400 flex-shrink-0" fill="none" stroke="currentColor"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-              <span>Mensalidades de R$ 29 a R$ 99/mês</span>
-            </li>
-            <li class="flex items-center gap-2 sm:gap-3 text-gray-600 text-sm sm:text-base">
-              <svg class="w-4 sm:w-5 h-4 sm:h-5 text-red-400 flex-shrink-0" fill="none" stroke="currentColor"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-              <span>Taxa de 5% a 15% por presente</span>
-            </li>
-            <li class="flex items-center gap-2 sm:gap-3 text-gray-600 text-sm sm:text-base">
-              <svg class="w-4 sm:w-5 h-4 sm:h-5 text-red-400 flex-shrink-0" fill="none" stroke="currentColor"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-              <span>Custos escondidos nas letras miúdas</span>
-            </li>
-          </ul>
+
+          <div class="relative">
+            <div class="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
+              <div
+                class="w-9 sm:w-11 h-9 sm:h-11 rounded-lg sm:rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
+                <span class="text-xl">💸</span>
+              </div>
+              <div>
+                <h3 class="text-base sm:text-lg font-bold text-gray-900">Outros Sites</h3>
+                <p class="text-red-500 text-xs sm:text-sm font-medium">O pesadelo das taxas</p>
+              </div>
+            </div>
+            <ul class="space-y-4">
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                <div class="text-sm sm:text-base text-gray-600">
+                  <span class="block font-bold text-gray-900">Taxa de até 10%</span>
+                  <span class="text-xs">Eles ficam com uma parte dos seus presentes.</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                <div class="text-sm sm:text-base text-gray-600">
+                  <span class="block font-bold text-gray-900">Mensalidades</span>
+                  <span class="text-xs">Cobram R$ 50/mês só para manter o site no ar.</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                <div class="text-sm sm:text-base text-gray-600">
+                  <span class="block font-bold text-gray-900">Taxa de Saque</span>
+                  <span class="text-xs">Mais taxas para transferir o SEU dinheiro.</span>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <!-- Our Pricing Card -->
@@ -221,7 +236,7 @@
           <div class="absolute -top-2.5 sm:-top-3 right-3 sm:right-4">
             <span
               class="px-2 sm:px-3 py-0.5 sm:py-1 bg-white text-[#D97F97] text-[10px] sm:text-xs font-bold rounded-full shadow-lg">
-              RECOMENDADO
+              MELHOR ESCOLHA
             </span>
           </div>
           <div class="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
@@ -233,34 +248,53 @@
             </div>
             <div>
               <h3 class="text-base sm:text-lg font-bold text-white">Laços de Carinho</h3>
-              <p class="text-white/80 text-xs sm:text-sm font-medium">Nossa proposta</p>
+              <p class="text-white/80 text-xs sm:text-sm font-medium">Economia Inteligente</p>
             </div>
           </div>
-          <ul class="space-y-2 sm:space-y-3">
-            <li class="flex items-center gap-2 sm:gap-3 text-white text-sm sm:text-base">
-              <svg class="w-4 sm:w-5 h-4 sm:h-5 text-white flex-shrink-0" fill="none" stroke="currentColor"
-                viewBox="0 0 24 24">
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-              <span class="font-medium">Apenas R$39,90 (pagamento único)</span>
+              <div class="text-sm sm:text-base text-white">
+                <span class="block font-bold">Taxa ZERO (0%)</span>
+                <span class="text-xs text-white/80">Receba 100% dos seus presentes.</span>
+              </div>
             </li>
-            <li class="flex items-center gap-2 sm:gap-3 text-white text-sm sm:text-base">
-              <svg class="w-4 sm:w-5 h-4 sm:h-5 text-white flex-shrink-0" fill="none" stroke="currentColor"
-                viewBox="0 0 24 24">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-              <span class="font-medium">ZERO taxas sobre seus presentes</span>
+              <div class="text-sm sm:text-base text-white">
+                <span class="block font-bold">Pagamento Único</span>
+                <span class="text-xs text-white/80">R$ 39,90 e nada mais. Acesso vitalício.</span>
+              </div>
             </li>
-            <li class="flex items-center gap-2 sm:gap-3 text-white text-sm sm:text-base">
-              <svg class="w-4 sm:w-5 h-4 sm:h-5 text-white flex-shrink-0" fill="none" stroke="currentColor"
-                viewBox="0 0 24 24">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-              <span class="font-medium">Sem custos escondidos</span>
+              <div class="text-sm sm:text-base text-white">
+                <span class="block font-bold">Zero Burocracia</span>
+                <span class="text-xs text-white/80">Sem prazos ou travas de saque.</span>
+              </div>
             </li>
           </ul>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- CTA Intermediário -->
+  <section class="py-8 sm:py-10 px-3 sm:px-4 bg-white">
+    <div class="text-center">
+      <button (click)="scrollTo('preco')"
+        class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg shadow-xl shadow-rose-300/40 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+        <span>Quero parar de perder dinheiro</span>
+        <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
     </div>
   </section>
 
@@ -332,503 +366,523 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-        @for(step of steps; track step.number; let i = $index) {
-        <div class="relative">
-          <!-- Connector line -->
-          @if(i < steps.length - 1) { <div
-            class="hidden lg:block absolute top-10 left-[60%] w-full h-0.5 bg-gradient-to-r from-[#D97F97] to-rose-200">
-        </div>
-        }
 
-        <div
-          class="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-rose-100 relative z-10 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full">
+
+      <div class="grid lg:grid-cols-2 gap-8 items-center">
+        <!-- Coluna da Imagem -->
+        <div class="relative order-2 lg:order-1">
           <div
-            class="w-10 sm:w-12 h-10 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-[#D97F97] to-[#c06f85] flex items-center justify-center text-white text-lg sm:text-xl font-bold mb-3 sm:mb-4 shadow-lg shadow-rose-200/50">
-            {{ step.number }}
+            class="absolute inset-0 bg-gradient-to-br from-rose-100 to-pink-50 rounded-3xl blur-2xl opacity-60 transform rotate-3">
           </div>
-          <h3 class="text-sm sm:text-lg font-bold text-gray-800 mb-1 sm:mb-2">{{ step.title }}</h3>
-          <p class="text-gray-600 text-xs sm:text-sm">{{ step.description }}</p>
+          <img src="imagempc.png" alt="Como funciona o Laços de Carinho"
+            class="relative w-full rounded-2xl shadow-2xl shadow-rose-200/50 hover:scale-[1.02] transition-transform duration-500 border border-white/50">
+        </div>
+
+        <!-- Coluna dos Passos -->
+        <div class="space-y-4 order-1 lg:order-2">
+          @for(step of steps; track step.number) {
+          <div
+            class="flex gap-4 p-4 rounded-xl hover:bg-white hover:shadow-lg hover:border-rose-100 border border-transparent transition-all duration-300 group">
+            <div
+              class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-[#D97F97] to-[#c06f85] flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-rose-200/50 group-hover:scale-110 transition-transform">
+              {{ step.number }}
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-800 text-lg mb-1">{{ step.title }}</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">{{ step.description }}</p>
+            </div>
+          </div>
+          }
+
+
         </div>
       </div>
-      }
     </div>
+  </section>
 
-    <div class="text-center mt-8 sm:mt-12">
+  <!-- CTA pós-passos -->
+  <section class="py-6 sm:py-8 px-3 sm:px-4 bg-white/50">
+    <div class="text-center">
       <button (click)="scrollTo('preco')"
-        class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg shadow-xl shadow-rose-300/40 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-        <span>Ver Preço</span>
+        class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white text-[#D97F97] border-2 border-rose-100 rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg shadow-lg hover:shadow-xl hover:-translate-y-1 hover:border-[#D97F97] transition-all duration-300 cursor-pointer">
+        <span>Ver Planos e Preços</span>
         <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
         </svg>
       </button>
     </div>
-</div>
-</section>
+  </section>
 
-<!-- Event Types Section -->
-<section class="py-12 sm:py-20 px-3 sm:px-4 bg-white">
-  <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-8 sm:mb-16 px-2">
-      <span
-        class="inline-block px-3 sm:px-4 py-1 sm:py-1.5 bg-rose-100 text-[#D97F97] rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
-        Eventos
-      </span>
-      <h2 class="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-        Perfeito para qualquer celebração
-      </h2>
-      <p class="text-sm sm:text-lg text-gray-600 max-w-2xl mx-auto">
-        Seja casamento, chá de panela ou chá de casa nova - temos tudo que você precisa
-      </p>
-    </div>
+  <!-- Event Types Section -->
+  <section class="py-12 sm:py-20 px-3 sm:px-4 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-8 sm:mb-16 px-2">
+        <span
+          class="inline-block px-3 sm:px-4 py-1 sm:py-1.5 bg-rose-100 text-[#D97F97] rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
+          Eventos
+        </span>
+        <h2 class="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+          Perfeito para qualquer celebração
+        </h2>
+        <p class="text-sm sm:text-lg text-gray-600 max-w-2xl mx-auto">
+          Seja casamento, chá de panela ou chá de casa nova - temos tudo que você precisa
+        </p>
+      </div>
 
-    <div class="grid md:grid-cols-2 gap-4 sm:gap-8">
-      <!-- Casamento -->
-      <div class="relative group">
-        <div
-          class="absolute inset-0 bg-gradient-to-r from-[#D97F97] to-pink-400 rounded-2xl sm:rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity">
-        </div>
-        <div
-          class="relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-xl border border-rose-100 overflow-hidden">
+      <div class="grid md:grid-cols-2 gap-4 sm:gap-8">
+        <!-- Casamento -->
+        <div class="relative group">
           <div
-            class="absolute top-0 right-0 w-20 sm:w-32 h-20 sm:h-32 bg-gradient-to-br from-rose-100 to-pink-50 rounded-bl-full">
+            class="absolute inset-0 bg-gradient-to-r from-[#D97F97] to-pink-400 rounded-2xl sm:rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity">
           </div>
-          <div class="relative">
-            <div class="text-4xl sm:text-6xl mb-3 sm:mb-4">💒</div>
-            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3">Casamento</h3>
-            <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">
-              Monte a lista dos sonhos para começar a vida a dois.
-              Desde itens para casa até experiências especiais.
-            </p>
-            <ul class="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
-              <li class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
-                <svg class="w-4 sm:w-5 h-4 sm:h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clip-rule="evenodd"></path>
-                </svg>
-                <span>Catálogo completo para casa nova</span>
-              </li>
-              <li class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
-                <svg class="w-4 sm:w-5 h-4 sm:h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clip-rule="evenodd"></path>
-                </svg>
-                <span>Confirmação de presença integrada</span>
-              </li>
-              <li class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
-                <svg class="w-4 sm:w-5 h-4 sm:h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clip-rule="evenodd"></path>
-                </svg>
-                <span>Lista de convidados em PDF</span>
-              </li>
-            </ul>
-            <a routerLink="/cadastro"
-              class="inline-flex items-center gap-2 text-[#D97F97] font-semibold hover:gap-3 transition-all text-sm sm:text-base">
-              <span>Criar minha lista</span>
-              <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
-                </path>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Chá de Panela -->
-      <div class="relative group">
-        <div
-          class="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-400 rounded-2xl sm:rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity">
-        </div>
-        <div
-          class="relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-xl border border-amber-100 overflow-hidden">
           <div
-            class="absolute top-0 right-0 w-20 sm:w-32 h-20 sm:h-32 bg-gradient-to-br from-amber-100 to-orange-50 rounded-bl-full">
-          </div>
-          <div class="relative">
-            <div class="text-4xl sm:text-6xl mb-3 sm:mb-4">🍲</div>
-            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3">Chá de Panela</h3>
-            <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">
-              Itens essenciais para a cozinha e o dia a dia.
-              Ideal para reunir as amigas e começar bem equipada!
-            </p>
-            <ul class="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
-              <li class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
-                <svg class="w-4 sm:w-5 h-4 sm:h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clip-rule="evenodd"></path>
-                </svg>
-                <span>Foco em itens de cozinha</span>
-              </li>
-              <li class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
-                <svg class="w-4 sm:w-5 h-4 sm:h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clip-rule="evenodd"></path>
-                </svg>
-                <span>QR Code para a festa</span>
-              </li>
-              <li class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
-                <svg class="w-4 sm:w-5 h-4 sm:h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clip-rule="evenodd"></path>
-                </svg>
-                <span>Lista separada do casamento</span>
-              </li>
-            </ul>
-            <a routerLink="/cadastro"
-              class="inline-flex items-center gap-2 text-amber-600 font-semibold hover:gap-3 transition-all text-sm sm:text-base">
-              <span>Criar lista de chá de panela</span>
-              <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
-                </path>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Pricing Section -->
-<section class="py-12 sm:py-20 px-3 sm:px-4 bg-gradient-to-b from-rose-50 to-white" id="preco">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-8 sm:mb-12 px-2">
-      <span
-        class="inline-flex items-center gap-2 px-4 py-1.5 bg-green-100 text-green-700 rounded-full text-xs sm:text-sm font-bold mb-4 animate-pulse">
-        <span class="w-2 h-2 rounded-full bg-green-500"></span>
-        Oferta por tempo limitado
-      </span>
-      <h2 class="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-        Investimento <span
-          class="bg-gradient-to-r from-[#D97F97] to-[#c06f85] bg-clip-text text-transparent">único</span>
-      </h2>
-      <p class="text-sm sm:text-lg text-gray-600 max-w-2xl mx-auto">
-        Pagamento único, sem mensalidades e sem taxas escondidas.
-      </p>
-    </div>
-
-    <!-- Pricing Card -->
-    <div class="relative max-w-md mx-auto">
-      <!-- Decoration -->
-      <div class="absolute -inset-4 bg-gradient-to-r from-[#D97F97] to-[#c06f85] rounded-3xl blur-xl opacity-20"></div>
-
-      <div class="relative bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-2xl border border-rose-100">
-        <!-- Badge desconto -->
-        <div class="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2">
-          <span
-            class="px-4 sm:px-6 py-1.5 sm:py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs sm:text-sm font-bold rounded-full shadow-lg shadow-green-200">
-            🔥 55% OFF
-          </span>
-        </div>
-
-        <div class="text-center mb-6 sm:mb-8">
-          <!-- Preço antigo -->
-          <div class="text-gray-400 text-lg sm:text-xl line-through mb-1">
-            R$ 89,90
-          </div>
-          <!-- Preço atual -->
-          <div class="flex items-center justify-center gap-1">
-            <span class="text-2xl sm:text-3xl font-bold text-gray-800">R$</span>
-            <span
-              class="text-5xl sm:text-7xl font-black bg-gradient-to-r from-[#D97F97] to-[#c06f85] bg-clip-text text-transparent">39</span>
-            <span class="text-2xl sm:text-3xl font-bold text-gray-800">,90</span>
-          </div>
-          <p class="text-gray-500 text-sm sm:text-base mt-2">
-            Pagamento único • Sem mensalidades
-          </p>
-        </div>
-
-        <!-- Benefícios -->
-        <ul class="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-          <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base">
-            <span class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-              <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </span>
-            <span>Lista para casamento ou chá</span>
-          </li>
-          <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base">
-            <span class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-              <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </span>
-            <span>Até 200 convidados</span>
-          </li>
-          <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base">
-            <span class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-              <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </span>
-            <span>QR Code e link compartilhável</span>
-          </li>
-          <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base">
-            <span class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-              <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </span>
-            <span>Confirmação de presença integrada</span>
-          </li>
-          <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base">
-            <span class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-              <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </span>
-            <span>Relatórios em PDF</span>
-          </li>
-          <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base">
-            <span class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-              <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </span>
-            <span><strong>Zero taxas</strong> sobre seus presentes</span>
-          </li>
-        </ul>
-
-        <!-- CTA Button -->
-        <a routerLink="/cadastro"
-          class="w-full px-6 sm:px-8 py-4 sm:py-5 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg shadow-xl shadow-rose-300/40 hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2">
-          <span>Começar Agora</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-          </svg>
-        </a>
-
-        <!-- Trust badges -->
-        <div class="flex items-center justify-center gap-4 mt-4 sm:mt-6 text-xs text-gray-500">
-          <span class="flex items-center gap-1">
-            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                clip-rule="evenodd"></path>
-            </svg>
-            Pagamento seguro
-          </span>
-          <span class="flex items-center gap-1">
-            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                clip-rule="evenodd"></path>
-            </svg>
-            PIX, Cartão ou Boleto
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Testimonials Section -->
-<section class="py-12 sm:py-20 px-3 sm:px-4 bg-rose-50/40" id="depoimentos">
-  <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-8 sm:mb-16 px-2">
-      <span
-        class="inline-block px-3 sm:px-4 py-1 sm:py-1.5 bg-rose-100 text-[#D97F97] rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
-        Depoimentos
-      </span>
-      <h2 class="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-        O que nossos casais dizem
-      </h2>
-      <p class="text-sm sm:text-lg text-gray-600 max-w-2xl mx-auto">
-        Milhares de casais já realizaram o sonho da casa nova com nossa ajuda
-      </p>
-    </div>
-
-    <!-- Testimonials carousel -->
-    <div class="relative">
-      <!-- Navigation buttons -->
-      <button (click)="prevTestimonial()"
-        class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-rose-100 flex items-center justify-center text-gray-600 hover:text-[#D97F97] hover:border-rose-200 transition-all hidden md:flex">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-        </svg>
-      </button>
-
-      <button (click)="nextTestimonial()"
-        class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-rose-100 flex items-center justify-center text-gray-600 hover:text-[#D97F97] hover:border-rose-200 transition-all hidden md:flex">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-        </svg>
-      </button>
-
-      <!-- Testimonials grid -->
-      <div class="grid md:grid-cols-3 gap-3 sm:gap-6 px-0 sm:px-4">
-        @for(testimonial of visibleTestimonials; track testimonial.name) {
-        <div
-          class="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-rose-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-          <!-- Header -->
-          <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            class="relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-xl border border-rose-100 overflow-hidden">
             <div
-              class="w-10 sm:w-14 h-10 sm:h-14 rounded-full bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center flex-shrink-0">
-              <!-- Couple icon SVG -->
-              <svg class="w-5 sm:w-8 h-5 sm:h-8 text-[#D97F97]" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
-              </svg>
+              class="absolute top-0 right-0 w-20 sm:w-32 h-20 sm:h-32 bg-gradient-to-br from-rose-100 to-pink-50 rounded-bl-full">
             </div>
-            <div class="min-w-0">
-              <h4 class="font-bold text-gray-800 text-sm sm:text-base truncate">{{ testimonial.name }}</h4>
-              <p class="text-xs sm:text-sm text-gray-500">{{ testimonial.event }} • {{ testimonial.date }}</p>
+            <div class="relative">
+              <div class="text-4xl sm:text-6xl mb-3 sm:mb-4">💒</div>
+              <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3">Casamento</h3>
+              <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">
+                Monte a lista dos sonhos para começar a vida a dois.
+                Desde itens para casa até experiências especiais.
+              </p>
+              <ul class="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
+                <li class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                  <svg class="w-4 sm:w-5 h-4 sm:h-5 text-green-500 flex-shrink-0" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Catálogo completo para casa nova</span>
+                </li>
+                <li class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                  <svg class="w-4 sm:w-5 h-4 sm:h-5 text-green-500 flex-shrink-0" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Confirmação de presença integrada</span>
+                </li>
+                <li class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                  <svg class="w-4 sm:w-5 h-4 sm:h-5 text-green-500 flex-shrink-0" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Lista de convidados em PDF</span>
+                </li>
+              </ul>
+              <a routerLink="/cadastro"
+                class="inline-flex items-center gap-2 text-[#D97F97] font-semibold hover:gap-3 transition-all text-sm sm:text-base">
+                <span>Criar minha lista</span>
+                <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
+                  </path>
+                </svg>
+              </a>
             </div>
-          </div>
-
-          <!-- Rating -->
-          <div class="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3">
-            @for(star of [1,2,3,4,5]; track star) {
-            <svg class="w-4 sm:w-5 h-4 sm:h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
-              </path>
-            </svg>
-            }
-          </div>
-
-          <!-- Text -->
-          <p class="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-4">
-            "{{ testimonial.text }}"
-          </p>
-
-          <!-- Highlight -->
-          <div
-            class="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-green-50 text-green-700 rounded-full text-[10px] sm:text-xs font-semibold">
-            <svg class="w-3 sm:w-4 h-3 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                clip-rule="evenodd"></path>
-            </svg>
-            {{ testimonial.highlight }}
           </div>
         </div>
-        }
+
+        <!-- Chá de Panela -->
+        <div class="relative group">
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-400 rounded-2xl sm:rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity">
+          </div>
+          <div
+            class="relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-xl border border-amber-100 overflow-hidden">
+            <div
+              class="absolute top-0 right-0 w-20 sm:w-32 h-20 sm:h-32 bg-gradient-to-br from-amber-100 to-orange-50 rounded-bl-full">
+            </div>
+            <div class="relative">
+              <div class="text-4xl sm:text-6xl mb-3 sm:mb-4">🍲</div>
+              <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3">Chá de Panela</h3>
+              <p class="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">
+                Itens essenciais para a cozinha e o dia a dia.
+                Ideal para reunir as amigas e começar bem equipada!
+              </p>
+              <ul class="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
+                <li class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                  <svg class="w-4 sm:w-5 h-4 sm:h-5 text-green-500 flex-shrink-0" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Foco em itens de cozinha</span>
+                </li>
+                <li class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                  <svg class="w-4 sm:w-5 h-4 sm:h-5 text-green-500 flex-shrink-0" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>QR Code para a festa</span>
+                </li>
+                <li class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                  <svg class="w-4 sm:w-5 h-4 sm:h-5 text-green-500 flex-shrink-0" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Lista separada do casamento</span>
+                </li>
+              </ul>
+              <a routerLink="/cadastro"
+                class="inline-flex items-center gap-2 text-amber-600 font-semibold hover:gap-3 transition-all text-sm sm:text-base">
+                <span>Criar lista de chá de panela</span>
+                <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
+                  </path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="py-12 sm:py-20 px-3 sm:px-4 bg-gradient-to-b from-rose-50 to-white" id="preco">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-8 sm:mb-12 px-2">
+        <span
+          class="inline-flex items-center gap-2 px-4 py-1.5 bg-green-100 text-green-700 rounded-full text-xs sm:text-sm font-bold mb-4 animate-pulse">
+          <span class="w-2 h-2 rounded-full bg-green-500"></span>
+          Oferta por tempo limitado
+        </span>
+        <h2 class="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+          Investimento <span
+            class="bg-gradient-to-r from-[#D97F97] to-[#c06f85] bg-clip-text text-transparent">único</span>
+        </h2>
+        <p class="text-sm sm:text-lg text-gray-600 max-w-2xl mx-auto">
+          Pagamento único, sem mensalidades e sem taxas escondidas.
+        </p>
       </div>
 
-      <!-- Mobile navigation dots -->
-      <div class="flex justify-center gap-2 mt-6 md:hidden">
-        @for(testimonial of testimonials; track testimonial.name; let i = $index) {
-        <button (click)="currentTestimonialIndex = i" [class]="currentTestimonialIndex === i 
+      <!-- Pricing Card -->
+      <div class="relative max-w-md mx-auto">
+        <!-- Decoration -->
+        <div class="absolute -inset-4 bg-gradient-to-r from-[#D97F97] to-[#c06f85] rounded-3xl blur-xl opacity-20">
+        </div>
+
+        <div class="relative bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-2xl border border-rose-100">
+          <!-- Badge desconto -->
+          <div class="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2">
+            <span
+              class="px-4 sm:px-6 py-1.5 sm:py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs sm:text-sm font-bold rounded-full shadow-lg shadow-green-200">
+              🔥 55% OFF
+            </span>
+          </div>
+
+          <div class="text-center mb-6 sm:mb-8">
+            <!-- Preço antigo -->
+            <div class="text-gray-400 text-lg sm:text-xl line-through mb-1">
+              R$ 89,90
+            </div>
+            <!-- Preço atual -->
+            <div class="flex items-center justify-center gap-1">
+              <span class="text-2xl sm:text-3xl font-bold text-gray-800">R$</span>
+              <span
+                class="text-5xl sm:text-7xl font-black bg-gradient-to-r from-[#D97F97] to-[#c06f85] bg-clip-text text-transparent">39</span>
+              <span class="text-2xl sm:text-3xl font-bold text-gray-800">,90</span>
+            </div>
+            <p class="text-gray-500 text-sm sm:text-base mt-2">
+              Pagamento único • Sem mensalidades
+            </p>
+          </div>
+
+          <!-- Benefícios -->
+          <ul class="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+            <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base">
+              <span class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </span>
+              <span>Lista para casamento ou chá</span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base">
+              <span class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </span>
+              <span>Até 200 convidados</span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base">
+              <span class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </span>
+              <span>QR Code e link compartilhável</span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base">
+              <span class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </span>
+              <span>Confirmação de presença integrada</span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base">
+              <span class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </span>
+              <span>Relatórios em PDF</span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base">
+              <span class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </span>
+              <span><strong>Zero taxas</strong> sobre seus presentes</span>
+            </li>
+          </ul>
+
+          <!-- CTA Button -->
+          <a routerLink="/cadastro"
+            class="w-full px-6 sm:px-8 py-4 sm:py-5 bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg shadow-xl shadow-rose-300/40 hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2">
+            <span>Começar Agora</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+            </svg>
+          </a>
+
+          <!-- Trust badges -->
+          <div class="flex items-center justify-center gap-4 mt-4 sm:mt-6 text-xs text-gray-500">
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Pagamento seguro
+            </span>
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              PIX, Cartão ou Boleto
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="py-12 sm:py-20 px-3 sm:px-4 bg-rose-50/40" id="depoimentos">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-8 sm:mb-16 px-2">
+        <span
+          class="inline-block px-3 sm:px-4 py-1 sm:py-1.5 bg-rose-100 text-[#D97F97] rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
+          Depoimentos
+        </span>
+        <h2 class="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+          O que nossos casais dizem
+        </h2>
+        <p class="text-sm sm:text-lg text-gray-600 max-w-2xl mx-auto">
+          Milhares de casais já realizaram o sonho da casa nova com nossa ajuda
+        </p>
+      </div>
+
+      <!-- Testimonials carousel -->
+      <div class="relative">
+        <!-- Navigation buttons -->
+        <button (click)="prevTestimonial()"
+          class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-rose-100 flex items-center justify-center text-gray-600 hover:text-[#D97F97] hover:border-rose-200 transition-all hidden md:flex">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+
+        <button (click)="nextTestimonial()"
+          class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-rose-100 flex items-center justify-center text-gray-600 hover:text-[#D97F97] hover:border-rose-200 transition-all hidden md:flex">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+
+        <!-- Testimonials grid -->
+        <div class="grid md:grid-cols-3 gap-3 sm:gap-6 px-0 sm:px-4">
+          @for(testimonial of visibleTestimonials; track testimonial.name) {
+          <div
+            class="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-rose-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <!-- Header -->
+            <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+              <div
+                class="w-10 sm:w-14 h-10 sm:h-14 rounded-full bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center flex-shrink-0">
+                <!-- Couple icon SVG -->
+                <svg class="w-5 sm:w-8 h-5 sm:h-8 text-[#D97F97]" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+                </svg>
+              </div>
+              <div class="min-w-0">
+                <h4 class="font-bold text-gray-800 text-sm sm:text-base truncate">{{ testimonial.name }}</h4>
+                <p class="text-xs sm:text-sm text-gray-500">{{ testimonial.event }} • {{ testimonial.date }}</p>
+              </div>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center gap-0.5 sm:gap-1 mb-2 sm:mb-3">
+              @for(star of [1,2,3,4,5]; track star) {
+              <svg class="w-4 sm:w-5 h-4 sm:h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                </path>
+              </svg>
+              }
+            </div>
+
+            <!-- Text -->
+            <p class="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-4">
+              "{{ testimonial.text }}"
+            </p>
+
+            <!-- Highlight -->
+            <div
+              class="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 bg-green-50 text-green-700 rounded-full text-[10px] sm:text-xs font-semibold">
+              <svg class="w-3 sm:w-4 h-3 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              {{ testimonial.highlight }}
+            </div>
+          </div>
+          }
+        </div>
+
+        <!-- Mobile navigation dots -->
+        <div class="flex justify-center gap-2 mt-6 md:hidden">
+          @for(testimonial of testimonials; track testimonial.name; let i = $index) {
+          <button (click)="currentTestimonialIndex = i" [class]="currentTestimonialIndex === i 
                 ? 'w-8 h-2 rounded-full bg-[#D97F97] transition-all' 
                 : 'w-2 h-2 rounded-full bg-gray-300 hover:bg-gray-400 transition-all'">
-        </button>
-        }
+          </button>
+          }
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FAQ Section -->
-<section class="py-12 sm:py-20 px-3 sm:px-4 bg-white" id="faq">
-  <div class="max-w-3xl mx-auto">
-    <div class="text-center mb-8 sm:mb-16 px-2">
-      <span
-        class="inline-block px-3 sm:px-4 py-1 sm:py-1.5 bg-rose-100 text-[#D97F97] rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
-        Dúvidas
-      </span>
-      <h2 class="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-        Perguntas Frequentes
-      </h2>
-      <p class="text-sm sm:text-lg text-gray-600">
-        Tire suas dúvidas sobre a plataforma
-      </p>
-    </div>
+  <!-- FAQ Section -->
+  <section class="py-12 sm:py-20 px-3 sm:px-4 bg-white" id="faq">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-8 sm:mb-16 px-2">
+        <span
+          class="inline-block px-3 sm:px-4 py-1 sm:py-1.5 bg-rose-100 text-[#D97F97] rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
+          Dúvidas
+        </span>
+        <h2 class="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+          Perguntas Frequentes
+        </h2>
+        <p class="text-sm sm:text-lg text-gray-600">
+          Tire suas dúvidas sobre a plataforma
+        </p>
+      </div>
 
-    <div class="space-y-3 sm:space-y-4">
-      @for(faq of faqs; track faq.question; let i = $index) {
-      <div class="bg-white rounded-xl sm:rounded-2xl shadow-md border border-rose-100 overflow-hidden">
-        <button (click)="toggleFaq(i)"
-          class="w-full px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between text-left hover:bg-rose-50/50 transition-colors gap-2">
-          <span class="font-semibold text-gray-800 text-sm sm:text-base">{{ faq.question }}</span>
-          <svg
-            [class]="'w-4 sm:w-5 h-4 sm:h-5 text-gray-500 transition-transform duration-200 flex-shrink-0 ' + (faq.open ? 'rotate-180' : '')"
-            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-          </svg>
-        </button>
-        @if(faq.open) {
-        <div class="px-4 sm:px-6 pb-3 sm:pb-4 text-gray-600 text-sm sm:text-base">
-          {{ faq.answer }}
+      <div class="space-y-3 sm:space-y-4">
+        @for(faq of faqs; track faq.question; let i = $index) {
+        <div class="bg-white rounded-xl sm:rounded-2xl shadow-md border border-rose-100 overflow-hidden">
+          <button (click)="toggleFaq(i)"
+            class="w-full px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between text-left hover:bg-rose-50/50 transition-colors gap-2">
+            <span class="font-semibold text-gray-800 text-sm sm:text-base">{{ faq.question }}</span>
+            <svg
+              [class]="'w-4 sm:w-5 h-4 sm:h-5 text-gray-500 transition-transform duration-200 flex-shrink-0 ' + (faq.open ? 'rotate-180' : '')"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          @if(faq.open) {
+          <div class="px-4 sm:px-6 pb-3 sm:pb-4 text-gray-600 text-sm sm:text-base">
+            {{ faq.answer }}
+          </div>
+          }
         </div>
         }
       </div>
-      }
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Final CTA Section -->
-<section class="py-12 sm:py-20 px-3 sm:px-4 bg-gradient-to-b from-white to-rose-50/50">
-  <div class="max-w-4xl mx-auto">
-    <div
-      class="relative bg-gradient-to-r from-[#D97F97] to-[#c06f85] rounded-2xl sm:rounded-3xl p-6 sm:p-12 overflow-hidden">
-      <!-- Background decoration -->
+  <!-- Final CTA Section -->
+  <section class="py-12 sm:py-20 px-3 sm:px-4 bg-gradient-to-b from-white to-rose-50/50">
+    <div class="max-w-4xl mx-auto">
       <div
-        class="absolute top-0 right-0 w-40 sm:w-64 h-40 sm:h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 animate-float-slow">
-      </div>
-      <div
-        class="absolute bottom-0 left-0 w-32 sm:w-48 h-32 sm:h-48 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2 animate-float-delay">
-      </div>
-      <div class="absolute top-1/2 left-1/4 w-12 sm:w-20 h-12 sm:h-20 bg-white/5 rounded-full animate-float"></div>
+        class="relative bg-gradient-to-r from-[#D97F97] to-[#c06f85] rounded-2xl sm:rounded-3xl p-6 sm:p-12 overflow-hidden">
+        <!-- Background decoration -->
+        <div
+          class="absolute top-0 right-0 w-40 sm:w-64 h-40 sm:h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 animate-float-slow">
+        </div>
+        <div
+          class="absolute bottom-0 left-0 w-32 sm:w-48 h-32 sm:h-48 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2 animate-float-delay">
+        </div>
+        <div class="absolute top-1/2 left-1/4 w-12 sm:w-20 h-12 sm:h-20 bg-white/5 rounded-full animate-float"></div>
 
-      <div class="relative text-center">
-        <div class="text-4xl sm:text-5xl mb-4 sm:mb-6 animate-heartbeat">💝</div>
-        <h2 class="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">
-          Comece sua jornada de amor
-        </h2>
-        <p class="text-sm sm:text-lg text-white/90 mb-3 sm:mb-4 max-w-xl mx-auto">
-          Organize seus presentes de casamento ou chá de forma simples e sem complicação.
-        </p>
-        <p class="text-lg sm:text-2xl text-white font-bold mb-6 sm:mb-8">
-          <span class="line-through opacity-60">R$ 89,90</span>
-          <span class="mx-2">→</span>
-          <span class="text-2xl sm:text-3xl">R$ 39,90</span>
-          <span class="text-xs sm:text-sm font-normal ml-2 bg-white/20 px-2 py-1 rounded-full">55% OFF</span>
-        </p>
-        <a routerLink="/cadastro"
-          class="inline-flex items-center justify-center gap-2 px-8 sm:px-10 py-4 sm:py-5 bg-white text-[#D97F97] rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 hover:scale-105 transition-all duration-300">
-          <span>Começar Agora</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-          </svg>
-        </a>
+        <div class="relative text-center">
+          <div class="text-4xl sm:text-5xl mb-4 sm:mb-6 animate-heartbeat">💝</div>
+          <h2 class="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">
+            Comece sua jornada de amor
+          </h2>
+          <p class="text-sm sm:text-lg text-white/90 mb-3 sm:mb-4 max-w-xl mx-auto">
+            Organize seus presentes de casamento ou chá de forma simples e sem complicação.
+          </p>
+          <p class="text-lg sm:text-2xl text-white font-bold mb-6 sm:mb-8">
+            <span class="line-through opacity-60">R$ 89,90</span>
+            <span class="mx-2">→</span>
+            <span class="text-2xl sm:text-3xl">R$ 39,90</span>
+            <span class="text-xs sm:text-sm font-normal ml-2 bg-white/20 px-2 py-1 rounded-full">55% OFF</span>
+          </p>
+          <a routerLink="/cadastro"
+            class="inline-flex items-center justify-center gap-2 px-8 sm:px-10 py-4 sm:py-5 bg-white text-[#D97F97] rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 hover:scale-105 transition-all duration-300">
+            <span>Começar Agora</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Footer -->
-<footer class="bg-gray-900 text-white py-8 sm:py-12 px-3 sm:px-4">
-  <div class="max-w-6xl mx-auto">
-    <div class="flex flex-col items-center gap-6">
-      <div class="flex items-center">
-        <img src="full-logo.png" alt="Laços de Carinho" class="h-10 sm:h-12 w-auto brightness-0 invert">
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-8 sm:py-12 px-3 sm:px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col items-center gap-6">
+        <div class="flex items-center">
+          <img src="full-logo.png" alt="Laços de Carinho" class="h-10 sm:h-12 w-auto brightness-0 invert">
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-400">
+          <button (click)="scrollTo('recursos')"
+            class="hover:text-white transition-colors cursor-pointer">Recursos</button>
+          <button (click)="scrollTo('como-funciona')" class="hover:text-white transition-colors cursor-pointer">Como
+            Funciona</button>
+          <button (click)="scrollTo('preco')" class="hover:text-white transition-colors cursor-pointer">Preço</button>
+          <button (click)="scrollTo('depoimentos')"
+            class="hover:text-white transition-colors cursor-pointer">Depoimentos</button>
+          <button (click)="scrollTo('faq')" class="hover:text-white transition-colors cursor-pointer">FAQ</button>
+        </div>
+
+        <p class="text-xs sm:text-sm text-gray-500 text-center">
+          © 2026 Laços de Carinho. Todos os direitos reservados.
+        </p>
       </div>
-
-      <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-400">
-        <button (click)="scrollTo('recursos')"
-          class="hover:text-white transition-colors cursor-pointer">Recursos</button>
-        <button (click)="scrollTo('como-funciona')" class="hover:text-white transition-colors cursor-pointer">Como
-          Funciona</button>
-        <button (click)="scrollTo('preco')" class="hover:text-white transition-colors cursor-pointer">Preço</button>
-        <button (click)="scrollTo('depoimentos')"
-          class="hover:text-white transition-colors cursor-pointer">Depoimentos</button>
-        <button (click)="scrollTo('faq')" class="hover:text-white transition-colors cursor-pointer">FAQ</button>
-      </div>
-
-      <p class="text-xs sm:text-sm text-gray-500 text-center">
-        © 2026 Laços de Carinho. Todos os direitos reservados.
-      </p>
     </div>
-  </div>
-</footer>
+  </footer>
 </div>

@@ -4,14 +4,16 @@ import { Router } from '@angular/router';
 import { UserAuthService } from '../../services/user-auth';
 import { UserService } from '../../services/user';
 import { WeddingService } from '../../services/wedding';
-import { PaymentService } from '../../services/payment';
+import { PaymentService, IDirectPaymentResponse } from '../../services/payment';
 import { IWeddingListShort, IGuestDetails, IGuestEvent, RsvpStatus, ListType, LIST_TYPE_LABELS } from '../../interfaces/wedding';
 import { take } from 'rxjs';
 import * as QRCode from 'qrcode';
+import { PaymentForm } from '../../components/payment-form/payment-form';
+import { FacebookPixelService } from '../../services/facebook-pixel';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule],
+  imports: [CommonModule, PaymentForm],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -21,6 +23,7 @@ export class Dashboard implements OnInit {
   private readonly _weddingService = inject(WeddingService);
   private readonly _paymentService = inject(PaymentService);
   private readonly _router = inject(Router);
+  private readonly _facebookPixelService = inject(FacebookPixelService);
 
   // Expose enum to template
   readonly RsvpStatus = RsvpStatus;
@@ -49,6 +52,7 @@ export class Dashboard implements OnInit {
   showUpgradeModal: boolean = false;
   upgrading: boolean = false;
   upgradeError: string = '';
+  showPaymentStep: boolean = false;
 
   // Computed property to check if user has guest events
   get hasGuestEvents(): boolean {
@@ -176,27 +180,43 @@ export class Dashboard implements OnInit {
 
   closeUpgradeModal() {
     this.showUpgradeModal = false;
+    this.showPaymentStep = false;
     this.upgradeError = '';
   }
 
+  // Avançar para o formulário de pagamento inline
   confirmUpgrade() {
-    this.upgrading = true;
-    this.upgradeError = '';
+    this.showPaymentStep = true;
+    this._facebookPixelService.track('InitiateCheckout');
+  }
 
-    // Cria preferência de pagamento para upgrade
-    this._paymentService.createUpgradePreference().pipe(take(1)).subscribe({
-      next: (response) => {
-        // Salva o preferenceId para verificar depois
-        localStorage.setItem('payment_preference_id', response.preferenceId);
+  // Callback quando o pagamento de upgrade é aprovado
+  onUpgradeApproved(response: IDirectPaymentResponse) {
+    if (response.token) {
+      this._userAuthService.setUserToken(response.token);
+    }
+    this.showUpgradeModal = false;
+    this.showPaymentStep = false;
 
-        // Redireciona para o Mercado Pago
-        window.location.href = response.checkoutUrl;
-      },
-      error: (err) => {
-        this.upgrading = false;
-        this.upgradeError = err.error?.errorMessages?.[0] || 'Erro ao iniciar pagamento. Tente novamente.';
+    this._router.navigate(['/pagamento-sucesso'], {
+      state: {
+        fromCheckout: true,
+        token: response.token,
+        name: response.name,
+        message: response.message,
+        paymentMethod: response.paymentMethod || 'card'
       }
     });
+  }
+
+  // Callback quando o pagamento de upgrade falha
+  onUpgradeError(message: string) {
+    this.upgradeError = message;
+  }
+
+  // Voltar do formulário de pagamento para o modal info
+  onUpgradeCancelled() {
+    this.showPaymentStep = false;
   }
 
   // Share modal methods

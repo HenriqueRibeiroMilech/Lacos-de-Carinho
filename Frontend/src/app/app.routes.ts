@@ -25,7 +25,7 @@ export const routes: Routes = [
   // ============================================
   {
     path: '',
-    redirectTo: 'entrar',
+    redirectTo: 'inicio',
     pathMatch: 'full',
   },
   {
@@ -45,21 +45,21 @@ export const routes: Routes = [
   // ============================================
   // ROTAS DE AUTENTICAÇÃO
   // ============================================
-  
+
   // Cadastro para CASAIS (vem da Landing) - role=admin
   {
     path: 'cadastro',
     component: Cadastro,
     canActivate: [loginAuthGuard],
   },
-  
+
   // Registro para CONVIDADOS (vem da lista pública) - role=user
   {
     path: 'registro',
     component: Register,
     canActivate: [loginAuthGuard],
   },
-  
+
   {
     path: 'esqueci-senha',
     component: ForgotPassword,
@@ -123,7 +123,7 @@ export const routes: Routes = [
   { path: 'reset-password', redirectTo: 'redefinir-senha', pathMatch: 'full' },
   { path: 'dashboard', redirectTo: 'painel', pathMatch: 'full' },
   { path: 'create-event', redirectTo: 'criar-evento', pathMatch: 'full' },
-  
+
   // Fallback
   {
     path: '**',

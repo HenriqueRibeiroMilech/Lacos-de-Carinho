@@ -64,22 +64,19 @@ public class MercadoPagoService : IMercadoPagoService
                 ["pending"] = _pendingUrl
             },
             ["external_reference"] = externalReference,
-            // Configuração de métodos de pagamento - não exclui nenhum para garantir que PIX apareça
             ["payment_methods"] = new Dictionary<string, object>
             {
                 ["excluded_payment_methods"] = Array.Empty<object>(),
                 ["excluded_payment_types"] = Array.Empty<object>(),
-                ["installments"] = 12 // Permite parcelamento
+                ["installments"] = 12
             }
         };
         
-        // Só adiciona auto_return se for HTTPS
         if (useAutoReturn)
         {
             preference["auto_return"] = "approved";
         }
         
-        // Só adiciona notification_url se estiver configurado
         if (!string.IsNullOrEmpty(_webhookUrl))
         {
             preference["notification_url"] = _webhookUrl;
@@ -87,9 +84,13 @@ public class MercadoPagoService : IMercadoPagoService
 
         _logger.LogInformation("Creating Mercado Pago preference for: {Email}, Amount: {Amount}", payerEmail, amount);
 
-        var response = await _httpClient.PostAsJsonAsync(
-            "https://api.mercadopago.com/checkout/preferences",
-            preference);
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://api.mercadopago.com/checkout/preferences")
+        {
+            Content = JsonContent.Create(preference)
+        };
+        request.Headers.Add("X-Idempotency-Key", Guid.NewGuid().ToString());
+
+        var response = await _httpClient.SendAsync(request);
 
         var responseContent = await response.Content.ReadAsStringAsync();
         
@@ -107,6 +108,103 @@ public class MercadoPagoService : IMercadoPagoService
         var checkoutUrl = json.RootElement.GetProperty("init_point").GetString() ?? "";
 
         return (preferenceId, checkoutUrl);
+    }
+
+    public async Task<MercadoPagoDirectPaymentResult> CreatePayment(
+        string token,
+        decimal amount,
+        string description,
+        string payerEmail,
+        string externalReference,
+        string paymentMethodId,
+        string issuerId,
+        int installments)
+    {
+        var paymentData = new Dictionary<string, object>
+        {
+            ["transaction_amount"] = (double)amount,
+            ["description"] = description,
+            ["payment_method_id"] = paymentMethodId,
+            ["external_reference"] = externalReference,
+            ["payer"] = new Dictionary<string, object>
+            {
+                ["email"] = payerEmail
+            }
+        };
+
+        // Para Pix, não enviamos token nem issuer_id/installments
+        if (paymentMethodId == "pix")
+        {
+            // Pix não precisa de token
+        }
+        else
+        {
+            // Pagamento com cartão: inclui token, issuer e parcelas
+            paymentData["token"] = token;
+            paymentData["issuer_id"] = issuerId;
+            paymentData["installments"] = installments;
+        }
+
+        // Adiciona notification_url se configurado
+        if (!string.IsNullOrEmpty(_webhookUrl))
+        {
+            paymentData["notification_url"] = _webhookUrl;
+        }
+
+        _logger.LogInformation(
+            "Creating direct payment for: {Email}, Amount: {Amount}, Method: {Method}",
+            payerEmail, amount, paymentMethodId);
+
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://api.mercadopago.com/v1/payments")
+        {
+            Content = JsonContent.Create(paymentData)
+        };
+        request.Headers.Add("X-Idempotency-Key", Guid.NewGuid().ToString());
+
+        var response = await _httpClient.SendAsync(request);
+
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            _logger.LogError("Mercado Pago payment error: {StatusCode} - {Response}",
+                response.StatusCode, responseContent);
+            throw new Exception($"Erro ao processar pagamento: {responseContent}");
+        }
+
+        var json = JsonDocument.Parse(responseContent);
+        var root = json.RootElement;
+
+        var paymentId = root.GetProperty("id").GetInt64();
+        var status = root.GetProperty("status").GetString() ?? "unknown";
+        var statusDetail = root.TryGetProperty("status_detail", out var sd)
+            ? sd.GetString() ?? "" : "";
+
+        // Para Pix, extrair dados do QR Code
+        string? pixQrCode = null;
+        string? pixQrCodeBase64 = null;
+        string? ticketUrl = null;
+
+        if (root.TryGetProperty("point_of_interaction", out var poi))
+        {
+            if (poi.TryGetProperty("transaction_data", out var txData))
+            {
+                if (txData.TryGetProperty("qr_code", out var qr))
+                    pixQrCode = qr.GetString();
+                if (txData.TryGetProperty("qr_code_base64", out var qrB64))
+                    pixQrCodeBase64 = qrB64.GetString();
+                if (txData.TryGetProperty("ticket_url", out var ticket))
+                    ticketUrl = ticket.GetString();
+            }
+        }
+
+        _logger.LogInformation(
+            "Payment created: Id={PaymentId}, Status={Status}, StatusDetail={StatusDetail}",
+            paymentId, status, statusDetail);
+
+        return new MercadoPagoDirectPaymentResult(
+            paymentId, status, statusDetail,
+            pixQrCode, pixQrCodeBase64, ticketUrl);
     }
 
     public async Task<string> GetPaymentStatus(string paymentId)
@@ -137,24 +235,24 @@ public class MercadoPagoService : IMercadoPagoService
                 ? extRef.GetString() ?? "" 
                 : "";
             
-            string? payerEmail = null;
+            string? payerEmailResult = null;
             if (json.RootElement.TryGetProperty("payer", out var payer) && 
                 payer.TryGetProperty("email", out var email))
             {
-                payerEmail = email.GetString();
+                payerEmailResult = email.GetString();
             }
             
             decimal? transactionAmount = null;
-            if (json.RootElement.TryGetProperty("transaction_amount", out var amount))
+            if (json.RootElement.TryGetProperty("transaction_amount", out var amt))
             {
-                transactionAmount = amount.GetDecimal();
+                transactionAmount = amt.GetDecimal();
             }
 
             _logger.LogInformation(
                 "Payment {PaymentId} details: Status={Status}, ExternalRef={ExternalRef}", 
                 paymentId, status, externalReference);
 
-            return new MercadoPagoPaymentDetails(status, externalReference, payerEmail, transactionAmount);
+            return new MercadoPagoPaymentDetails(status, externalReference, payerEmailResult, transactionAmount);
         }
         catch (Exception ex)
         {

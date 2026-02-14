@@ -620,12 +620,15 @@
   <!-- Upgrade Modal -->
   @if(showUpgradeModal) {
   <div class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" (click)="closeUpgradeModal()">
-    <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden" (click)="$event.stopPropagation()">
+    <div class="bg-white w-full max-w-lg max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col"
+      (click)="$event.stopPropagation()">
       <!-- Header com gradient -->
       <div class="relative bg-gradient-to-r from-[#D97F97] to-[#c06f85] p-6 text-white">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+        <div
+          class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none">
+        </div>
         <button (click)="closeUpgradeModal()"
-          class="absolute top-4 right-4 p-2 text-white/80 hover:text-white transition-colors">
+          class="absolute top-4 right-4 z-10 p-2 text-white/80 hover:text-white transition-colors cursor-pointer">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
@@ -641,8 +644,10 @@
         </div>
       </div>
 
-      <!-- Content -->
-      <div class="p-6">
+      <!-- Content (scrollable) -->
+      <div class="p-6 overflow-y-auto flex-1 min-h-0">
+        @if(!showPaymentStep) {
+        <!-- Step 1: Info -->
         <p class="text-gray-600 mb-6">
           Ao criar sua lista, você poderá:
         </p>
@@ -701,28 +706,22 @@
             class="flex-1 px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 transition-colors">
             Cancelar
           </button>
-          <button (click)="confirmUpgrade()" [disabled]="upgrading"
-            class="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0">
-            @if(upgrading) {
-            <span class="flex items-center justify-center gap-2">
-              <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                </path>
-              </svg>
-              Processando...
-            </span>
-            } @else {
+          <button (click)="confirmUpgrade()"
+            class="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-[#D97F97] to-[#c06f85] text-white font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300">
             <span class="flex items-center justify-center gap-2">
               Pagar agora
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
               </svg>
             </span>
-            }
           </button>
         </div>
+        } @else {
+        <!-- Step 2: Formulário de pagamento inline -->
+        <app-payment-form [paymentType]="'upgrade'" (paymentApproved)="onUpgradeApproved($event)"
+          (paymentError)="onUpgradeError($event)" (cancelled)="onUpgradeCancelled()">
+        </app-payment-form>
+        }
       </div>
     </div>
   </div>

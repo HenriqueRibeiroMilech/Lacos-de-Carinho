@@ -44,4 +44,8 @@ export class UserService {
   upgradeAccount(): Observable<IUpgradeResponse> {
     return this._httpClient.put<IUpgradeResponse>(`${environment.apiUrl}/User/upgrade`, {});
   }
+
+  checkEmailExists(email: string): Observable<{ exists: boolean }> {
+    return this._httpClient.get<{ exists: boolean }>(`${environment.apiUrl}/User/check-email/${encodeURIComponent(email)}`);
+  }
 }

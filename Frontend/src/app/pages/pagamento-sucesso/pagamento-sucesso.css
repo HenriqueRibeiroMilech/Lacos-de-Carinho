@@ -1,1 +1,336 @@
-/* Pagamento Sucesso styles */
+/* ==========================================
+   Pagamento Sucesso — Animations & Effects
+   ========================================== */
+
+/* Container animation */
+:host {
+    display: block;
+}
+
+/* Card slide up + fade in */
+.success-card {
+    animation: slideUpFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
+
+@keyframes slideUpFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Success icon pulse */
+.success-icon-container {
+    animation: iconBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+    opacity: 0;
+    transform: scale(0);
+}
+
+@keyframes iconBounce {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    60% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Confetti particles */
+.confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 100;
+}
+
+.confetti {
+    position: absolute;
+    top: -10px;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    animation: confettiFall linear forwards;
+}
+
+.confetti:nth-child(1) {
+    left: 5%;
+    animation-duration: 2.8s;
+    animation-delay: 0.1s;
+    background: #D97F97;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+}
+
+.confetti:nth-child(2) {
+    left: 12%;
+    animation-duration: 3.2s;
+    animation-delay: 0.3s;
+    background: #FFD700;
+    width: 12px;
+    height: 6px;
+    border-radius: 2px;
+}
+
+.confetti:nth-child(3) {
+    left: 20%;
+    animation-duration: 2.5s;
+    animation-delay: 0.0s;
+    background: #4CAF50;
+    border-radius: 50%;
+    width: 6px;
+    height: 6px;
+}
+
+.confetti:nth-child(4) {
+    left: 28%;
+    animation-duration: 3.5s;
+    animation-delay: 0.5s;
+    background: #FF6B6B;
+    width: 10px;
+    height: 5px;
+    border-radius: 2px;
+}
+
+.confetti:nth-child(5) {
+    left: 35%;
+    animation-duration: 2.9s;
+    animation-delay: 0.2s;
+    background: #AB47BC;
+    border-radius: 50%;
+    width: 9px;
+    height: 9px;
+}
+
+.confetti:nth-child(6) {
+    left: 42%;
+    animation-duration: 3.1s;
+    animation-delay: 0.4s;
+    background: #29B6F6;
+    width: 11px;
+    height: 5px;
+    border-radius: 2px;
+}
+
+.confetti:nth-child(7) {
+    left: 50%;
+    animation-duration: 2.6s;
+    animation-delay: 0.1s;
+    background: #FFA726;
+    border-radius: 50%;
+    width: 7px;
+    height: 7px;
+}
+
+.confetti:nth-child(8) {
+    left: 58%;
+    animation-duration: 3.3s;
+    animation-delay: 0.6s;
+    background: #D97F97;
+    width: 13px;
+    height: 5px;
+    border-radius: 2px;
+}
+
+.confetti:nth-child(9) {
+    left: 65%;
+    animation-duration: 2.7s;
+    animation-delay: 0.0s;
+    background: #66BB6A;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+}
+
+.confetti:nth-child(10) {
+    left: 72%;
+    animation-duration: 3.0s;
+    animation-delay: 0.3s;
+    background: #EC407A;
+    width: 10px;
+    height: 6px;
+    border-radius: 2px;
+}
+
+.confetti:nth-child(11) {
+    left: 78%;
+    animation-duration: 2.4s;
+    animation-delay: 0.2s;
+    background: #FFD700;
+    border-radius: 50%;
+    width: 6px;
+    height: 6px;
+}
+
+.confetti:nth-child(12) {
+    left: 85%;
+    animation-duration: 3.4s;
+    animation-delay: 0.5s;
+    background: #7E57C2;
+    width: 11px;
+    height: 5px;
+    border-radius: 2px;
+}
+
+.confetti:nth-child(13) {
+    left: 92%;
+    animation-duration: 2.8s;
+    animation-delay: 0.1s;
+    background: #26A69A;
+    border-radius: 50%;
+    width: 9px;
+    height: 9px;
+}
+
+.confetti:nth-child(14) {
+    left: 8%;
+    animation-duration: 3.6s;
+    animation-delay: 0.7s;
+    background: #FF7043;
+    width: 8px;
+    height: 4px;
+    border-radius: 2px;
+}
+
+.confetti:nth-child(15) {
+    left: 48%;
+    animation-duration: 2.3s;
+    animation-delay: 0.0s;
+    background: #D97F97;
+    border-radius: 50%;
+    width: 7px;
+    height: 7px;
+}
+
+.confetti:nth-child(16) {
+    left: 16%;
+    animation-duration: 3.1s;
+    animation-delay: 0.4s;
+    background: #42A5F5;
+    width: 12px;
+    height: 5px;
+    border-radius: 2px;
+}
+
+.confetti:nth-child(17) {
+    left: 55%;
+    animation-duration: 2.9s;
+    animation-delay: 0.2s;
+    background: #FFCA28;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+}
+
+.confetti:nth-child(18) {
+    left: 38%;
+    animation-duration: 3.3s;
+    animation-delay: 0.6s;
+    background: #EF5350;
+    width: 9px;
+    height: 4px;
+    border-radius: 2px;
+}
+
+.confetti:nth-child(19) {
+    left: 70%;
+    animation-duration: 2.5s;
+    animation-delay: 0.1s;
+    background: #AB47BC;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+}
+
+.confetti:nth-child(20) {
+    left: 25%;
+    animation-duration: 3.5s;
+    animation-delay: 0.3s;
+    background: #66BB6A;
+    width: 10px;
+    height: 5px;
+    border-radius: 2px;
+}
+
+@keyframes confettiFall {
+    0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(25vh) rotate(90deg) translateX(20px);
+    }
+
+    50% {
+        transform: translateY(50vh) rotate(180deg) translateX(-15px);
+    }
+
+    75% {
+        opacity: 0.8;
+        transform: translateY(75vh) rotate(270deg) translateX(10px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(100vh) rotate(360deg) translateX(-10px);
+    }
+}
+
+/* Payment details card */
+.payment-details {
+    animation: fadeIn 0.5s ease 0.8s forwards;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading spinner */
+.loading-card {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Error / Pending card animation */
+.result-card {
+    animation: slideUpFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
